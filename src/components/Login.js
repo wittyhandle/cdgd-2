@@ -18,7 +18,7 @@ class Login extends Component {
     };
 
     doLogin = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         console.log('will do login with', this.state);
     };
 
