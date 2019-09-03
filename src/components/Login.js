@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { authenticationService } from '../services/';
 
 class Login extends Component {
 
@@ -8,7 +8,7 @@ class Login extends Component {
         this.state = {
             username: '',
             password: ''
-        }
+        };
     }
 
     handleOnChange = (e) => {
@@ -19,7 +19,16 @@ class Login extends Component {
 
     doLogin = (e) => {
         e.preventDefault();
-        console.log('will do login with', this.state);
+        //console.log('will do login with', this.state);
+        authenticationService.login(this.state.username, this.state.password)
+            .then(
+                user => {
+                    this.props.history.push({pathname: '/'});
+                },
+                error => {
+                    console.log('error', error);
+                }
+            );
     };
 
     render() {
