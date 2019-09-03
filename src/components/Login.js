@@ -19,7 +19,6 @@ class Login extends Component {
 
     doLogin = (e) => {
         e.preventDefault();
-        //console.log('will do login with', this.state);
         authenticationService.login(this.state.username, this.state.password)
             .then(
                 user => {

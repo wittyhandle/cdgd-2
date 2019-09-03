@@ -1,4 +1,5 @@
 let express = require('express');
+let jwt = require('jsonwebtoken');
 let router = express.Router();
 
 router.post('/authenticate', function(req, res, next) {
@@ -11,7 +12,10 @@ router.post('/authenticate', function(req, res, next) {
   if (!user) {
     res.status('401').json({success: false, message: 'Invalid Credentials'});
   } else {
-    res.json({success: true, message: 'Successful Login'});
+
+    const token = jwt.sign({ data: user.username }, 'secret', { expiresIn: '1h' });
+
+    res.json({success: true, data: {message: 'Successful Login', token}});
   }
 });
 
