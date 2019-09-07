@@ -1,8 +1,10 @@
-import React, { Component } from "react";
-import Main from "./components/Main";
-import Login from "./components/Login";
-import { ConfigContext as Provider } from "./config/config";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, { Component } from 'react';
+import Main from './components/Main';
+import Login from './components/Login';
+import Admin from './components/Admin';
+import { AuthenticationProvider } from './context/authentication.context';
+import { ConfigContext as Provider } from './config/config';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 class App extends Component {
   render() {
     return (
@@ -10,8 +12,11 @@ class App extends Component {
           <Provider>
             <Router>
               <Switch>
-                <Route path="/" component={Main} exact={true} />
-                <Route path="/login" component={Login} exact={true} />
+                <Route path='/' component={Main} exact={true} />
+                  <AuthenticationProvider>
+                    <Route path='/login' component={Login} exact={true} />
+                    <Route path='/admin' component={Admin} exact={true} />
+                </AuthenticationProvider>
               </Switch>
             </Router>
           </Provider>

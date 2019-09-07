@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { authenticationService } from '../services/';
+import { AuthenticationConsumer } from '../context/authentication.context';
 
 class Login extends Component {
 
@@ -17,12 +18,13 @@ class Login extends Component {
         })
     };
 
-    doLogin = (e) => {
+    doLogin = (e, setCurrentUser) => {
         e.preventDefault();
         authenticationService.login(this.state.username, this.state.password)
             .then(
                 user => {
-                    this.props.history.push({pathname: '/'});
+                    this.props.history.push({pathname: '/admin'});
+                    setCurrentUser(user);
                 },
                 error => {
                     console.log('error', error);
@@ -32,28 +34,32 @@ class Login extends Component {
 
     render() {
         return (
-            <div className={'row align-self-center w-100'}>
-                <div className={'col'}>
-                    <form className={'mx-auto w-50 p-3'} onSubmit={this.doLogin}>
-                        <div className={'form-group'}>
+            <AuthenticationConsumer>
+                {({ currentUser, setCurrentUser }) => (
+                    <div className={'row align-self-center w-100'}>
+                        <div className={'col'}>
+                            <form className={'mx-auto w-50 p-3'} onSubmit={(e) => { this.doLogin(e, setCurrentUser) }}>
+                                <div className={'form-group'}>
 
-                            <div className={'cdgd-field'}>
-                                <label htmlFor='username'>Username</label>
-                                <input type='text' value={this.state.username} className={'form-control'} onChange={this.handleOnChange} id='username'/>
-                            </div>
+                                    <div className={'cdgd-field'}>
+                                        <label htmlFor='username'>Username</label>
+                                        <input type='text' value={this.state.username} className={'form-control'} onChange={this.handleOnChange} id='username'/>
+                                    </div>
 
-                            <div className={'cdgd-field'}>
-                                <label htmlFor='password'>Password</label>
-                                <input type='password' value={this.state.password} className={'form-control'} onChange={this.handleOnChange} id='password'/>
-                            </div>
+                                    <div className={'cdgd-field'}>
+                                        <label htmlFor='password'>Password</label>
+                                        <input type='password' value={this.state.password} className={'form-control'} onChange={this.handleOnChange} id='password'/>
+                                    </div>
 
-                            <div className={'cdgd-button'}>
-                                <button type='submit' className={'btn btn-primary'}>Submit</button>
-                            </div>
+                                    <div className={'cdgd-button'}>
+                                        <button type='submit' className={'btn btn-primary'}>Submit</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                )}
+            </AuthenticationConsumer>
         );
     }
 }
