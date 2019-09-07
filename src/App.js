@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import Main from './components/Main';
-import Login from './components/Login';
-import Admin from './components/Admin';
+import {Admin, Main, Login} from './components'
 import { AuthenticationProvider } from './context/authentication.context';
 import { ConfigContext as Provider } from './config/config';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
