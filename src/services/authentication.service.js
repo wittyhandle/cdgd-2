@@ -7,7 +7,7 @@ const login = (username, password) => {
     return axios
         .post('http://localhost:5000/api/v1/users/authenticate', credentials)
         .then(res => {
-            localStorage.setItem('currentUser', JSON.stringify(res.data.data.token));
+            sessionStorage.setItem('currentUser', JSON.stringify(res.data.data));
             return username;
         })
         .catch(e => {
@@ -16,6 +16,10 @@ const login = (username, password) => {
         });
 };
 
+const getCurrentUser = () => {
+    return JSON.parse(sessionStorage.getItem('currentUser'));
+};
+
 export const authenticationService = {
-    login
+    login, getCurrentUser
 };

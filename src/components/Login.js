@@ -27,6 +27,7 @@ class Login extends Component {
                     setCurrentUser(user);
                 },
                 error => {
+                    // TODO handle bad login cases
                     console.log('error', error);
                 }
             );
