@@ -6,8 +6,8 @@ import { authenticationService } from '../services/';
 const PrivateRoute = ({component: Component, ...rest}) => (
 
     <Route {...rest} render={props => {
-        const currentUser = authenticationService.getCurrentUser();
-        if (!currentUser) {
+        const userToken = authenticationService.getUserToken();
+        if (!userToken) {
             return <Redirect to={{ pathname: '/login'}} />
         }
 

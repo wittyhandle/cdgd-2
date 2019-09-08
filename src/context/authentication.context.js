@@ -1,30 +1,17 @@
 import React, { Component } from 'react';
+import { authenticationService } from '../services';
 
 const AuthenticationContext = React.createContext();
 
 export class AuthenticationProvider extends Component {
 
     state = {
-        currentUser: 'steve'
+        currentUser: authenticationService.getUserName()
     };
 
     setCurrentUser = (currentUser) => {
-        console.log('setting', currentUser);
         this.setState({currentUser});
     };
-
-    // constructor(props) {
-    //     super(props);
-    //
-    //     this.state = {
-    //         currentUser: 'steve'
-    //     };
-    //
-    //     this.setCurrentUser = (currentUser) => {
-    //         console.log('setting', currentUser);
-    //         this.setState({currentUser});
-    //     }
-    // }
 
     render() {
 

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const USER_DATA = 'user_data';
+
 const login = (username, password) => {
 
     const credentials = {username, password};
@@ -7,7 +9,7 @@ const login = (username, password) => {
     return axios
         .post('http://localhost:5000/api/v1/users/authenticate', credentials)
         .then(res => {
-            sessionStorage.setItem('currentUser', JSON.stringify(res.data.data));
+            sessionStorage.setItem(USER_DATA, JSON.stringify(res.data));
             return username;
         })
         .catch(e => {
@@ -16,10 +18,30 @@ const login = (username, password) => {
         });
 };
 
-const getCurrentUser = () => {
-    return JSON.parse(sessionStorage.getItem('currentUser'));
+const verifyUser = () => {
+
+    const token = getUserToken();
+    return axios
+        .get(`http://localhost:5000/api/v1/users/verify/${token}`)
+        .then(res => {
+            return res.data.data.decoded.data;
+        })
+        .catch(e => {
+            const error = (e.response && e.response.data) || e.response.statusText;
+            return Promise.reject(error);
+        });
+};
+
+const getUserToken = () => {
+    const userObj = JSON.parse(sessionStorage.getItem(USER_DATA));
+    return userObj && userObj.token;
+};
+
+const getUserName = () => {
+    const userObj = JSON.parse(sessionStorage.getItem(USER_DATA));
+    return userObj && userObj.username;
 };
 
 export const authenticationService = {
-    login, getCurrentUser
+    login, getUserToken, verifyUser, getUserName
 };

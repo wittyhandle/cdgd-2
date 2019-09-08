@@ -4,6 +4,7 @@ let bodyParser = require('body-parser');
 let cors = require('cors');
 
 let users = require('./routes/users');
+let admin = require('./routes/admin');
 
 let app = express();
 
@@ -13,5 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/api/v1/users', users);
+app.use('/api/v1/admin', admin);
 
 module.exports = app;

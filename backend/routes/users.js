@@ -16,12 +16,16 @@ router.post('/authenticate', function(req, res, next) {
     res.status('401').json({success: false, message: 'Invalid Credentials'});
   } else {
 
-    const token = jwt.sign({ data: user.username }, SECRET, { expiresIn: EXPIRATION });
+    const token = jwt.sign({ username: user.username }, SECRET, { expiresIn: EXPIRATION });
 
-    res.json({success: true, data: {message: 'Successful Login', token}});
+    res.json({
+      success: true,
+      token,
+      message: 'Successful Login',
+      username: user.username
+    });
   }
 });
-
 
 router.get('/verify/:token', function (req, res, next) {
 
