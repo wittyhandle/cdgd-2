@@ -1,7 +1,8 @@
 let express = require('express');
 let router = express.Router();
+let isAuthenticated = require('../middleware/auth');
 
-router.get('/works', function(req, res, next) {
+router.get('/works', isAuthenticated, function(req, res, next) {
 
     const works = [{id: 1, name: 'work 1'}, {id: 2, name: 'work 2'}];
 
