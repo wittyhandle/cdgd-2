@@ -16,7 +16,6 @@ const isAuthenticated = (req, res, next) => {
         if (token) {
 
             try {
-                console.log('validate', token);
                 jwt.verify(token, SECRET);
                 next();
             } catch (e) {

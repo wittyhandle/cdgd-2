@@ -2,7 +2,7 @@ let express = require('express');
 let jwt = require('jsonwebtoken');
 let router = express.Router();
 
-const EXPIRATION = '1m';
+const EXPIRATION = '10m';
 const SECRET = 'secret';
 
 router.post('/authenticate', function(req, res, next) {

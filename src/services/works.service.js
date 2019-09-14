@@ -1,16 +1,10 @@
-import axios from 'axios';
+import { get } from '../helpers/ajax';
 
 const getWorks = () => {
 
-    return axios
-        .get('http://localhost:5000/api/v1/admin/works')
-        .then(res => {
-            return res.data.works;
-        })
-        .catch(e => {
-            const error = (e.response && e.response.data) || e.response.statusText;
-            return Promise.reject(error);
-        });
+    return get('/api/v1/admin/works').then(d => {
+        return d.works;
+    });
 };
 
 export const worksService = {
