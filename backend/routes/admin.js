@@ -6,7 +6,6 @@ router.get('/works', isAuthenticated, function(req, res, next) {
 
     const works = [{id: 1, name: 'work 1'}, {id: 2, name: 'work 2'}];
 
-    console.log('wwww');
     res.json({
         success: true,
         works

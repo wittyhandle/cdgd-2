@@ -1,11 +1,12 @@
-import { get } from '../helpers/ajax';
+import api  from '../utils/api';
 
 const getWorks = () => {
 
-    return get('/api/v1/admin/works').then(d => {
+    return api.get('/api/v1/admin/works').then(d => {
         return d.works;
     });
 };
+
 
 export const worksService = {
     getWorks

@@ -18,18 +18,8 @@ const login = (username, password) => {
         });
 };
 
-const verifyUser = () => {
-
-    const token = getUserToken();
-    return axios
-        .get(`http://localhost:5000/api/v1/users/verify/${token}`)
-        .then(res => {
-            return res.data.data.decoded.data;
-        })
-        .catch(e => {
-            const error = (e.response && e.response.data) || e.response.statusText;
-            return Promise.reject(error);
-        });
+const logout = () => {
+    sessionStorage.removeItem(USER_DATA);
 };
 
 const getUserToken = () => {
@@ -43,5 +33,5 @@ const getUserName = () => {
 };
 
 export const authenticationService = {
-    login, getUserToken, verifyUser, getUserName
+    login, logout, getUserToken, getUserName
 };
