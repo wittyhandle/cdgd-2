@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api  from '../utils/api';
 
 const USER_DATA = 'user_data';
 
@@ -6,10 +6,10 @@ const login = (username, password) => {
 
     const credentials = {username, password};
 
-    return axios
-        .post('http://localhost:5000/api/v1/users/authenticate', credentials)
+    return api
+        .post('/api/v1/users/authenticate', credentials)
         .then(res => {
-            sessionStorage.setItem(USER_DATA, JSON.stringify(res.data));
+            sessionStorage.setItem(USER_DATA, JSON.stringify(res));
             return username;
         })
         .catch(e => {

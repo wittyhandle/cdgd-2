@@ -15,8 +15,10 @@ instance.interceptors.response.use((response) => {
     return response.data;
 }, (error) => {
 
-    console.log('the codes', error.response.status);
-    if ([401, 403].indexOf(error.response.status) !== -1) {
+    const url = error.response.config.url || '';
+    const isAuthenticating = url.endsWith('/users/authenticate');
+
+    if ([401, 403].indexOf(error.response.status) !== -1 && !isAuthenticating) {
         authenticationService.logout();
         window.location.reload(true);
     }
