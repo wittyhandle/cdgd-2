@@ -5,13 +5,8 @@ import { AuthenticationConsumer } from '../context/authentication.context';
 
 class Login extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     doLogin = (values, setStatus, setCurrentUser) => {
 
-        setStatus('something');
         authenticationService.login(values.username, values.password)
             .then(
                 user => {
@@ -19,7 +14,6 @@ class Login extends Component {
                     setCurrentUser(user);
                 },
                 error => {
-                    console.log(error);
                     setStatus({msg: error.message});
                 }
             );
@@ -28,7 +22,7 @@ class Login extends Component {
     render() {
         return (
             <AuthenticationConsumer>
-                {({ currentUser, setCurrentUser }) => (
+                {({ setCurrentUser }) => (
                     <div className={'row align-self-center w-100'}>
                         <div className={'col'}>
 
