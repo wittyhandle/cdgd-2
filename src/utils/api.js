@@ -18,12 +18,12 @@ instance.interceptors.response.use((response) => {
     const url = error.response.config.url || '';
     const isAuthenticating = url.endsWith('/users/authenticate');
 
-    if ([401, 403].indexOf(error.response.status) !== -1 && !isAuthenticating) {
+    if ([401, 403].includes(error.response.status) && !isAuthenticating) {
         authenticationService.logout();
         window.location.reload(true);
     }
 
-    return Promise.reject(error);
+    return Promise.reject(error.response.data || {message: 'Unknown Error'});
 });
 
 export default instance;

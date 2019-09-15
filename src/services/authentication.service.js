@@ -13,8 +13,7 @@ const login = (username, password) => {
             return username;
         })
         .catch(e => {
-            const error = (e.response && e.response.data) || e.response.statusText;
-            return Promise.reject(error);
+            return Promise.reject(e);
         });
 };
 
