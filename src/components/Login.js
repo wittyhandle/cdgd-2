@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
+import { SinglePaned } from "./index";
 import { authenticationService } from '../services/';
 import { AuthenticationConsumer } from '../context/authentication.context';
 
@@ -23,56 +24,57 @@ class Login extends Component {
         return (
             <AuthenticationConsumer>
                 {({ setCurrentUser }) => (
-                    <div className={'row align-self-center w-100'}>
-                        <div className={'col'}>
+                    <SinglePaned pane={ (
+                        <div className={'row h-100 justify-content-center align-items-center'}>
+                            <div className={'col'}>
 
-                            <Formik
-                                initialValues={{username: '', password: ''}}
-                                onSubmit={(values, { setSubmitting, setStatus }) => {
-                                    setSubmitting(false);
-                                    this.doLogin(values, setStatus, setCurrentUser);
-                                }}
-                            >
-                                {({
-                                    values,
-                                    status,
-                                    errors,
-                                    touched,
-                                    handleChange,
-                                    handleBlur,
-                                    handleSubmit,
-                                    isSubmitting
-                                }) => (
-                                    <Form className={'mx-auto w-50 p-3'}>
-                                        <div className={'form-group'}>
+                                <Formik
+                                    initialValues={{username: '', password: ''}}
+                                    onSubmit={(values, { setSubmitting, setStatus }) => {
+                                        setSubmitting(false);
+                                        this.doLogin(values, setStatus, setCurrentUser);
+                                    }}
+                                >
+                                    {({
+                                        values,
+                                        status,
+                                        errors,
+                                        touched,
+                                        handleChange,
+                                        handleBlur,
+                                        handleSubmit,
+                                        isSubmitting
+                                    }) => (
+                                        <Form className={'mx-auto w-50 p-3'}>
+                                            <div className={'form-group'}>
 
-                                            {status && status.msg && <div>{status.msg}</div>}
+                                                {status && status.msg && <div>{status.msg}</div>}
 
-                                            <div className={'cdgd-field'}>
-                                                <label htmlFor='username'>Username</label>
-                                                <Field type='text' name='username' className={'form-control'}/>
+                                                <div className={'cdgd-field'}>
+                                                    <label htmlFor='username'>Username</label>
+                                                    <Field type='text' name='username' className={'form-control'}/>
+                                                </div>
+
+                                                <div className={'cdgd-field'}>
+                                                    <label htmlFor='password'>Password</label>
+                                                    <Field type='password' name='password' className={'form-control'}/>
+                                                </div>
+
+                                                <div className={'cdgd-button'}>
+                                                    <button
+                                                        type='submit'
+                                                        className={'btn btn-primary'}
+                                                        disabled={isSubmitting}>
+                                                        Submit
+                                                    </button>
+                                                </div>
                                             </div>
-
-                                            <div className={'cdgd-field'}>
-                                                <label htmlFor='password'>Password</label>
-                                                <Field type='password' name='password' className={'form-control'}/>
-                                            </div>
-
-                                            <div className={'cdgd-button'}>
-                                                <button
-                                                    type='submit'
-                                                    className={'btn btn-primary'}
-                                                    disabled={isSubmitting}>
-                                                    Submit
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </Form>
-                                )}
-                            </Formik>
-
+                                        </Form>
+                                    )}
+                                </Formik>
+                            </div>
                         </div>
-                    </div>
+                    ) }/>
                 )}
             </AuthenticationConsumer>
         );

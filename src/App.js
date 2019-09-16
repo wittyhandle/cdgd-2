@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 class App extends Component {
   render() {
     return (
-        <div className={'container d-flex h-100'}>
+        <div className={'wrapper'}>
           <Provider>
             <Router>
               <Switch>
