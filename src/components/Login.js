@@ -25,9 +25,11 @@ class Login extends Component {
             <AuthenticationConsumer>
                 {({ setCurrentUser }) => (
                     <SinglePaned pane={ (
-                        <div className={'row h-100 justify-content-center align-items-center'}>
-                            <div className={'col'}>
-
+                        <div className={'card'}>
+                            <div className={'card-header'}>
+                                <h5 className={'card-title'}>Sign-In</h5>
+                            </div>
+                            <div className={'card-body'}>
                                 <Formik
                                     initialValues={{username: '', password: ''}}
                                     onSubmit={(values, { setSubmitting, setStatus }) => {
@@ -45,22 +47,35 @@ class Login extends Component {
                                         handleSubmit,
                                         isSubmitting
                                     }) => (
-                                        <Form className={'mx-auto w-50 p-3'}>
-                                            <div className={'form-group'}>
+                                        <Form>
+                                            {status && status.msg &&
+                                                <div className={'row'}>
+                                                    <div className={'col-lg-12'}>
+                                                        <div className={'alert alert-danger fade show'}>
+                                                            {status.msg}
+                                                        </div>
+                                                    </div>
+                                                </div>}
 
-                                                {status && status.msg && <div>{status.msg}</div>}
-
-                                                <div className={'cdgd-field'}>
-                                                    <label htmlFor='username'>Username</label>
-                                                    <Field type='text' name='username' className={'form-control'}/>
+                                            <div className={'row'}>
+                                                <div className={'col-lg-12 align-self-center'}>
+                                                    <div className={'form-group'}>
+                                                        <label htmlFor='username'>Username</label>
+                                                        <Field type='text' name='username' className={'form-control'}/>
+                                                    </div>
                                                 </div>
+                                            </div>
 
-                                                <div className={'cdgd-field'}>
-                                                    <label htmlFor='password'>Password</label>
-                                                    <Field type='password' name='password' className={'form-control'}/>
+                                            <div className={'row'}>
+                                                <div className={'col-lg-12 align-self-center'}>
+                                                    <div className={'form-group'}>
+                                                        <label htmlFor='password'>Password</label>
+                                                        <Field type='text' name='password' className={'form-control'}/>
+                                                    </div>
                                                 </div>
-
-                                                <div className={'cdgd-button'}>
+                                            </div>
+                                            <div className={'row'}>
+                                                <div className={'ml-auto mr-auto'}>
                                                     <button
                                                         type='submit'
                                                         className={'btn btn-primary'}

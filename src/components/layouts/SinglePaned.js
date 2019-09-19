@@ -10,7 +10,11 @@ export const SinglePaned = props => {
             <div className="main-panel">
 
                 <div className="content">
-                    {props.pane}
+                    <div className={'row'}>
+                        <div className={'col-md-4 mx-auto'}>
+                            {props.pane}
+                        </div>
+                    </div>
                 </div>
 
                 <Footer/>
