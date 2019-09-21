@@ -12,7 +12,7 @@ export const SinglePaned = props => {
                 <div className="content">
                     <div className={'row'}>
                         <div className={'col-md-4 mx-auto'}>
-                            {props.pane}
+                            {props.children()}
                         </div>
                     </div>
                 </div>

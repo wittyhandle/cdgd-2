@@ -24,31 +24,32 @@ class Login extends Component {
         return (
             <AuthenticationConsumer>
                 {({ setCurrentUser }) => (
-                    <SinglePaned pane={ (
-                        <div className={'card'}>
-                            <div className={'card-header'}>
-                                <h5 className={'card-title'}>Sign-In</h5>
-                            </div>
-                            <div className={'card-body'}>
-                                <Formik
-                                    initialValues={{username: '', password: ''}}
-                                    onSubmit={(values, { setSubmitting, setStatus }) => {
-                                        setSubmitting(false);
-                                        this.doLogin(values, setStatus, setCurrentUser);
-                                    }}
-                                >
-                                    {({
-                                        values,
-                                        status,
-                                        errors,
-                                        touched,
-                                        handleChange,
-                                        handleBlur,
-                                        handleSubmit,
-                                        isSubmitting
-                                    }) => (
-                                        <Form>
-                                            {status && status.msg &&
+                    <SinglePaned>
+                        {() => (
+                            <div className={'card'}>
+                                <div className={'card-header'}>
+                                    <h5 className={'card-title'}>Sign-In</h5>
+                                </div>
+                                <div className={'card-body'}>
+                                    <Formik
+                                        initialValues={{username: '', password: ''}}
+                                        onSubmit={(values, { setSubmitting, setStatus }) => {
+                                            setSubmitting(false);
+                                            this.doLogin(values, setStatus, setCurrentUser);
+                                        }}
+                                    >
+                                        {({
+                                            values,
+                                            status,
+                                            errors,
+                                            touched,
+                                            handleChange,
+                                            handleBlur,
+                                            handleSubmit,
+                                            isSubmitting
+                                        }) => (
+                                            <Form>
+                                                {status && status.msg &&
                                                 <div className={'row'}>
                                                     <div className={'col-lg-12'}>
                                                         <div className={'alert alert-danger fade show'}>
@@ -57,39 +58,40 @@ class Login extends Component {
                                                     </div>
                                                 </div>}
 
-                                            <div className={'row'}>
-                                                <div className={'col-lg-12 align-self-center'}>
-                                                    <div className={'form-group'}>
-                                                        <label htmlFor='username'>Username</label>
-                                                        <Field type='text' name='username' className={'form-control'}/>
+                                                <div className={'row'}>
+                                                    <div className={'col-lg-12 align-self-center'}>
+                                                        <div className={'form-group'}>
+                                                            <label htmlFor='username'>Username</label>
+                                                            <Field type='text' name='username' className={'form-control'}/>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div className={'row'}>
-                                                <div className={'col-lg-12 align-self-center'}>
-                                                    <div className={'form-group'}>
-                                                        <label htmlFor='password'>Password</label>
-                                                        <Field type='text' name='password' className={'form-control'}/>
+                                                <div className={'row'}>
+                                                    <div className={'col-lg-12 align-self-center'}>
+                                                        <div className={'form-group'}>
+                                                            <label htmlFor='password'>Password</label>
+                                                            <Field type='password' name='password' className={'form-control'}/>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className={'row'}>
-                                                <div className={'ml-auto mr-auto'}>
-                                                    <button
-                                                        type='submit'
-                                                        className={'btn btn-primary'}
-                                                        disabled={isSubmitting}>
-                                                        Submit
-                                                    </button>
+                                                <div className={'row'}>
+                                                    <div className={'ml-auto mr-auto'}>
+                                                        <button
+                                                            type='submit'
+                                                            className={'btn btn-primary'}
+                                                            disabled={isSubmitting}>
+                                                            Submit
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Form>
-                                    )}
-                                </Formik>
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                </div>
                             </div>
-                        </div>
-                    ) }/>
+                        )}
+                    </SinglePaned>
                 )}
             </AuthenticationConsumer>
         );
