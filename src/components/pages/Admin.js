@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { AuthenticationConsumer } from '../../context/authentication.context';
 import { worksService } from '../../services';
 import { WithSidebar} from "..";
 
@@ -14,13 +13,7 @@ const Admin = () => {
     });
 
     return (
-
-        <AuthenticationConsumer>
-            {({ currentUser }) => (
-                <WithSidebar/>
-            )}
-        </AuthenticationConsumer>
-
+        <WithSidebar/>
     )
 };
 
