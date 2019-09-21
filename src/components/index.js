@@ -1,5 +1,5 @@
-export * from './Admin';
-export {default as Login} from './Login';
+export {default as Admin} from './pages/Admin';
+export {default as Login} from './pages/Login';
 export {default as Main} from './Main';
 export * from './Footer';
 export * from './Card';

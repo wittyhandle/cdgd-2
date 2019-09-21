@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { AuthenticationConsumer } from '../context/authentication.context';
-import { worksService } from '../services/';
-import { WithSidebar} from "./index";
+import { AuthenticationConsumer } from '../../context/authentication.context';
+import { worksService } from '../../services';
+import { WithSidebar} from "..";
 
-export const Admin = () => {
+const Admin = () => {
 
     const [works, setWorks] = useState([]);
 
@@ -23,3 +23,5 @@ export const Admin = () => {
 
     )
 };
+
+export default Admin;

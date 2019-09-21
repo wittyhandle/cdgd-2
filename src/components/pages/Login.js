@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { SinglePaned, Card } from "./index";
-import { authenticationService } from '../services/';
-import { AuthenticationConsumer } from '../context/authentication.context';
+import { SinglePaned, Card } from '..';
+import { authenticationService } from '../../services';
+import { AuthenticationConsumer } from '../../context/authentication.context';
 
 class Login extends Component {
 
