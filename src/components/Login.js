@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { SinglePaned } from "./index";
+import { SinglePaned, Card } from "./index";
 import { authenticationService } from '../services/';
 import { AuthenticationConsumer } from '../context/authentication.context';
 
@@ -26,11 +26,8 @@ class Login extends Component {
                 {({ setCurrentUser }) => (
                     <SinglePaned>
                         {() => (
-                            <div className={'card'}>
-                                <div className={'card-header'}>
-                                    <h5 className={'card-title'}>Sign-In</h5>
-                                </div>
-                                <div className={'card-body'}>
+                            <Card title={'Sign-In'}>
+                                {() => (
                                     <Formik
                                         initialValues={{username: '', password: ''}}
                                         onSubmit={(values, { setSubmitting, setStatus }) => {
@@ -88,8 +85,8 @@ class Login extends Component {
                                             </Form>
                                         )}
                                     </Formik>
-                                </div>
-                            </div>
+                                )}
+                            </Card>
                         )}
                     </SinglePaned>
                 )}
