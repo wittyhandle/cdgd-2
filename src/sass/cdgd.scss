@@ -1,3 +1,5 @@
+@import 'paper-dashboard/variables';
+
 .card {
   form {
     .form-group {
@@ -13,3 +15,14 @@
   }
 }
 
+.navbar-brand {
+  color: $default-color;
+}
+
+.navbar {
+  .navbar-nav {
+    .nav-link {
+      text-transform: none;
+    }
+  }
+}
