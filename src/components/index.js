@@ -5,3 +5,4 @@ export * from './Footer';
 export * from './Card';
 export {default as PrivateRoute} from './PrivateRoute';
 export * from './layouts/SinglePaned';
+export * from './layouts/WithSidebar';

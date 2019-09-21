@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AuthenticationConsumer } from '../context/authentication.context';
 import { worksService } from '../services/';
+import { WithSidebar} from "./index";
 
 export const Admin = () => {
 
@@ -16,7 +17,7 @@ export const Admin = () => {
 
         <AuthenticationConsumer>
             {({ currentUser }) => (
-                <div className={'row w-100'}>Admin ({currentUser})</div>
+                <WithSidebar/>
             )}
         </AuthenticationConsumer>
 

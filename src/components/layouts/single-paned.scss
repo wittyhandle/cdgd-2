@@ -1,10 +1,5 @@
 .single-paned {
   .main-panel {
     width: 100%;
-
-    > .content {
-      min-height: calc(100vh - 165px);
-    }
-
   }
 }
