@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Footer, Dropdown } from '../index';
+import {Footer, Dropdown, Sidebar} from '../index';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 import { authenticationService } from '../../services';
 
@@ -21,14 +21,15 @@ export const WithSidebar = () => {
         <AuthenticationConsumer>
             {({ currentUser }) => (
                 <div className={'with-sidebar'}>
-                    <div className={'sidebar'} data-color="white">Sidebar</div>
+
+                    <Sidebar/>
 
                     <div className={'main-panel'}>
 
                         <nav className={'navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent'}>
                             <div className={'container-fluid'}>
                                 <div className={'navbar-wrapper'}>
-                                    <div className={'navbar-brand'}>CDGD Materials</div>
+                                    <div className={'navbar-brand'}>Materials Admin</div>
                                 </div>
                                 <div className={'collapse navbar-collapse justify-content-end'} id={'navigation'}>
                                     <ul className={'navbar-nav'}>
