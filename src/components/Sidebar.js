@@ -1,25 +1,16 @@
 import React from 'react';
+import {SidebarItem} from './index';
 
 export const Sidebar = () => {
     return (
-        <div className={'sidebar'} data-color="white">
+        <div className={'sidebar'} data-color='white' data-active-color='danger'>
             <div className={'logo'}>
                 <a className={'simple-text logo-normal'}>CDGD</a>
             </div>
             <div className={'sidebar-wrapper'}>
                 <ul className={'nav'}>
-                    <li>
-                        <a href={'/admin'}>
-                            <i className={'nc-icon nc-bank'}/>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href={'/user'}>
-                            <i className={'nc-icon nc-single-02'}/>
-                            <p>Users</p>
-                        </a>
-                    </li>
+                    <SidebarItem path={'admin'} name={'Dashboard'} icon={'nc-bank'}/>
+                    <SidebarItem path={'user'} name={'Users'} icon={'nc-single-02'}/>
                 </ul>
             </div>
         </div>

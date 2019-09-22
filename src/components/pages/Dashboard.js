@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { worksService } from '../../services';
+import {worksService} from '../../services';
 import { WithSidebar} from '..';
 
 export const Dashboard = () => {
