@@ -11,9 +11,9 @@ class App extends Component {
             <Router>
               <Switch>
                 <Route path='/' component={Main} exact={true} />
-                  <AuthenticationProvider>
-                    <Route path='/login' component={Login} exact={true} />
-                    <PrivateRoute exact path="/admin" component={Admin}/>
+                <AuthenticationProvider>
+                  <Route path='/login' component={Login} exact={true} />
+                  <PrivateRoute exact path="/admin" component={Admin}/>
                 </AuthenticationProvider>
               </Switch>
             </Router>
