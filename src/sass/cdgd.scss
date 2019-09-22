@@ -23,6 +23,11 @@
   .navbar-nav {
     .nav-link {
       text-transform: none;
+
+      i.nc-icon + p {
+        margin-right: 8px;
+      }
+
     }
   }
 }
