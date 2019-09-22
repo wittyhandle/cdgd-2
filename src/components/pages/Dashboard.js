@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { worksService } from '../../services';
-import { WithSidebar} from "..";
+import { WithSidebar} from '..';
 
-const Admin = () => {
+export const Dashboard = () => {
 
     const [works, setWorks] = useState([]);
 
@@ -16,5 +16,3 @@ const Admin = () => {
         <WithSidebar/>
     )
 };
-
-export default Admin;

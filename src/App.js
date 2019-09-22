@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Admin, Main, Login, PrivateRoute} from './components'
+import {Dashboard, User, Main, Login, PrivateRoute} from './components'
 import { AuthenticationProvider } from './context/authentication.context';
 import { ConfigContext as Provider } from './config/config';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -13,7 +13,8 @@ class App extends Component {
                 <Route path='/' component={Main} exact={true} />
                 <AuthenticationProvider>
                   <Route path='/login' component={Login} exact={true} />
-                  <PrivateRoute exact path="/admin" component={Admin}/>
+                  <PrivateRoute exact path="/admin" component={Dashboard}/>
+                  <PrivateRoute exact path="/user" component={User}/>
                 </AuthenticationProvider>
               </Switch>
             </Router>

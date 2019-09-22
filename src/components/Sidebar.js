@@ -9,7 +9,13 @@ export const Sidebar = () => {
             <div className={'sidebar-wrapper'}>
                 <ul className={'nav'}>
                     <li>
-                        <a href={'#'}>
+                        <a href={'/admin'}>
+                            <i className={'nc-icon nc-bank'}/>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href={'/user'}>
                             <i className={'nc-icon nc-single-02'}/>
                             <p>Users</p>
                         </a>

@@ -1,4 +1,5 @@
-export {default as Admin} from './pages/Admin';
+export * from './pages/Dashboard';
+export * from './pages/User';
 export {default as Login} from './pages/Login';
 export * from './Main';
 export * from './Dropdown';
