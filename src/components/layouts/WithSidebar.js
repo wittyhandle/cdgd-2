@@ -1,33 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Footer } from '../index';
+import { Footer, Dropdown } from '../index';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 import { authenticationService } from '../../services';
 
-export const WithSidebar = props => {
+export const WithSidebar = () => {
 
-    const [dropdownState, setDropdownState] = useState({
-        cssClass: '', isExpanded: false
-    });
-
-    const onClick = () => {
-        const klass = dropdownState.cssClass === '' ? 'show' : '';
-        setDropdownState({cssClass: klass, isExpanded: !dropdownState.isExpanded});
-    };
-
-    const onLogout = () => {
-        authenticationService.logout();
-        return <Redirect to={{ pathname: '/login'}} />
-    };
+    const items = [
+        {
+            title: 'Logout',
+            handler: () => {
+                authenticationService.logout();
+                return <Redirect to={{ pathname: '/login'}} />
+            }
+        }
+    ];
 
     return (
 
         <AuthenticationConsumer>
             {({ currentUser }) => (
                 <div className={'with-sidebar'}>
-                    <div className={'sidebar'} data-color="white">
-                        Sidebar
-                    </div>
+                    <div className={'sidebar'} data-color="white">Sidebar</div>
 
                     <div className={'main-panel'}>
 
@@ -38,20 +32,7 @@ export const WithSidebar = props => {
                                 </div>
                                 <div className={'collapse navbar-collapse justify-content-end'} id={'navigation'}>
                                     <ul className={'navbar-nav'}>
-                                        <li className={'nav-item btn-rotate dropdown ' + dropdownState.cssClass }>
-                                            <a
-                                                className={'nav-link dropdown-toggle'}
-                                                href={'#'}
-                                                onClick={onClick}
-                                                data-toggle='dropdown'
-                                                aria-expanded={dropdownState.isExpanded}>
-                                                <i className={'nc-icon'}/>
-                                                <p><span className={'d-md-block'}>{currentUser}</span></p>
-                                            </a>
-                                            <div className={'dropdown-menu dropdown-menu-right ' + dropdownState.cssClass}>
-                                                <a className="dropdown-item" href="#" onClick={onLogout}>Logout</a>
-                                            </div>
-                                        </li>
+                                        <Dropdown title={currentUser} items={items}/>
                                     </ul>
                                 </div>
                             </div>
