@@ -4,7 +4,7 @@ import {Footer, Dropdown, Sidebar} from '../index';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 import { authenticationService } from '../../services';
 
-export const WithSidebar = () => {
+export const ThreePaned = () => {
 
     const items = [
         {
@@ -20,7 +20,7 @@ export const WithSidebar = () => {
 
         <AuthenticationConsumer>
             {({ currentUser }) => (
-                <div className={'with-sidebar'}>
+                <div className={'three-paned'}>
 
                     <Sidebar/>
 

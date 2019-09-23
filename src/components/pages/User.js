@@ -1,11 +1,9 @@
 import React from 'react';
-import { WithSidebar} from '..';
+import { ThreePaned} from '..';
 
 export const User = () => {
 
     return (
-        <div>
-            <WithSidebar/>
-        </div>
+        <ThreePaned/>
     )
 };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {worksService} from '../../services';
-import { WithSidebar} from '..';
+import { ThreePaned} from '..';
 
 export const Dashboard = () => {
 
@@ -13,6 +13,6 @@ export const Dashboard = () => {
     });
 
     return (
-        <WithSidebar/>
+        <ThreePaned/>
     )
 };
