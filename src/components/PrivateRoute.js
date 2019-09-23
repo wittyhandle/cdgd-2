@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { authenticationService } from '../services/';
 
-const PrivateRoute = ({component: Component, ...rest}) => (
+const PrivateRoute = ({render, ...rest}) => (
 
     <Route {...rest} render={props => {
         const userToken = authenticationService.getUserToken();
@@ -11,7 +11,7 @@ const PrivateRoute = ({component: Component, ...rest}) => (
             return <Redirect to={{ pathname: '/login'}} />
         }
 
-        return <Component {...props} />
+        return render({...props})
     }} />
 
 );

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {worksService} from '../../services';
-import { ThreePaned} from '..';
 
 export const Dashboard = () => {
 
@@ -13,6 +12,6 @@ export const Dashboard = () => {
     });
 
     return (
-        <ThreePaned/>
+        <div>I am in the dashboard</div>
     )
 };

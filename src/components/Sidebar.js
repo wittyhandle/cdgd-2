@@ -3,7 +3,7 @@ import {SidebarItem} from './index';
 
 export const Sidebar = () => {
     return (
-        <div className={'sidebar'} data-color='white' data-active-color='danger'>
+        <div className={'sidebar'} data-color='white' data-active-color='info'>
             <div className={'logo'}>
                 <a className={'simple-text logo-normal'}>CDGD</a>
             </div>

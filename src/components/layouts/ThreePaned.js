@@ -3,9 +3,11 @@ import { Redirect } from 'react-router-dom';
 import {Footer, Dropdown, Sidebar} from '../index';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 import { authenticationService } from '../../services';
+import PropTypes from 'prop-types';
 
-export const ThreePaned = () => {
+export const ThreePaned = props => {
 
+    console.log('props', props);
     const items = [
         {
             title: 'Logout',
@@ -40,7 +42,7 @@ export const ThreePaned = () => {
                         </nav>
 
                         <div className={'content'}>
-                            Main
+                            {props.children}
                         </div>
 
                         <Footer/>
@@ -50,4 +52,8 @@ export const ThreePaned = () => {
         </AuthenticationConsumer>
 
     )
+};
+
+ThreePaned.prototype = {
+    contentSlot: PropTypes.func
 };
