@@ -10,7 +10,7 @@ export const Sidebar = () => {
             <div className={'sidebar-wrapper'}>
                 <ul className={'nav'}>
                     <SidebarItem path={'admin'} name={'Dashboard'} icon={'nc-bank'}/>
-                    <SidebarItem path={'user'} name={'Users'} icon={'nc-single-02'}/>
+                    <SidebarItem path={'user'} name={'Users'} icon={'nc-badge'}/>
                 </ul>
             </div>
         </div>
