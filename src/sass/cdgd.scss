@@ -6,6 +6,11 @@
       margin-bottom: 20px;
     }
   }
+
+  i.nc-icon {
+    margin-right: 5px;
+  }
+
 }
 
 
@@ -38,4 +43,22 @@
       margin-left: 5px;
     }
   }
+}
+
+.new-user {
+
+  form {
+    padding: 20px;
+  }
+}
+
+.new-user, .visible {
+  max-height: 0;
+  overflow-y: hidden;
+  transition: max-height 0.3s ease-in-out;
+  border-right: 1px solid $opacity-gray-8;
+}
+
+.new-user.visible {
+  max-height: 300px;
 }
