@@ -36,13 +36,7 @@ class Login extends Component {
                                         }}
                                     >
                                         {({
-                                            values,
                                             status,
-                                            errors,
-                                            touched,
-                                            handleChange,
-                                            handleBlur,
-                                            handleSubmit,
                                             isSubmitting
                                         }) => (
                                             <Form>

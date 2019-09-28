@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import {Card} from "../Card";
-import {Field, Form, Formik} from "formik";
+import {Field, Form, Formik, ErrorMessage} from "formik";
+import * as Yup from 'yup';
 
 export const User = () => {
 
     const [isUserFormVisible, setUserFormVisible] = useState('');
 
+    const specialCharacters = '!@#$%';
+    const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
+    const numberRegex = /^.*[0-9]+.*$/;
+    const capitalRegex = /^.*[A-Z]+.*$/;
+
     const onNewUserClick = (e) => {
-        console.log('new');
         e.preventDefault();
         const isVisible = isUserFormVisible === '' ? 'visible' : '';
         setUserFormVisible(isVisible);
     };
+
 
     return (
         <div className={'row'}>
@@ -21,18 +27,41 @@ export const User = () => {
                         <div>
                             <div className={'row'}>
                                 <div className={'col-lg-2'}>
-
                                     <button className={'btn btn-info'} onClick={onNewUserClick}>
                                         <i className={'nc-icon nc-simple-add'}/>
                                         New User
                                     </button>
-
                                 </div>
 
                                 <Formik
-                                    initialValues={{username: ''}}
+                                    validateOnBlur={true}
+                                    validateOnChange={true}
+                                    initialValues={{userName: '', email: '', firstName: '', lastName: '', password: ''}}
+                                    validationSchema={Yup.object().shape({
+                                        userName: Yup.string().required('Username is required'),
+                                        email: Yup.string()
+                                            .required('Email is required')
+                                            .email('Email is invalid'),
+                                        firstName: Yup.string().required('First name is required'),
+                                        lastName: Yup.string().required('Last name is required'),
+                                        password: Yup.string()
+                                            .required('Password is required')
+                                            .min(8, 'Password must be at least ${min} characters long')
+                                            .max(20, 'Password must be less than ${max} characters long')
+                                            .test('password-chars', 'Password must have at least one of ' + specialCharacters, function (value) {
+                                                return value.match(specialCharRegex);
+                                            })
+                                            .test( 'password-nums', 'Password must have at least one number', function (value) {
+                                                return value.match(numberRegex);
+                                            })
+                                            .test( 'password-uppercase', 'Password must have at least one uppercase letter', function (value) {
+                                                return value.match(capitalRegex);
+                                            }),
+                                        password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+                                    })}
                                     onSubmit={(values, { setSubmitting, setStatus }) => {
                                         setSubmitting(false);
+                                        console.log('submitting', values);
                                     }}
                                 >
                                     {({
@@ -54,8 +83,8 @@ export const User = () => {
                                                         <div className={'row'}>
                                                             <div className={'col-lg-6'}>
                                                                 <div className={'form-group'}>
-                                                                    <label htmlFor='username'>Username</label>
-                                                                    <Field type='text' name='username' className={'form-control'}/>
+                                                                    <label htmlFor='userName'>Username</label>
+                                                                    <Field type='text' name='userName' className={'form-control'}/>
                                                                 </div>
                                                             </div>
                                                             <div className={'col-lg-6'}>
@@ -68,14 +97,14 @@ export const User = () => {
                                                         <div className={'row'}>
                                                             <div className={'col-lg-6'}>
                                                                 <div className={'form-group'}>
-                                                                    <label htmlFor='firstname'>First Name</label>
-                                                                    <Field type='text' name='firstname' className={'form-control'}/>
+                                                                    <label htmlFor='firstName'>First Name</label>
+                                                                    <Field type='text' name='firstName' className={'form-control'}/>
                                                                 </div>
                                                             </div>
                                                             <div className={'col-lg-6'}>
                                                                 <div className={'form-group'}>
-                                                                    <label htmlFor='lastname'>Last Name</label>
-                                                                    <Field type='text' name='lastname' className={'form-control'}/>
+                                                                    <label htmlFor='lastName'>Last Name</label>
+                                                                    <Field type='text' name='lastName' className={'form-control'}/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -83,8 +112,8 @@ export const User = () => {
                                                         <div className={'row'}>
                                                             <div className={'col-lg-6'}>
                                                                 <div className={'form-group'}>
-                                                                    <label htmlFor='password1'>Password</label>
-                                                                    <Field type='password' name='password1' className={'form-control'}/>
+                                                                    <label htmlFor='password'>Password</label>
+                                                                    <Field type='password' name='password' className={'form-control'}/>
                                                                 </div>
                                                             </div>
                                                             <div className={'col-lg-6'}>
@@ -94,11 +123,26 @@ export const User = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-
+                                                        <div className={'row'}>
+                                                            <div className={'ml-auto mr-auto'}>
+                                                                <button
+                                                                    type='submit'
+                                                                    className={'btn btn-primary'}
+                                                                    disabled={isSubmitting}>
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </Form>
                                                 </div>
-                                                <div className={'col-lg-2'}>
-                                                    Hello
+                                                <div className={'col-lg-3'}>
+                                                    <ErrorMessage name='userName' component='div' className='alert alert-danger text-center fade show' />
+                                                    <ErrorMessage name='email' component='div' className='alert alert-danger text-center fade show' />
+                                                    <ErrorMessage name='firstName' component='div' className='alert alert-danger text-center fade show' />
+                                                    <ErrorMessage name='lastName' component='div' className='alert alert-danger text-center fade show' />
+                                                    <ErrorMessage name='password' component='div' className='alert alert-danger text-center fade show' />
+
+                                                    <ErrorMessage name='password2' component='div' className='alert alert-danger text-center fade show' />
                                                 </div>
                                             </div>
                                         </div>
