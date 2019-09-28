@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {Card} from "../Card";
 import {Field, Form, Formik, ErrorMessage} from "formik";
 import * as Yup from 'yup';
+import { userService } from '../../services';
 
 export const User = () => {
 
@@ -34,28 +35,34 @@ export const User = () => {
                                 </div>
 
                                 <Formik
-                                    validateOnBlur={true}
-                                    validateOnChange={true}
+                                    validateOnBlur={false}
+                                    validateOnChange={false}
                                     initialValues={{userName: '', email: '', firstName: '', lastName: '', password: ''}}
                                     validationSchema={Yup.object().shape({
-                                        userName: Yup.string().required('Username is required'),
+                                        userName: Yup.string()
+                                            .required('Username is required')
+                                            .test('unique-username', 'Username must be unique', function(value) {
+                                                return userService.isUnique(value);
+                                            }),
                                         email: Yup.string()
                                             .required('Email is required')
                                             .email('Email is invalid'),
-                                        firstName: Yup.string().required('First name is required'),
-                                        lastName: Yup.string().required('Last name is required'),
+                                        firstName: Yup.string()
+                                            .required('First name is required'),
+                                        lastName: Yup.string()
+                                            .required('Last name is required'),
                                         password: Yup.string()
                                             .required('Password is required')
                                             .min(8, 'Password must be at least ${min} characters long')
                                             .max(20, 'Password must be less than ${max} characters long')
                                             .test('password-chars', 'Password must have at least one of ' + specialCharacters, function (value) {
-                                                return value.match(specialCharRegex);
+                                                return value && value.match(specialCharRegex);
                                             })
                                             .test( 'password-nums', 'Password must have at least one number', function (value) {
-                                                return value.match(numberRegex);
+                                                return value && value.match(numberRegex);
                                             })
                                             .test( 'password-uppercase', 'Password must have at least one uppercase letter', function (value) {
-                                                return value.match(capitalRegex);
+                                                return value && value.match(capitalRegex);
                                             }),
                                         password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                                     })}

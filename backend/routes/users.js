@@ -5,11 +5,11 @@ let router = express.Router();
 const EXPIRATION = '10m';
 const SECRET = 'secret';
 
-router.post('/authenticate', function(req, res, next) {
+const USERS = [
+  {username: 'Mike', password: 'secret'}
+];
 
-  const USERS = [
-    {username: 'Mike', password: 'secret'}
-  ];
+router.post('/authenticate', function(req, res, next) {
 
   let user = USERS.find(u => u.username === req.body.username && u.password === req.body.password);
   if (!user) {
@@ -40,6 +40,12 @@ router.get('/verify/:token', function (req, res, next) {
     res.status('401').json({success: false, message: 'JWT token has expired'});
   }
 
+});
+
+router.get('/unique/:username', function(req, res, next) {
+
+  const unique = !USERS.find(u => u.username === req.params.username)
+  res.json({success: true, data: { unique }});
 });
 
 module.exports = router;
