@@ -1,13 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import {Footer, Dropdown, Sidebar} from '../index';
+import { Footer, Dropdown, Sidebar } from '../index';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 import { authenticationService } from '../../services';
 import PropTypes from 'prop-types';
 
 export const ThreePaned = props => {
 
-    console.log('props', props);
     const items = [
         {
             title: 'Logout',
@@ -50,7 +49,6 @@ export const ThreePaned = props => {
                 </div>
             )}
         </AuthenticationConsumer>
-
     )
 };
 
