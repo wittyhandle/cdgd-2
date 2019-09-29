@@ -7,6 +7,7 @@ import { userService } from '../../services';
 export const User = () => {
 
     const [isUserFormVisible, setUserFormVisible] = useState('');
+    const [isSuccess, setSuccess] = useState('hide');
 
     const specialCharacters = '!@#$%';
     const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
@@ -19,6 +20,11 @@ export const User = () => {
         setUserFormVisible(isVisible);
     };
 
+    const saveUser = user => {
+        userService.createUser(user).then(r => {
+            setSuccess('show');
+        });
+    };
 
     return (
         <div className={'row'}>
@@ -37,7 +43,7 @@ export const User = () => {
                                 <Formik
                                     validateOnBlur={false}
                                     validateOnChange={false}
-                                    initialValues={{userName: '', email: '', firstName: '', lastName: '', password: ''}}
+                                    initialValues={{userName: '', email: '', firstName: '', lastName: '', password: '', password2: ''}}
                                     validationSchema={Yup.object().shape({
                                         userName: Yup.string()
                                             .required('Username is required')
@@ -66,9 +72,9 @@ export const User = () => {
                                             }),
                                         password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                                     })}
-                                    onSubmit={(values, { setSubmitting, setStatus }) => {
+                                    onSubmit={(user, { setSubmitting, setStatus }) => {
                                         setSubmitting(false);
-                                        console.log('submitting', values);
+                                        saveUser(user);
                                     }}
                                 >
                                     {({
@@ -143,12 +149,12 @@ export const User = () => {
                                                     </Form>
                                                 </div>
                                                 <div className={'col-lg-3'}>
+                                                    <div className={'alert alert-success text-center fade ' + isSuccess}>Success - User created</div>
                                                     <ErrorMessage name='userName' component='div' className='alert alert-danger text-center fade show' />
                                                     <ErrorMessage name='email' component='div' className='alert alert-danger text-center fade show' />
                                                     <ErrorMessage name='firstName' component='div' className='alert alert-danger text-center fade show' />
                                                     <ErrorMessage name='lastName' component='div' className='alert alert-danger text-center fade show' />
                                                     <ErrorMessage name='password' component='div' className='alert alert-danger text-center fade show' />
-
                                                     <ErrorMessage name='password2' component='div' className='alert alert-danger text-center fade show' />
                                                 </div>
                                             </div>

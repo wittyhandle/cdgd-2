@@ -1,8 +1,10 @@
 let express = require('express');
 let jwt = require('jsonwebtoken');
 let router = express.Router();
+let isAuthenticated = require('../middleware/auth');
+let user = require('../models/User');
 
-const EXPIRATION = '10m';
+const EXPIRATION = '30m';
 const SECRET = 'secret';
 
 const USERS = [
@@ -42,10 +44,19 @@ router.get('/verify/:token', function (req, res, next) {
 
 });
 
-router.get('/unique/:username', function(req, res, next) {
+router.get('/unique/:username', isAuthenticated, function(req, res, next) {
 
-  const unique = !USERS.find(u => u.username === req.params.username)
+  const unique = !USERS.find(u => u.username === req.params.username);
   res.json({success: true, data: { unique }});
+});
+
+router.post('/new', isAuthenticated, function(req, res, next) {
+
+  const {user: newUser} = req.body;
+  user.createUser(newUser).then(r => {
+    res.json({success: true, id: r[0]});
+  }).catch(next);
+
 });
 
 module.exports = router;
