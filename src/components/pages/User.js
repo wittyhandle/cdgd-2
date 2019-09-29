@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {Card} from "../Card";
-import {Field, Form, Formik, ErrorMessage} from "formik";
+import {Form, Formik, ErrorMessage} from "formik";
 import * as Yup from 'yup';
 import { userService } from '../../services';
+import {Field} from "..";
 
 export const User = () => {
 
@@ -95,45 +96,27 @@ export const User = () => {
                                                     <Form>
                                                         <div className={'row'}>
                                                             <div className={'col-lg-6'}>
-                                                                <div className={'form-group'}>
-                                                                    <label htmlFor='userName'>Username</label>
-                                                                    <Field type='text' name='userName' className={'form-control'}/>
-                                                                </div>
+                                                                <Field name={'userName'} label={'Username'} type={'text'}/>
                                                             </div>
                                                             <div className={'col-lg-6'}>
-                                                                <div className={'form-group'}>
-                                                                    <label htmlFor='email'>Email</label>
-                                                                    <Field type='email' name='email' className={'form-control'}/>
-                                                                </div>
+                                                                <Field name={'email'} label={'Email'} type={'email'}/>
                                                             </div>
                                                         </div>
                                                         <div className={'row'}>
                                                             <div className={'col-lg-6'}>
-                                                                <div className={'form-group'}>
-                                                                    <label htmlFor='firstName'>First Name</label>
-                                                                    <Field type='text' name='firstName' className={'form-control'}/>
-                                                                </div>
+                                                                <Field name={'firstName'} label={'First Name'} type={'text'}/>
                                                             </div>
                                                             <div className={'col-lg-6'}>
-                                                                <div className={'form-group'}>
-                                                                    <label htmlFor='lastName'>Last Name</label>
-                                                                    <Field type='text' name='lastName' className={'form-control'}/>
-                                                                </div>
+                                                                <Field name={'lastName'} label={'Last Name'} type={'text'}/>
                                                             </div>
                                                         </div>
 
                                                         <div className={'row'}>
                                                             <div className={'col-lg-6'}>
-                                                                <div className={'form-group'}>
-                                                                    <label htmlFor='password'>Password</label>
-                                                                    <Field type='password' name='password' className={'form-control'}/>
-                                                                </div>
+                                                                <Field name={'password'} label={'Password'} type={'password'}/>
                                                             </div>
                                                             <div className={'col-lg-6'}>
-                                                                <div className={'form-group'}>
-                                                                    <label htmlFor='password2'>Confirm Password</label>
-                                                                    <Field type='password' name='password2' className={'form-control'}/>
-                                                                </div>
+                                                                <Field name={'password2'} label={'Confirm Password'} type={'password'}/>
                                                             </div>
                                                         </div>
                                                         <div className={'row'}>

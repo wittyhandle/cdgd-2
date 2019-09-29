@@ -10,3 +10,5 @@ export {default as PrivateRoute} from './PrivateRoute';
 export * from './layouts/SinglePaned';
 export * from './layouts/ThreePaned';
 export * from './SidebarItem'
+
+export * from './forms/Field';
