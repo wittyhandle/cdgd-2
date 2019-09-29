@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { SinglePaned, Card } from '..';
+import { Formik, Form } from 'formik';
+import {SinglePaned, Card, Field} from '..';
 import { authenticationService } from '../../services';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 
@@ -51,19 +51,13 @@ class Login extends Component {
 
                                                 <div className={'row'}>
                                                     <div className={'col-lg-12 align-self-center'}>
-                                                        <div className={'form-group'}>
-                                                            <label htmlFor='username'>Username</label>
-                                                            <Field type='text' name='username' className={'form-control'}/>
-                                                        </div>
+                                                        <Field name={'username'} label={'Username'} type={'text'}/>
                                                     </div>
                                                 </div>
 
                                                 <div className={'row'}>
                                                     <div className={'col-lg-12 align-self-center'}>
-                                                        <div className={'form-group'}>
-                                                            <label htmlFor='password'>Password</label>
-                                                            <Field type='password' name='password' className={'form-control'}/>
-                                                        </div>
+                                                        <Field name={'password'} label={'Password'} type={'password'}/>
                                                     </div>
                                                 </div>
                                                 <div className={'row'}>
