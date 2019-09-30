@@ -1,5 +1,7 @@
 export * from './pages/Dashboard';
-export * from './pages/User';
+export * from './pages/NewUser';
+export * from './pages/UserList';
+export * from './pages/UserManagement';
 export {default as Login} from './pages/Login';
 export * from './Main';
 export * from './Dropdown';

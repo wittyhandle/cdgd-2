@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   Dashboard,
-  User,
+  UserManagement,
   Main,
   Login,
   PrivateRoute,
@@ -25,7 +25,7 @@ class App extends Component {
                       <ThreePaned><Dashboard/></ThreePaned>
                   )}/>
                   <PrivateRoute exact path="/user" render={() => (
-                      <ThreePaned><User/></ThreePaned>
+                      <ThreePaned><UserManagement/></ThreePaned>
                   )}/>
 
                 </AuthenticationProvider>
