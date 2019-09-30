@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
-import {Card} from "../Card";
-import {Form, Formik, ErrorMessage} from "formik";
+import {Card} from '../Card';
+import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import { userService } from '../../services';
-import {Field} from "..";
+
+import {FeedbackPanel} from '../forms/FeedbackPanel';
+import {Field} from '..';
 
 export const User = () => {
 
     const [isUserFormVisible, setUserFormVisible] = useState('');
-    const [isSuccess, setSuccess] = useState('hide');
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const specialCharacters = '!@#$%';
     const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
     const numberRegex = /^.*[0-9]+.*$/;
     const capitalRegex = /^.*[A-Z]+.*$/;
 
-    const onNewUserClick = (e) => {
+    const handleNewUserClick = (e) => {
         e.preventDefault();
         const isVisible = isUserFormVisible === '' ? 'visible' : '';
         setUserFormVisible(isVisible);
@@ -23,7 +25,7 @@ export const User = () => {
 
     const saveUser = user => {
         userService.createUser(user).then(r => {
-            setSuccess('show');
+            setShowSuccess(true);
         });
     };
 
@@ -35,7 +37,7 @@ export const User = () => {
                         <div>
                             <div className={'row'}>
                                 <div className={'col-lg-2'}>
-                                    <button className={'btn btn-info'} onClick={onNewUserClick}>
+                                    <button className={'btn btn-info'} onClick={handleNewUserClick}>
                                         <i className={'nc-icon nc-simple-add'}/>
                                         New User
                                     </button>
@@ -78,16 +80,7 @@ export const User = () => {
                                         saveUser(user);
                                     }}
                                 >
-                                    {({
-                                        values,
-                                        status,
-                                        errors,
-                                        touched,
-                                        handleChange,
-                                        handleBlur,
-                                        handleSubmit,
-                                        isSubmitting
-                                    }) => (
+                                    {({ isSubmitting }) => (
 
                                         <div className={'col-lg-10 new-user ' + isUserFormVisible}>
 
@@ -132,13 +125,10 @@ export const User = () => {
                                                     </Form>
                                                 </div>
                                                 <div className={'col-lg-3'}>
-                                                    <div className={'alert alert-success text-center fade ' + isSuccess}>Success - User created</div>
-                                                    <ErrorMessage name='userName' component='div' className='alert alert-danger text-center fade show' />
-                                                    <ErrorMessage name='email' component='div' className='alert alert-danger text-center fade show' />
-                                                    <ErrorMessage name='firstName' component='div' className='alert alert-danger text-center fade show' />
-                                                    <ErrorMessage name='lastName' component='div' className='alert alert-danger text-center fade show' />
-                                                    <ErrorMessage name='password' component='div' className='alert alert-danger text-center fade show' />
-                                                    <ErrorMessage name='password2' component='div' className='alert alert-danger text-center fade show' />
+                                                    <FeedbackPanel
+                                                        showSuccess={showSuccess}
+                                                        successMessage={'Success - User created'}
+                                                        errors={['userName', 'email', 'firstName', 'lastName', 'password', 'password2']}/>
                                                 </div>
                                             </div>
                                         </div>

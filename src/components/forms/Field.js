@@ -1,6 +1,6 @@
 import React from 'react';
 import {Field as FormikField} from 'formik';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 export const Field = props => {
     return (
