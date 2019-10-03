@@ -50,15 +50,11 @@ class Login extends Component {
                                                 </div>}
 
                                                 <div className={'row'}>
-                                                    <div className={'col-lg-12 align-self-center'}>
-                                                        <Field name={'username'} label={'Username'} type={'text'}/>
-                                                    </div>
+                                                    <Field name={'username'} label={'Username'} type={'text'} colCss={'col-lg-12 align-self-center'}/>
                                                 </div>
 
                                                 <div className={'row'}>
-                                                    <div className={'col-lg-12 align-self-center'}>
-                                                        <Field name={'password'} label={'Password'} type={'password'}/>
-                                                    </div>
+                                                    <Field name={'password'} label={'Password'} type={'password'} colCss={'col-lg-12 align-self-center'}/>
                                                 </div>
                                                 <div className={'row'}>
                                                     <div className={'ml-auto mr-auto'}>

@@ -84,29 +84,17 @@ export const NewUser = props => {
                             <div className={'col-lg-6 form-container'}>
                                 <Form>
                                     <div className={'row'}>
-                                        <div className={'col-lg-6'}>
-                                            <Field name={'userName'} label={'Username'} type={'text'}/>
-                                        </div>
-                                        <div className={'col-lg-6'}>
-                                            <Field name={'email'} label={'Email'} type={'email'}/>
-                                        </div>
+                                        <Field name={'userName'} label={'Username'} type={'text'} colCss={'col-lg-6'}/>
+                                        <Field name={'email'} label={'Email'} type={'email'} colCss={'col-lg-6'}/>
                                     </div>
                                     <div className={'row'}>
-                                        <div className={'col-lg-6'}>
-                                            <Field name={'firstName'} label={'First Name'} type={'text'}/>
-                                        </div>
-                                        <div className={'col-lg-6'}>
-                                            <Field name={'lastName'} label={'Last Name'} type={'text'}/>
-                                        </div>
+                                        <Field name={'firstName'} label={'First Name'} type={'text'} colCss={'col-lg-6'}/>
+                                        <Field name={'lastName'} label={'Last Name'} type={'text'} colCss={'col-lg-6'}/>
                                     </div>
 
                                     <div className={'row'}>
-                                        <div className={'col-lg-6'}>
-                                            <Field name={'password'} label={'Password'} type={'password'}/>
-                                        </div>
-                                        <div className={'col-lg-6'}>
-                                            <Field name={'password2'} label={'Confirm Password'} type={'password'}/>
-                                        </div>
+                                        <Field name={'password'} label={'Password'} type={'password'} colCss={'col-lg-6'}/>
+                                        <Field name={'password2'} label={'Confirm Password'} type={'password'} colCss={'col-lg-6'}/>
                                     </div>
                                     <div className={'row'}>
                                         <div className={'ml-auto mr-auto'}>
