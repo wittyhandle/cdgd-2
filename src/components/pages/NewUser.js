@@ -18,15 +18,22 @@ export const NewUser = props => {
     const capitalRegex = /^.*[A-Z]+.*$/;
 
     const handleNewUserClick = (e) => {
-        e.preventDefault();
+        e && e.preventDefault();
         const isVisible = isUserFormVisible === '' ? 'visible' : '';
         setUserFormVisible(isVisible);
     };
 
-    const saveUser = user => {
+    const saveUser = (user, reset) => {
         userService.createUser(user).then(r => {
             setShowSuccess(true);
             props.newUserHandler(user);
+
+            setTimeout(() => {
+                reset();
+                setShowSuccess(false);
+                handleNewUserClick();
+            }, 2000);
+            
         });
     };
 
@@ -71,9 +78,9 @@ export const NewUser = props => {
                     }),
                     password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                 })}
-                onSubmit={(user, { setSubmitting, setStatus }) => {
+                onSubmit={(user, { setSubmitting, resetForm }) => {
                     setSubmitting(false);
-                    saveUser(user);
+                    saveUser(user, resetForm);
                 }}
             >
                 {({ isSubmitting }) => (
