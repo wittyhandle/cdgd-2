@@ -33,7 +33,7 @@ export const NewUser = props => {
                 setShowSuccess(false);
                 handleNewUserClick();
             }, 2000);
-            
+
         });
     };
 

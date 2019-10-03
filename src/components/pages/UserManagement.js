@@ -2,20 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {UserList} from './UserList';
 import {Card} from '../Card';
 import {NewUser} from './NewUser';
+import { userService } from '../../services';
 
 export const UserManagement = () => {
 
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        const testUsers = [{
-            userName: 'test',
-            firstName: 'Mike',
-            lastName: 'Ottinger',
-            email: 'test@foo.com'
-        }];
 
-        setUsers(testUsers);
+        userService.getUsers().then(users => {
+            setUsers(users)
+        });
+
     }, []);
 
     const handleNewUser = (user) => {

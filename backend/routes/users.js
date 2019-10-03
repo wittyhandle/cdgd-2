@@ -11,6 +11,17 @@ const USERS = [
   {username: 'Mike', password: 'secret'}
 ];
 
+router.get('/', (req, res, next) => {
+
+  user.getUsers().then(users => {
+    res.json({
+      success: true,
+      users
+    });
+  }).catch(next);
+
+});
+
 router.post('/authenticate', function(req, res, next) {
 
   let user = USERS.find(u => u.username === req.body.username && u.password === req.body.password);

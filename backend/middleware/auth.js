@@ -4,7 +4,6 @@ const SECRET = 'secret';
 
 const isAuthenticated = (req, res, next) => {
 
-    console.log('isAuthenticated called');
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -15,7 +14,6 @@ const isAuthenticated = (req, res, next) => {
 
             try {
                 jwt.verify(token, SECRET);
-                console.log('verified, go on');
                 return next();
             } catch (e) {
                 console.log('ERROR', e);
