@@ -55,13 +55,16 @@ router.get('/verify/:token', function (req, res, next) {
 
 });
 
-router.get('/unique/:username', isAuthenticated, function(req, res, next) {
+router.get('/unique/:username', isAuthenticated, (req, res, next) => {
 
-  const unique = !USERS.find(u => u.username === req.params.username);
-  res.json({success: true, data: { unique }});
+  user.getUserByUsername(req.params.username).then(count => {
+    res.json({
+      success: true,
+      data: { unique: count[0]['u'] === 0 }});
+  }).catch(next);
 });
 
-router.post('/new', isAuthenticated, function(req, res, next) {
+router.post('/new', isAuthenticated, (req, res, next) => {
 
   const {user: newUser} = req.body;
   user.createUser(newUser).then(r => {
