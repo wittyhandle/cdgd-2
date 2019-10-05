@@ -1,6 +1,6 @@
 export * from './pages/Dashboard';
-export * from './pages/NewUser';
-export * from './pages/UserList';
+export * from './user/NewUser';
+export * from './user/UserList';
 export * from './pages/UserManagement';
 export {default as Login} from './pages/Login';
 export * from './Main';

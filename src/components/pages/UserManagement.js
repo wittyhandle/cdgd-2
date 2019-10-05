@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {UserList} from './UserList';
+import {UserList} from '../user/UserList';
 import {Card} from '../Card';
-import {NewUser} from './NewUser';
+import {NewUser} from '../user/NewUser';
 import { userService } from '../../services';
 
 export const UserManagement = () => {
