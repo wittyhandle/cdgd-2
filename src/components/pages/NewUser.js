@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import { userService } from '../../services';
 
 import {FeedbackPanel} from '../forms/FeedbackPanel';
-import {Field} from '..';
+import {Field, Submit} from '..';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export const NewUser = props => {
 
@@ -23,10 +24,11 @@ export const NewUser = props => {
         setUserFormVisible(isVisible);
     };
 
-    const saveUser = (user, reset) => {
+    const saveUser = (user, reset, setSubmitting) => {
         userService.createUser(user).then(r => {
             setShowSuccess(true);
             props.newUserHandler(user);
+            setSubmitting(false);
 
             setTimeout(() => {
                 reset();
@@ -79,8 +81,7 @@ export const NewUser = props => {
                     password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                 })}
                 onSubmit={(user, { setSubmitting, resetForm }) => {
-                    setSubmitting(false);
-                    saveUser(user, resetForm);
+                    saveUser(user, resetForm, setSubmitting);
                 }}
             >
                 {({ isSubmitting }) => (
@@ -104,13 +105,8 @@ export const NewUser = props => {
                                         <Field name={'password2'} label={'Confirm Password'} type={'password'} colCss={'col-lg-6'}/>
                                     </div>
                                     <div className={'row'}>
-                                        <div className={'ml-auto mr-auto'}>
-                                            <button
-                                                type='submit'
-                                                className={'btn btn-primary'}
-                                                disabled={isSubmitting}>
-                                                Submit
-                                            </button>
+                                        <div className={'col-lg-3 ml-auto mr-auto'}>
+                                            <Submit isSubmitting={isSubmitting} title={'Submit'}/>
                                         </div>
                                     </div>
                                 </Form>

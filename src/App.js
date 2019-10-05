@@ -10,6 +10,8 @@ import {
 import { AuthenticationProvider } from './context/authentication.context';
 import { ConfigContext as Provider } from './config/config';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import './fontawesome';
+
 class App extends Component {
   render() {
     return (
