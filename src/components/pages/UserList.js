@@ -8,6 +8,7 @@ export const UserList = props => {
             <table className={'table'}>
                 <thead className={'text-primary'}>
                 <tr>
+                    <th>Id</th>
                     <th>Username</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -17,6 +18,7 @@ export const UserList = props => {
                 <tbody>
                 {props.users.map((user, index) => (
                     <tr key={index}>
+                        <td>{user.id}</td>
                         <td>{user.userName}</td>
                         <td>{user.firstName}</td>
                         <td>{user.lastName}</td>
@@ -33,6 +35,7 @@ UserList.propTypes = {
     users: PropTypes.arrayOf(
         PropTypes.shape(
             {
+                id: PropTypes.number,
                 userName: PropTypes.string,
                 firstName: PropTypes.string,
                 lastName: PropTypes.string,

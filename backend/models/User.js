@@ -4,7 +4,7 @@ const knex = require('knex')(knexConfig.development);
 const createUser = user => ( knex('users').insert(user) );
 
 const getUsers = () => (
-    knex('users').select('userName', 'email', 'firstName', 'lastName')
+    knex('users').select('id', 'userName', 'email', 'firstName', 'lastName')
 );
 
 const getUserByUsername = username => (

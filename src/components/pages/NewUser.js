@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import { userService } from '../../services';
+import {userService} from '../../services';
 
 import {FeedbackPanel} from '../forms/FeedbackPanel';
 import {Field, Submit} from '..';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export const NewUser = props => {
 
