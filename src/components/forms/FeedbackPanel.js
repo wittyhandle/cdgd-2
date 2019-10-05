@@ -11,7 +11,7 @@ const cssClassesByProp = show => {
 export const FeedbackPanel = props => {
 
     return (
-        <div>
+        <div className={'feedback'}>
             {props.errors.map((i, index) => (
                 <ErrorMessage key={index} name={i} component='div' className='alert alert-danger text-center fade show' />
             ))}
