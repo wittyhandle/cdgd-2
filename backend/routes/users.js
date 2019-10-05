@@ -1,8 +1,9 @@
-let express = require('express');
-let jwt = require('jsonwebtoken');
-let router = express.Router();
-let isAuthenticated = require('../middleware/auth');
-let user = require('../models/User');
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const router = express.Router();
+const isAuthenticated = require('../middleware/auth');
+const user = require('../models/User');
+const bcrypt = require('bcrypt');
 
 const EXPIRATION = '30m';
 const SECRET = 'secret';
@@ -40,7 +41,7 @@ router.post('/authenticate', function(req, res, next) {
   }
 });
 
-router.get('/verify/:token', function (req, res, next) {
+router.get('/verify/:token', (req, res, next) => {
 
   try {
 
@@ -67,9 +68,13 @@ router.get('/unique/:username', isAuthenticated, (req, res, next) => {
 router.post('/new', isAuthenticated, (req, res, next) => {
 
   const {user: newUser} = req.body;
-  user.createUser(newUser).then(r => {
-    res.json({success: true, id: r[0]});
-  }).catch(next);
+
+  bcrypt.hash(newUser.password, 15, (err, hash) => {
+    newUser.password = hash;
+    user.createUser(newUser).then(r => {
+      res.json({success: true, id: r[0]});
+    }).catch(next);
+  });
 
 });
 
