@@ -23,18 +23,21 @@ router.post('/authenticate', (req, res, next) => {
 
   const { username, password } = req.body;
 
-  user.getUserByCredentials(username).then(passwordHash => {
+  user.getPasswordByUsername(username).then(passwordHash => {
     return bcrypt.compare(password, passwordHash[0].password);
   }).then(matched => {
     if (matched) {
       const token = jwt.sign({ username: username }, SECRET, { expiresIn: EXPIRATION });
 
-      res.json({
-        success: true,
-        token,
-        message: 'Successful Login',
-        username: username
+      user.getUserByUsername(username).then(user => {
+        res.json({
+          success: true,
+          token,
+          message: 'Successful Login',
+          user: user[0]
+        });
       });
+
     } else {
       res.status('401').json({success: false, message: 'Invalid Credentials'});
     }

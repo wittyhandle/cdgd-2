@@ -34,7 +34,7 @@ export const ThreePaned = props => {
                                 </div>
                                 <div className={'collapse navbar-collapse justify-content-end'} id={'navigation'}>
                                     <ul className={'navbar-nav'}>
-                                        <Dropdown title={currentUser} items={items}/>
+                                        <Dropdown title={currentUser.firstName} items={items}/>
                                     </ul>
                                 </div>
                             </div>

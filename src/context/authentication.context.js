@@ -6,7 +6,7 @@ const AuthenticationContext = React.createContext();
 export class AuthenticationProvider extends Component {
 
     state = {
-        currentUser: authenticationService.getUserName()
+        currentUser: authenticationService.getUser()
     };
 
     setCurrentUser = (currentUser) => {

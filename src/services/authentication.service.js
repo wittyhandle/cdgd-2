@@ -10,7 +10,7 @@ const login = (username, password) => {
         .post('/api/v1/users/authenticate', credentials)
         .then(res => {
             sessionStorage.setItem(USER_DATA, JSON.stringify(res));
-            return username;
+            return res.user;
         })
         .catch(e => {
             return Promise.reject(e);
@@ -26,11 +26,11 @@ const getUserToken = () => {
     return userObj && userObj.token;
 };
 
-const getUserName = () => {
+const getUser = () => {
     const userObj = JSON.parse(sessionStorage.getItem(USER_DATA));
-    return userObj && userObj.username;
+    return userObj && userObj.user;
 };
 
 export const authenticationService = {
-    login, logout, getUserToken, getUserName
+    login, logout, getUserToken, getUser
 };
