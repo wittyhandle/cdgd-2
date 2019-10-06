@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const isAuthenticated = require('../middleware/auth');
-const user = require('../models/User');
+const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
 const EXPIRATION = '30m';
@@ -10,7 +10,7 @@ const SECRET = 'secret';
 
 router.get('/', (req, res, next) => {
 
-  user.getUsers().then(users => {
+  User.getUsers().then(users => {
     res.json({
       success: true,
       users
@@ -23,13 +23,13 @@ router.post('/authenticate', (req, res, next) => {
 
   const { username, password } = req.body;
 
-  user.getPasswordByUsername(username).then(passwordHash => {
+  User.getPasswordByUsername(username).then(passwordHash => {
     return bcrypt.compare(password, passwordHash[0].password);
   }).then(matched => {
     if (matched) {
       const token = jwt.sign({ username: username }, SECRET, { expiresIn: EXPIRATION });
 
-      user.getUserByUsername(username).then(user => {
+      User.getUserByUsername(username).then(user => {
         res.json({
           success: true,
           token,
@@ -63,7 +63,7 @@ router.get('/verify/:token', (req, res, next) => {
 
 router.get('/unique/:username', isAuthenticated, (req, res, next) => {
 
-  user.getUserCountByUsername(req.params.username).then(count => {
+  User.getUserCountByUsername(req.params.username).then(count => {
     res.json({
       success: true,
       data: { unique: count[0]['u'] === 0 }});
@@ -76,7 +76,7 @@ router.post('/new', isAuthenticated, (req, res, next) => {
 
   bcrypt.hash(newUser.password, 15, (hash) => {
     newUser.password = hash;
-    user.createUser(newUser).then(r => {
+    User.create(newUser).then(r => {
       res.json({success: true, id: r[0]});
     }).catch(next);
   });

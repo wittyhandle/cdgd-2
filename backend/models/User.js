@@ -1,30 +1,22 @@
 const knexConfig = require('../knexfile');
 const knex = require('knex')(knexConfig.development);
 
-const createUser = user => ( knex('users').insert(user) );
-
 const userFields = ['id', 'userName', 'email', 'firstName', 'lastName'];
 
-const getUsers = () => (
+exports.create = user => ( knex('users').insert(user) );
+
+exports.getUsers = () => (
     knex('users').select(...userFields)
 );
 
-const getUserCountByUsername = username => (
+exports.getUserCountByUsername = username => (
     knex('users').count('userName', {as: 'u'}).where('userName', username)
 );
 
-const getPasswordByUsername = userName => (
+exports.getPasswordByUsername = userName => (
     knex('users').where({userName}).select('password')
 );
 
-const getUserByUsername = userName => (
+exports.getUserByUsername = userName => (
     knex('users').where({userName}).select(...userFields)
 );
-
-module.exports = {
-    createUser,
-    getUsers,
-    getUserCountByUsername,
-    getPasswordByUsername,
-    getUserByUsername
-};
