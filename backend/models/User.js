@@ -7,12 +7,17 @@ const getUsers = () => (
     knex('users').select('id', 'userName', 'email', 'firstName', 'lastName')
 );
 
-const getUserByUsername = username => (
+const getUserCountByUsername = username => (
     knex('users').count('userName', {as: 'u'}).where('userName', username)
+);
+
+const getUserByCredentials = userName => (
+    knex('users').where({userName}).select('password')
 );
 
 module.exports = {
     createUser,
     getUsers,
-    getUserByUsername
+    getUserCountByUsername,
+    getUserByCredentials
 };

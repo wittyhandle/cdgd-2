@@ -8,10 +8,6 @@ const bcrypt = require('bcrypt');
 const EXPIRATION = '30m';
 const SECRET = 'secret';
 
-const USERS = [
-  {username: 'Mike', password: 'secret'}
-];
-
 router.get('/', (req, res, next) => {
 
   user.getUsers().then(users => {
@@ -23,22 +19,28 @@ router.get('/', (req, res, next) => {
 
 });
 
-router.post('/authenticate', function(req, res, next) {
+router.post('/authenticate', (req, res, next) => {
 
-  let user = USERS.find(u => u.username === req.body.username && u.password === req.body.password);
-  if (!user) {
-    res.status('401').json({success: false, message: 'Invalid Credentials'});
-  } else {
+  const { username, password } = req.body;
 
-    const token = jwt.sign({ username: user.username }, SECRET, { expiresIn: EXPIRATION });
+  user.getUserByCredentials(username).then(passwordHash => {
+    return bcrypt.compare(password, passwordHash[0].password);
+  }).then(matched => {
+    if (matched) {
+      const token = jwt.sign({ username: username }, SECRET, { expiresIn: EXPIRATION });
 
-    res.json({
-      success: true,
-      token,
-      message: 'Successful Login',
-      username: user.username
-    });
-  }
+      res.json({
+        success: true,
+        token,
+        message: 'Successful Login',
+        username: username
+      });
+    } else {
+      res.status('401').json({success: false, message: 'Invalid Credentials'});
+    }
+  })
+  .catch(next);
+
 });
 
 router.get('/verify/:token', (req, res, next) => {
@@ -58,7 +60,7 @@ router.get('/verify/:token', (req, res, next) => {
 
 router.get('/unique/:username', isAuthenticated, (req, res, next) => {
 
-  user.getUserByUsername(req.params.username).then(count => {
+  user.getUserCountByUsername(req.params.username).then(count => {
     res.json({
       success: true,
       data: { unique: count[0]['u'] === 0 }});
@@ -69,7 +71,7 @@ router.post('/new', isAuthenticated, (req, res, next) => {
 
   const {user: newUser} = req.body;
 
-  bcrypt.hash(newUser.password, 15, (err, hash) => {
+  bcrypt.hash(newUser.password, 15, (hash) => {
     newUser.password = hash;
     user.createUser(newUser).then(r => {
       res.json({success: true, id: r[0]});
