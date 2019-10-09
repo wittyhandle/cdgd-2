@@ -16,4 +16,13 @@ app.use(cookieParser());
 app.use('/api/v1/users', users);
 app.use('/api/v1/admin', admin);
 
+// our own error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send({
+        success: false,
+        error: err.message
+    });
+});
+
 module.exports = app;

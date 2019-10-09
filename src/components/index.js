@@ -8,6 +8,7 @@ export * from './Dropdown';
 export * from './Footer';
 export * from './Sidebar';
 export * from './Card';
+export {default as ErrorBoundary } from './ErrorBoundary';
 export {default as PrivateRoute} from './PrivateRoute';
 export * from './layouts/SinglePaned';
 export * from './layouts/ThreePaned';

@@ -13,7 +13,7 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use((response) => {
     return response.data;
-}, (error) => {
+}, error => {
 
     const url = error.response.config.url || '';
     const isAuthenticating = url.endsWith('/users/authenticate');

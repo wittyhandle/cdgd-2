@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Footer, Dropdown, Sidebar } from '../index';
+import {Footer, Dropdown, Sidebar, ErrorBoundary} from '../index';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 import { authenticationService } from '../../services';
 import PropTypes from 'prop-types';
@@ -40,10 +40,11 @@ export const ThreePaned = props => {
                             </div>
                         </nav>
 
-                        <div className={'content'}>
-                            {props.children}
-                        </div>
-
+                            <div className={'content'}>
+                                <ErrorBoundary>
+                                    {props.children}
+                                </ErrorBoundary>
+                            </div>
                         <Footer/>
                     </div>
                 </div>

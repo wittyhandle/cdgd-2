@@ -2,7 +2,8 @@ import api  from '../utils/api';
 
 
 const getUsers = () => (
-    api.get('/api/v1/users').then(users => { return users.users })
+    api.get('/api/v1/users')
+        .then(users => { return users.users })
 );
 
 const isUnique = username => {
