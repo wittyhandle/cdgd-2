@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Formik, Form } from 'formik';
-import {SinglePaned, Card, Field} from '..';
+import {SinglePaned, Card, Field, Submit} from '..';
 import { authenticationService } from '../../services';
 import { AuthenticationConsumer } from '../../context/authentication.context';
 
 class Login extends Component {
 
-    doLogin = (values, setStatus, setCurrentUser) => {
+    doLogin = (values, setStatus, setSubmitting, setCurrentUser) => {
 
         authenticationService.login(values.username, values.password)
             .then(
                 user => {
+                    setSubmitting(false);
                     setCurrentUser(user);
                     this.props.history.push({pathname: '/admin'});
                 },
@@ -31,8 +32,7 @@ class Login extends Component {
                                     <Formik
                                         initialValues={{username: '', password: ''}}
                                         onSubmit={(values, { setSubmitting, setStatus }) => {
-                                            setSubmitting(false);
-                                            this.doLogin(values, setStatus, setCurrentUser);
+                                            this.doLogin(values, setStatus, setSubmitting, setCurrentUser);
                                         }}
                                     >
                                         {({
@@ -58,12 +58,7 @@ class Login extends Component {
                                                 </div>
                                                 <div className={'row'}>
                                                     <div className={'ml-auto mr-auto'}>
-                                                        <button
-                                                            type='submit'
-                                                            className={'btn btn-primary'}
-                                                            disabled={isSubmitting}>
-                                                            Submit
-                                                        </button>
+                                                        <Submit isSubmitting={isSubmitting} title={'Log In'}/>
                                                     </div>
                                                 </div>
                                             </Form>
