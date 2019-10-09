@@ -11,8 +11,8 @@ class Login extends Component {
         authenticationService.login(values.username, values.password)
             .then(
                 user => {
-                    this.props.history.push({pathname: '/admin'});
                     setCurrentUser(user);
+                    this.props.history.push({pathname: '/admin'});
                 },
                 error => {
                     setStatus({msg: error.message});
