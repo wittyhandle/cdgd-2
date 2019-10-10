@@ -8,18 +8,18 @@ class Login extends Component {
 
     doLogin = (values, setStatus, setSubmitting, setCurrentUser) => {
 
+        setStatus({});
         authenticationService.login(values.username, values.password)
             .then(
                 user => {
-                    setSubmitting(false);
                     setCurrentUser(user);
                     this.props.history.push({pathname: '/admin'});
-                },
-                error => {
-                    setSubmitting(false);
-                    setStatus({msg: error.message});
                 }
-            );
+            ).catch(e => {
+                setStatus({msg: e.message});
+            }).finally(() => {
+                setSubmitting(false);
+            });
     };
 
     render() {

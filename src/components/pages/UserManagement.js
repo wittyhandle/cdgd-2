@@ -14,7 +14,7 @@ export const UserManagement = () => {
         userService.getUsers().then(users => {
             setUsers(users)
         }).catch(err => {
-            setError(err.error);
+            setError(err.message);
         });
 
     }, []);
