@@ -23,9 +23,9 @@ router.post('/authenticate', (req, res, next) => {
 
   const { username, password } = req.body;
 
-  User.getPasswordByUsername(username).then(passwordHash => {
-    return bcrypt.compare(password, passwordHash[0].password);
-  }).then(matched => {
+  User.getPasswordByUsername(username).then(passwordHash => (
+      passwordHash[0] && bcrypt.compare(password, passwordHash[0].password)
+  )).then(matched => {
     if (matched) {
       const token = jwt.sign({ username: username }, SECRET, { expiresIn: EXPIRATION });
 

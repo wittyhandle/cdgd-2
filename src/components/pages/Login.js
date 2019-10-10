@@ -16,6 +16,7 @@ class Login extends Component {
                     this.props.history.push({pathname: '/admin'});
                 },
                 error => {
+                    setSubmitting(false);
                     setStatus({msg: error.message});
                 }
             );
