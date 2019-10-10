@@ -72,15 +72,17 @@ router.get('/unique/:username', isAuthenticated, (req, res, next) => {
 
 router.post('/new', isAuthenticated, (req, res, next) => {
 
-  const {user: newUser} = req.body;
+  const {user} = req.body;
 
-  bcrypt.hash(newUser.password, 15, (hash) => {
-    newUser.password = hash;
-    User.create(newUser).then(r => {
+  bcrypt.hash(user.password, 15).then(hash => {
+
+    user.password = hash;
+
+    User.create(user).then(r => {
       res.json({success: true, id: r[0]});
     }).catch(next);
-  });
 
+  });
 });
 
 module.exports = router;
