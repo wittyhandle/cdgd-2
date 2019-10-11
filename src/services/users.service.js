@@ -15,8 +15,6 @@ const isUnique = username => {
 
 const createUser = user => {
 
-    delete user.password2;
-
     return api
         .post('/api/v1/users/new', {user})
         .then(res => {

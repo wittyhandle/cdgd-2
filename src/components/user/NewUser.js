@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
@@ -12,6 +12,8 @@ export const NewUser = props => {
     const [isUserFormVisible, setUserFormVisible] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
 
+    useEffect(() => { console.log('sksk', showSuccess) }, []);
+
     const specialCharacters = '!@#$%';
     const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
     const numberRegex = /^.*[0-9]+.*$/;
@@ -23,11 +25,10 @@ export const NewUser = props => {
         setUserFormVisible(isVisible);
     };
 
-    const saveUser = (user, reset, setSubmitting) => {
+    const saveUser = (user, reset, setSubmitting, setFieldError) => {
         userService.createUser(user).then(r => {
             setShowSuccess(true);
             props.newUserHandler(user);
-            setSubmitting(false);
 
             setTimeout(() => {
                 reset();
@@ -35,6 +36,10 @@ export const NewUser = props => {
                 handleNewUserClick();
             }, 2000);
 
+        }).catch(e => {
+            setFieldError('userName', e.message);
+        }).finally(() => {
+            setSubmitting(false);
         });
     };
 
@@ -52,11 +57,6 @@ export const NewUser = props => {
                 validateOnChange={false}
                 initialValues={{userName: '', email: '', firstName: '', lastName: '', password: '', password2: ''}}
                 validationSchema={Yup.object().shape({
-                    userName: Yup.string()
-                    .required('Username is required')
-                    .test('unique-username', 'Username must be unique', function(value) {
-                        return userService.isUnique(value);
-                    }),
                     email: Yup.string()
                     .required('Email is required')
                     .email('Email is invalid'),
@@ -79,11 +79,35 @@ export const NewUser = props => {
                     }),
                     password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                 })}
-                onSubmit={(user, { setSubmitting, resetForm }) => {
-                    saveUser(user, resetForm, setSubmitting);
+
+                // Handle userName validation here for async
+                validate={values => {
+
+                    let errors = {};
+
+                    if (!values.userName) {
+                        errors.userName = 'Username is required';
+                        return errors;
+                    }
+
+                    return userService.isUnique(values.userName).then(isUnique => {
+                        if (isUnique) {
+                            return true;
+                        }
+                        errors.userName = 'Username must be unique';
+                    }).catch(() => {
+                        errors.userName = 'Server error, cannot determine uniqueness';
+                    }).finally(() => {
+                        if (Object.keys(errors).length) {
+                            throw errors;
+                        }
+                    });
+                }}
+                onSubmit={(user, { setSubmitting, resetForm, setFieldError }) => {
+                    saveUser(user, resetForm, setSubmitting, setFieldError);
                 }}
             >
-                {({ isSubmitting }) => (
+                {({ isSubmitting, errors }) => (
 
                     <div className={'col-lg-10 new-user ' + isUserFormVisible}>
 
@@ -114,7 +138,7 @@ export const NewUser = props => {
                                 <FeedbackPanel
                                     showSuccess={showSuccess}
                                     successMessage={'Success - User created'}
-                                    errors={['userName', 'email', 'firstName', 'lastName', 'password', 'password2']}/>
+                                    errors={errors} />
                             </div>
                         </div>
                     </div>

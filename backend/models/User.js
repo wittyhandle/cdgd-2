@@ -3,7 +3,10 @@ const knex = require('knex')(knexConfig.development);
 
 const userFields = ['id', 'userName', 'email', 'firstName', 'lastName'];
 
-exports.create = user => ( knex('users').insert(user) );
+exports.create = user => {
+    delete user.password2;
+    return knex('users').insert(user)
+};
 
 exports.getUsers = () => (
     knex('users').select(...userFields)
