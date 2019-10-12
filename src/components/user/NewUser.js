@@ -28,6 +28,8 @@ export const NewUser = props => {
     const saveUser = (user, reset, setSubmitting, setFieldError) => {
         userService.createUser(user).then(r => {
             setShowSuccess(true);
+
+            user.id = r;
             props.newUserHandler(user);
 
             setTimeout(() => {
