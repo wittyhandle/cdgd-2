@@ -8,7 +8,6 @@ export default class ErrorBoundary extends Component{
     }
 
     componentDidCatch(error, errorInfo) {
-        console.log('from compo', error);
         this.setState({
             error: error,
             errorInfo: errorInfo
@@ -16,7 +15,8 @@ export default class ErrorBoundary extends Component{
     }
 
     render() {
-        if (this.state.error) {
+        let e = this.state.error;
+        if (e && e.status && e.status !== 403 && e.status !== 401) {
             return (
                 <div>
                     <h2>{this.state.error && this.state.error.message}</h2>

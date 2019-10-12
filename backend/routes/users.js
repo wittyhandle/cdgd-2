@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const EXPIRATION = '30m';
 const SECRET = 'secret';
 
-router.get('/', (req, res, next) => {
+router.get('/', isAuthenticated, (req, res, next) => {
 
   User.getUsers().then(users => {
     res.json({
