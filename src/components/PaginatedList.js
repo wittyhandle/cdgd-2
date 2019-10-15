@@ -16,12 +16,10 @@ export const PaginatedList = props => {
             setTotal(result.count);
         });
         
-    }, [limit, total]);
+    }, [limit, offset, props]);
     
-    const handleClick = e => {
-        console.log('handle');
-        e.preventDefault();
-        setLimit(30);
+    const handleItemsQuery = (selectedPage) => {
+        setOffset(selectedPage * limit);
     };
     
     return (
@@ -42,7 +40,7 @@ export const PaginatedList = props => {
                     </tbody>
                 </table>
             </div>
-            <PaginationControls total={total} pageSize={limit}/>
+            <PaginationControls total={total} pageSize={limit} queryHandler={handleItemsQuery}/>
         </div>
         
     )
