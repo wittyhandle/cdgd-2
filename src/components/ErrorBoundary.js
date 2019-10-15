@@ -15,8 +15,7 @@ export default class ErrorBoundary extends Component{
     }
 
     render() {
-        let e = this.state.error;
-        if (e && e.status && e.status !== 403 && e.status !== 401) {
+        if (this.state.error) {
             return (
                 <div>
                     <h2>{this.state.error && this.state.error.message}</h2>
