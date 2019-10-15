@@ -29,19 +29,19 @@ export const PaginationControls = props => {
                     <ul className={'pagination pull-right'}>
                         
                         <li className={'page-item' + (currentIndex === 1 ? ' text-muted disabled' : '')}>
-                            <a href={'#'} className={'page-link' + (currentIndex !== 1 ? ' text-primary' : '')}>Previous</a>
+                            <a href={'#'} className={'page-link' + (currentIndex !== 1 ? ' text-info' : '')}>Previous</a>
                         </li>
                         
                         {[...Array(linkCount)].map((n, i) => (
                             <li key={i} className={'page-item' + ((i + 1) === currentIndex ? ' active' : '')}>
                                 <a href={'#'}
-                                   className={'page-link' + ((i + 1) !== currentIndex ? ' text-primary' : '')}
+                                   className={'page-link' + ((i + 1) !== currentIndex ? ' text-info' : '')}
                                    onClick={handlePageClick}>{i + 1}</a>
                             </li>
                         ))}
                         
                         <li className={'page-item' + (currentIndex === linkCount ? ' text-muted disabled' : '')}>
-                            <a href={'#'} className={'page-link' + (currentIndex !== linkCount ? ' text-primary' : '')}>Next</a>
+                            <a href={'#'} className={'page-link' + (currentIndex !== linkCount ? ' text-info' : '')}>Next</a>
                         </li>
                     </ul>
                 </div>

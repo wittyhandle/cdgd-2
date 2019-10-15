@@ -87,25 +87,14 @@ a:focus {
 
 
 .page-item.active .page-link {
-  background-color: $brand-primary;
-  border-color: $brand-primary;
+  background-color: $brand-info;
+  border-color: $brand-info;
 }
 
-//.page-item.disabled .page-link {
-//  color: $default-color;
-//}
+.page-item.disabled .page-link {
+  color: $default-color;
+}
 
 .pagination-label {
   margin-top: 8px;
-}
-
-.page-link2 {
-  position: relative;
-  display: block;
-  padding: .5rem .75rem;
-  margin-left: -1px;
-  line-height: 1.25;
-  color: #007bff;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
 }

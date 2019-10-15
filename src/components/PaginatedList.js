@@ -28,7 +28,7 @@ export const PaginatedList = props => {
         <div className={'cdgd-pagination'}>
             <div className={'table-responsive'}>
                 <table className={'table'}>
-                    <thead className={'text-primary'}>
+                    <thead className={'text-info'}>
                     <tr>
                         {props.headers.map((h, i) => (
                             <th key={i}>{h}</th>
