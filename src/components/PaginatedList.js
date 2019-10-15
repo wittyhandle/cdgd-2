@@ -1,19 +1,22 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
+import {PaginationControls} from './PaginationControls';
 
 export const PaginatedList = props => {
     
     const [items, setItems] = useState([]);
     const [limit, setLimit] = useState(10);
     const [offset, setOffset] = useState(0);
+    const [total, setTotal] = useState(0);
     
     useEffect(() => {
         
-        props.getItems(limit, offset).then(items => {
-            setItems(items);
+        props.getItems(limit, offset).then(result => {
+            setItems(result.items);
+            setTotal(result.count);
         });
         
-    }, [limit]);
+    }, [limit, total]);
     
     const handleClick = e => {
         console.log('handle');
@@ -39,31 +42,7 @@ export const PaginatedList = props => {
                     </tbody>
                 </table>
             </div>
-            <hr />
-            <div className={'row justify-content-between'}>
-                
-                <div className={'col-lg-8 pagination-label'}>
-                    <p className={'text-muted'}>Showing 1 - 10 of 59</p>
-                </div>
-                <div className={'col-lg-4'}>
-                    <ul className={'pagination pull-right'}>
-                        <li className="paginate_button page-item previous disabled text-muted"><a href="#"
-                                                                                       className="page-link">Previous</a>
-                        </li>
-                        <li className="paginate_button page-item active"><a
-                            href="#"
-                            data-dt-idx="1" tabIndex="0"
-                            className="page-link">1</a></li>
-                        <li className="paginate_button page-item "><a href="#"
-                                                                      className="text-primary page-link">2</a>
-                        </li>
-                        <li className="paginate_button page-item next"><a href="#"
-                                                                          className="text-primary page-link">Next</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
+            <PaginationControls total={total} pageSize={limit}/>
         </div>
         
     )

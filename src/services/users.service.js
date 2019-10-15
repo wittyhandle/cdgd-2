@@ -2,16 +2,17 @@ import api  from '../utils/api';
 
 
 const getUsers = (limit, offset) => (
-    api.get(`/api/v1/users/${limit}/${offset}`)
-        .then(users => { return users.users.items })
+    api
+        .get(`/api/v1/users/${limit}/${offset}`)
+        .then(users => { return users.users })
 );
 
-const isUnique = username => {
-
-    return api.get(`/api/v1/users/unique/${username}`).then(d => {
-        return d.data.unique;
-    });
-};
+const isUnique = username => (
+    api
+        .get(`/api/v1/users/unique/${username}`).then(d => {
+            return d.data.unique;
+        })
+);
 
 const createUser = user => {
 
