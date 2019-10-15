@@ -11,7 +11,7 @@ export const UserManagement = () => {
 
     useEffect(() => {
 
-        userService.getUsers().then(users => {
+        userService.getUsers(10, 0).then(users => {
             setUsers(users)
         }).catch(err => {
             setError(err.message);

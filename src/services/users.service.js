@@ -1,9 +1,9 @@
 import api  from '../utils/api';
 
 
-const getUsers = () => (
-    api.get('/api/v1/users')
-        .then(users => { return users.users })
+const getUsers = (limit, offset) => (
+    api.get(`/api/v1/users/${limit}/${offset}`)
+        .then(users => { return users.users.items })
 );
 
 const isUnique = username => {

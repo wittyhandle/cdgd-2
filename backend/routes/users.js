@@ -8,15 +8,21 @@ const bcrypt = require('bcrypt');
 const EXPIRATION = '30m';
 const SECRET = 'secret';
 
-router.get('/', isAuthenticated, (req, res, next) => {
-
-  User.getUsers().then(users => {
+router.get('/:limit/:offset', isAuthenticated, (req, res, next) => {
+  
+  const countCall = User.getUserCount();
+  
+  const { limit, offset } = req.params;
+  const userCall = User.getUsers(Number(limit), Number(offset));
+  
+  Promise.all([countCall, userCall]).then((values) => {
+    const users = { count: values[0][0]['u'], items: values[1] };
     res.json({
       success: true,
       users
     });
   }).catch(next);
-
+  
 });
 
 router.post('/authenticate', (req, res, next) => {
@@ -49,8 +55,12 @@ router.post('/authenticate', (req, res, next) => {
 router.get('/verify/:token', (req, res, next) => {
 
   try {
+    
+    
 
     const token = req.params.token;
+    console.log('and this is the token', token, '!');
+    
     let decoded = jwt.verify(token, SECRET);
 
     res.json({success: true, data: {message: 'Valid token', decoded}});
