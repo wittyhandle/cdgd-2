@@ -7,6 +7,7 @@ export * from './Main';
 export * from './Dropdown';
 export * from './Footer';
 export * from './Sidebar';
+export * from './PaginatedList';
 export * from './Card';
 export {default as ErrorBoundary } from './ErrorBoundary';
 export {default as PrivateRoute} from './PrivateRoute';

@@ -1,33 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {PaginatedList} from '../PaginatedList';
+import {userService} from '../../services';
 
-export const UserList = props => {
 
+export const UserList = () => {
+
+    const headers = ['Id', 'Username', 'First Name', 'Last Name', 'Email'];
+    
+    const getUsers = (limit, offset) => (
+        userService.getUsers(limit, offset)
+    );
+    
+    const rowRenderer = ({id, userName, firstName, lastName, email}) => (
+        <tr key={id}>
+            <td>{id}</td>
+            <td>{userName}</td>
+            <td>{firstName}</td>
+            <td>{lastName}</td>
+            <td>{email}</td>
+        </tr>
+    );
+    
     return (
-        <div className={'table-responsive'}>
-            <table className={'table'}>
-                <thead className={'text-primary'}>
-                <tr>
-                    <th>Id</th>
-                    <th>Username</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                </tr>
-                </thead>
-                <tbody>
-                {props.users.map((user, index) => (
-                    <tr key={index}>
-                        <td>{user.id}</td>
-                        <td>{user.userName}</td>
-                        <td>{user.firstName}</td>
-                        <td>{user.lastName}</td>
-                        <td>{user.email}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
+        <PaginatedList
+            headers={headers}
+            getItems={getUsers}
+            rowRenderer={rowRenderer}/>
     )
 };
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
@@ -11,8 +11,6 @@ export const NewUser = props => {
 
     const [isUserFormVisible, setUserFormVisible] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
-
-    useEffect(() => { console.log('sksk', showSuccess) }, []);
 
     const specialCharacters = '!@#$%';
     const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
