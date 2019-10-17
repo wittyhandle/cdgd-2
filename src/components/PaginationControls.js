@@ -1,20 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
-export const PaginationControls = props => {
+export const PaginationControls = ({total, pageSize, queryHandler}) => {
     
     const [linkCount, setLinkCount] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [minRecord, setMinRecord] = useState(0);
+    const [maxRecord, setMaxRecord] = useState(0);
     
     useEffect(() => {
-        const count = Math.ceil(props.total / props.pageSize);
+        const count = Math.ceil(total / pageSize);
         setLinkCount(count);
         
-    }, [props.total, props.pageSize]);
+    }, [total, pageSize]);
     
     useEffect(() => {
-        props.queryHandler(currentIndex);
-    }, [currentIndex]);
+        queryHandler(currentIndex);
+    }, [currentIndex, queryHandler]);
+    
+    useEffect(() => {
+        
+        if (currentIndex === 0) {
+            setMinRecord(1);
+        } else {
+            setMinRecord(((currentIndex) * pageSize) + 1);
+        }
+        
+        const max = (currentIndex + 1) * pageSize;
+        setMaxRecord(Math.min(max, total));
+        
+    }, [currentIndex, pageSize, total]);
     
     const handlePageClick = (e) => {
         e.preventDefault();
@@ -32,12 +47,14 @@ export const PaginationControls = props => {
         setCurrentIndex(currentIndex + 1);
     };
     
+    const showingLabel = total ? `Showing ${minRecord} - ${maxRecord} of ${total}` : '';
+    
     return (
         <div>
             <hr />
             <div className={'row justify-content-between'}>
                 <div className={'col-lg-8 pagination-label'}>
-                    <p className={'text-muted'}>Showing 1 - 10 of {props.total}</p>
+                    <p className={'text-muted'}>{showingLabel}</p>
                 </div>
                 <div className={'col-lg-4'}>
                     <ul className={'pagination pull-right'}>
