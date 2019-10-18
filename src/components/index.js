@@ -9,6 +9,7 @@ export * from './Footer';
 export * from './Sidebar';
 export * from './PaginatedList';
 export * from './PaginationControls';
+export * from './PaginationPageSize';
 export * from './Card';
 export {default as ErrorBoundary } from './ErrorBoundary';
 export {default as PrivateRoute} from './PrivateRoute';

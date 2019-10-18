@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {PaginationControls} from './PaginationControls';
+import {PaginationControls} from './index';
+import {PaginationPageSize} from './index';
 
 export const PaginatedList = props => {
     
@@ -18,12 +19,18 @@ export const PaginatedList = props => {
         
     }, [limit, offset, props]);
     
-    const handleItemsQuery = (selectedPage) => {
+    const handlePageChange = (selectedPage) => {
         setOffset(selectedPage * limit);
+    };
+    
+    const handlePageSizeChange = e => {
+        setOffset(0);
+        setLimit(Number(e.target.value));
     };
     
     return (
         <div className={'cdgd-pagination'}>
+            <PaginationPageSize queryHandler={handlePageSizeChange}/>
             <div className={'table-responsive'}>
                 <table className={'table'}>
                     <thead className={'text-info'}>
@@ -40,7 +47,7 @@ export const PaginatedList = props => {
                     </tbody>
                 </table>
             </div>
-            <PaginationControls total={total} pageSize={limit} queryHandler={handleItemsQuery}/>
+            <PaginationControls total={total} pageSize={limit} queryHandler={handlePageChange}/>
         </div>
         
     )

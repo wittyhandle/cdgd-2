@@ -25,10 +25,10 @@ export const PaginationControls = ({total, pageSize, queryHandler}) => {
         } else {
             setMinRecord(((currentIndex) * pageSize) + 1);
         }
-        
+
         const max = (currentIndex + 1) * pageSize;
         setMaxRecord(Math.min(max, total));
-        
+
     }, [currentIndex, pageSize, total]);
     
     const handlePageClick = (e) => {
