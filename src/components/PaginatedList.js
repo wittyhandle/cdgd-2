@@ -2,6 +2,7 @@ import React, {useEffect, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import {PaginationControls} from './index';
 import {PaginationPageSize} from './index';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 export const PaginatedList = ({getItems, headers, rowRenderer}) => {
     
@@ -80,18 +81,28 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
         });
     };
     
+    const handleSort = e => {
+        console.log('sortee!');
+    };
+    
     const fromRecord = state.currentPage === 1 ? 1 : ((state.currentPage - 1) * state.limit) + 1;
     const toRecord = Math.min(state.currentPage * state.limit, state.total);
     
     return (
-        <div className={'cdgd-pagination'}>
+        <div className={'cdgd-pagination bootstrap-table'}>
             <PaginationPageSize onPageSizeChange={handlePageSizeChange}/>
-            <div className={'table-responsive'}>
+            <div className={'table-responsive fixed-table-container'}>
                 <table className={'table'}>
                     <thead className={'text-info'}>
                     <tr>
                         {headers.map((h, i) => (
-                            <th key={i}>{h}</th>
+                            <th key={i}>
+                                {h}
+                                <div className={'sorts'}>
+                                    <div className={'up active'} onClick={handleSort}><FontAwesomeIcon icon={'sort-up'}  /></div>
+                                    <div className={'down'} onClick={handleSort}><FontAwesomeIcon icon={'sort-down'} /></div>
+                                </div>
+                            </th>
                         ))}
                     </tr>
                     </thead>

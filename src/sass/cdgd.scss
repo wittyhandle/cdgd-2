@@ -114,3 +114,24 @@ a:focus {
   }
 }
 
+.sorts {
+  float: left;
+  margin-right: 10px;
+  div {
+
+    opacity: .5;
+
+    &:hover {
+      opacity: .75;
+    }
+
+    cursor: pointer;
+
+    &.up.active, &.down.active {
+      opacity: 1;
+    }
+
+    height: 1px;
+  }
+}
+
