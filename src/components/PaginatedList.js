@@ -15,7 +15,9 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
         currentPage: 1,
         total: 0,
         fromRecord: 0,
-        toRecord: 0
+        toRecord: 0,
+        sortBy: 'id',
+        sortDirection: 'asc'
     };
     
     const reducer = (state, action) => {
@@ -53,6 +55,15 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                     toRecord: action.toRecord
                 }
             }
+            case 'set_sort': {
+                console.log('set sort with action', action);
+                return {
+                    ...state,
+                    sortBy: action.sortBy,
+                    sortDirection: action.sortDirection
+                }
+            }
+            
             default: {
                 return state;
             }
@@ -81,9 +92,14 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
         });
     };
     
-    const handleSort = e => {
-        console.log('sortee!');
+    const handleSort = (column, direction) => {
+        console.log('dispatch with', column, direction);
+        dispatch({type: 'set_sort', sortBy: column, sortDirection: direction});
     };
+    
+    const isSortIconActive = (column, direction) => (
+        state.sortBy === column && state.sortDirection === direction ? ' active' : ''
+    );
     
     const fromRecord = state.currentPage === 1 ? 1 : ((state.currentPage - 1) * state.limit) + 1;
     const toRecord = Math.min(state.currentPage * state.limit, state.total);
@@ -95,12 +111,16 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                 <table className={'table'}>
                     <thead className={'text-info'}>
                     <tr>
-                        {headers.map((h, i) => (
-                            <th key={i}>
-                                {h}
+                        {headers.map(h => (
+                            <th key={h.key}>
+                                {h.name}
                                 <div className={'sorts'}>
-                                    <div className={'up active'} onClick={handleSort}><FontAwesomeIcon icon={'sort-up'}  /></div>
-                                    <div className={'down'} onClick={handleSort}><FontAwesomeIcon icon={'sort-down'} /></div>
+                                    <div onClick={() => handleSort(h.key, 'asc')} className={'up' + isSortIconActive(h.key, 'asc')}>
+                                        <FontAwesomeIcon icon={'sort-up'}  />
+                                    </div>
+                                    <div onClick={() => handleSort(h.key, 'desc')}  className={'down' + isSortIconActive(h.key, 'desc')}>
+                                        <FontAwesomeIcon icon={'sort-down'} />
+                                    </div>
                                 </div>
                             </th>
                         ))}
@@ -127,7 +147,7 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
 };
 
 PaginatedList.propTypes = {
-    headers: PropTypes.arrayOf(PropTypes.string),
+    headers: PropTypes.arrayOf(PropTypes.shape({key: PropTypes.string, name: PropTypes.string})),
     getItems: PropTypes.func,
     rowRenderer: PropTypes.func
 };

@@ -6,7 +6,13 @@ import {userService} from '../../services';
 
 export const UserList = () => {
 
-    const headers = ['Id', 'Username', 'First Name', 'Last Name', 'Email'];
+    const headers = [
+        {key: 'id', name: 'Id'},
+        {key: 'username', name: 'Username'},
+        {key: 'firstName', name: 'First Name'},
+        {key: 'lastName', name: 'Last Name'},
+        {key: 'email', name: 'Email'}
+    ];
     
     const getUsers = (limit, offset) => (
         userService.getUsers(limit, offset)

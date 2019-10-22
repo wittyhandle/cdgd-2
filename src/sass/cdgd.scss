@@ -115,14 +115,22 @@ a:focus {
 }
 
 .sorts {
+
   float: left;
   margin-right: 10px;
   div {
 
-    opacity: .5;
+    position: relative;
+    margin-right: 5px;
+    opacity: .50;
 
     &:hover {
       opacity: .75;
+    }
+
+    svg {
+      position: absolute;
+      display: block;
     }
 
     cursor: pointer;
@@ -131,7 +139,7 @@ a:focus {
       opacity: 1;
     }
 
-    height: 1px;
+    height: 6px;
   }
 }
 
