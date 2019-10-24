@@ -143,3 +143,14 @@ a:focus {
   }
 }
 
+.bootstrap-table {
+  th {
+
+    &.narrow {
+      width: 5%;
+    }
+
+    width: 20%;
+  }
+}
+

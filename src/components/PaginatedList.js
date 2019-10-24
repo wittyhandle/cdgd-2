@@ -116,7 +116,7 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                     <thead className={'text-info'}>
                     <tr>
                         {headers.map(h => (
-                            <th key={h.key}>
+                            <th key={h.key} className={h.size || ''}>
                                 {h.name}
                                 <div className={'sorts'}>
                                     <div onClick={() => handleSort(h.key, 'asc')} className={'up' + isSortIconActive(h.key, 'asc')}>
@@ -151,7 +151,7 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
 };
 
 PaginatedList.propTypes = {
-    headers: PropTypes.arrayOf(PropTypes.shape({key: PropTypes.string, name: PropTypes.string})),
+    headers: PropTypes.arrayOf(PropTypes.shape({key: PropTypes.string, name: PropTypes.string, size: PropTypes.string})),
     getItems: PropTypes.func,
     rowRenderer: PropTypes.func
 };

@@ -7,7 +7,7 @@ import {userService} from '../../services';
 export const UserList = () => {
 
     const headers = [
-        {key: 'id', name: 'Id'},
+        {key: 'id', name: 'Id', 'size': 'narrow'},
         {key: 'username', name: 'Username'},
         {key: 'firstName', name: 'First Name'},
         {key: 'lastName', name: 'Last Name'},
