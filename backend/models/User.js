@@ -9,10 +9,11 @@ exports.create = user => {
         .insert(user)
 };
 
-exports.getUsers = (limit, offset) => (
+exports.getUsers = (limit, offset, order, direction) => (
     knex
         .select(...userFields)
         .from('users')
+        .orderBy(order, direction)
         .limit(limit)
         .offset(offset)
 );

@@ -59,6 +59,8 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                 console.log('set sort with action', action);
                 return {
                     ...state,
+                    success: action.success,
+                    items: action.response.items,
                     sortBy: action.sortBy,
                     sortDirection: action.sortDirection
                 }
@@ -73,28 +75,30 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     
     useEffect(() => {
-        getItems(initialState.limit, initialState.startIndex).then(response => {
+        getItems(initialState.limit, initialState.startIndex, initialState.sortBy, initialState.sortDirection).then(response => {
             dispatch({type: 'get_users', response, success: true});
         });
-    }, [getItems, initialState.limit, initialState.startIndex]);
+    }, [getItems, initialState.limit, initialState.startIndex, initialState.sortBy, initialState.sortDirection]);
     
     const handlePageChange = selectedPage => {
         const startIndex = (selectedPage - 1) * state.limit;
-        getItems(state.limit, startIndex).then(response => {
+        getItems(state.limit, startIndex, state.sortBy, state.sortDirection).then(response => {
             dispatch({type: 'change_page', response, selectedPage, startIndex, success: true});
         });
     };
     
     const handlePageSizeChange = e => {
         const limit = Number(e.target.value);
-        getItems(limit, 0).then(response => {
+        getItems(limit, 0, state.sortBy, state.sortDirection).then(response => {
             dispatch({type: 'change_page_size', response, selectedPage: 1, startIndex: 0, limit, success: true});
         });
     };
     
     const handleSort = (column, direction) => {
-        console.log('dispatch with', column, direction);
-        dispatch({type: 'set_sort', sortBy: column, sortDirection: direction});
+        
+        getItems(state.limit, state.startIndex, column, direction).then(response => {
+            dispatch({type: 'set_sort', response, sortBy: column, sortDirection: direction, success: true});
+        });
     };
     
     const isSortIconActive = (column, direction) => (

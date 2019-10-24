@@ -14,8 +14,8 @@ export const UserList = () => {
         {key: 'email', name: 'Email'}
     ];
     
-    const getUsers = (limit, offset) => (
-        userService.getUsers(limit, offset)
+    const getUsers = (...args) => (
+        userService.getUsers(...args)
     );
     
     const rowRenderer = ({id, userName, firstName, lastName, email}) => (

@@ -8,12 +8,12 @@ const bcrypt = require('bcrypt');
 const EXPIRATION = '30m';
 const SECRET = 'secret';
 
-router.get('/:limit/:offset', isAuthenticated, (req, res, next) => {
+router.get('/:limit/:offset/:order/:direction', isAuthenticated, (req, res, next) => {
   
   const countCall = User.getUserCount();
   
-  const { limit, offset } = req.params;
-  const userCall = User.getUsers(Number(limit), Number(offset));
+  const { limit, offset, order, direction } = req.params;
+  const userCall = User.getUsers(Number(limit), Number(offset), order, direction);
   
   Promise.all([countCall, userCall]).then((values) => {
     const users = { count: values[0][0]['u'], items: values[1] };

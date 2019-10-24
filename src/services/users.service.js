@@ -1,9 +1,9 @@
 import api  from '../utils/api';
 
 
-const getUsers = (limit, offset) => (
+const getUsers = (limit, offset, order, direction) => (
     api
-        .get(`/api/v1/users/${limit}/${offset}`)
+        .get(`/api/v1/users/${limit}/${offset}/${order}/${direction}`)
         .then(users => { return users.users })
 );
 
