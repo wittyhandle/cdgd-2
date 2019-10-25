@@ -15,22 +15,21 @@ export const Dropdown = props => {
 
     return (
         <li className={'nav-item btn-rotate dropdown ' + dropdownState.cssClass }>
-            <a
-                className={'nav-link dropdown-toggle'}
+            <button
+                className={'nav-link dropdown-toggle btn-link'}
                 href={'#'}
                 onClick={onDropDownToggle}
                 data-toggle='dropdown'
                 aria-expanded={dropdownState.isExpanded}>
                 <i className={'nc-icon'}/>
                 <p><span className={'d-md-block'}>{props.title}</span></p>
-            </a>
+            </button>
             <div className={'dropdown-menu dropdown-menu-right ' + dropdownState.cssClass}>
                 {props.items.map((i, index) => (
-                    <a
+                    <button
                         key={index}
-                        className='dropdown-item'
-                        href='#'
-                        onClick={i.handler}>{i.title}</a>
+                        className='dropdown-item ButtonLink'
+                        onClick={i.handler}>{i.title}</button>
                 ))}
             </div>
         </li>

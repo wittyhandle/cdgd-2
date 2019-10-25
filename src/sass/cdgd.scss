@@ -1,6 +1,6 @@
 @import 'paper-dashboard/variables';
 
-a:focus {
+a:focus, button.btn-link {
   outline: none !important;
   box-shadow: none !important;
 }
@@ -38,6 +38,9 @@ a:focus {
         margin-right: 8px;
       }
 
+    }
+    .nav-link.btn-link {
+      font-size: inherit;
     }
   }
 }
