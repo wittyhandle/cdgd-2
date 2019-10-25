@@ -3,18 +3,15 @@ import PropTypes from 'prop-types';
 
 export const PaginationControls = ({total, pageSize, currentPage, onPageChange, fromRecord, toRecord}) => {
     
-    const handlePageChange = e => {
-        e.preventDefault();
-        onPageChange(Number(e.target.text));
+    const handlePageChange = page => {
+        onPageChange(page);
     };
     
-    const handlePreviousClick = e => {
-        e.preventDefault();
+    const handlePreviousClick = () => {
         onPageChange(currentPage - 1);
     };
     
-    const handleNextClick = e => {
-        e.preventDefault();
+    const handleNextClick = () => {
         onPageChange(currentPage + 1);
     };
     
@@ -32,23 +29,24 @@ export const PaginationControls = ({total, pageSize, currentPage, onPageChange, 
                     <ul className={'pagination pull-right'}>
                         
                         <li className={'page-item' + (currentPage === 1 ? ' text-muted disabled' : '')}>
-                            <a href={'#'}
-                               className={'page-link' + (currentPage !== 1 ? ' text-info' : '')}
-                               onClick={handlePreviousClick}>Previous</a>
+                            <button
+                                className={'page-link btn-link' + (currentPage !== 1 ? ' text-info' : '')}
+                                onClick={handlePreviousClick}>Previous</button>
+                            
                         </li>
                         
                         {[...Array(linkCount)].map((n, i) => (
                             <li key={i} className={'page-item' + (i === (currentPage - 1) ? ' active' : '')}>
-                                <a href={'#'}
-                                   className={'page-link' + (i !== (currentPage - 1) ? ' text-info' : '')}
-                                   onClick={handlePageChange}>{i + 1}</a>
+                                <button
+                                    className={'page-link btn-link' + (i !== (currentPage - 1) ? ' text-info' : '')}
+                                    onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
                             </li>
                         ))}
                         
                         <li className={'page-item' + (currentPage === linkCount ? ' text-muted disabled' : '')}>
-                            <a href={'#'}
-                               className={'page-link' + (currentPage !== linkCount ? ' text-info' : '')}
-                               onClick={handleNextClick}>Next</a>
+                            <button
+                                className={'page-link btn-link' + (currentPage !== linkCount ? ' text-info' : '')}
+                                onClick={handleNextClick}>Next</button>
                         </li>
                     </ul>
                 </div>
