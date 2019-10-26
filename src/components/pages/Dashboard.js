@@ -1,15 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import {worksService} from '../../services';
+import React from 'react';
 
 export const Dashboard = () => {
-
-    const [works, setWorks] = useState([]);
-
-    useEffect(() => {
-        worksService.getWorks().then(works => {
-            console.log(works);
-        });
-    });
 
     return (
         <div>I am in the dashboard</div>

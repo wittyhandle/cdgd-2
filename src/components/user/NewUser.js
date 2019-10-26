@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import React, {useState} from 'react';
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
@@ -8,7 +9,7 @@ import {FeedbackPanel} from '../forms/FeedbackPanel';
 import {Field, Submit} from '..';
 
 export const NewUser = props => {
-
+    
     const [isUserFormVisible, setUserFormVisible] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
 

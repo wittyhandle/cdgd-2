@@ -5,7 +5,7 @@ export const Sidebar = () => {
     return (
         <div className={'sidebar'} data-color='white' data-active-color='info'>
             <div className={'logo'}>
-                <a className={'simple-text logo-normal'}>CDGD</a>
+                <a href={'/'} className={'simple-text logo-normal'}>CDGD</a>
             </div>
             <div className={'sidebar-wrapper'}>
                 <ul className={'nav'}>
