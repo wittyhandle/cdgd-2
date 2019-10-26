@@ -10,6 +10,7 @@ export const ThreePaned = props => {
     const items = [
         {
             title: 'Logout',
+			path: '/',
             handler: () => {
                 authenticationService.logout();
                 return <Redirect to={{ pathname: '/login'}} />

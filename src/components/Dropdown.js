@@ -17,7 +17,6 @@ export const Dropdown = props => {
         <li className={'nav-item btn-rotate dropdown ' + dropdownState.cssClass }>
             <button
                 className={'nav-link dropdown-toggle btn-link'}
-                href={'#'}
                 onClick={onDropDownToggle}
                 data-toggle='dropdown'
                 aria-expanded={dropdownState.isExpanded}>
@@ -26,10 +25,7 @@ export const Dropdown = props => {
             </button>
             <div className={'dropdown-menu dropdown-menu-right ' + dropdownState.cssClass}>
                 {props.items.map((i, index) => (
-                    <button
-                        key={index}
-                        className='dropdown-item ButtonLink'
-                        onClick={i.handler}>{i.title}</button>
+                    <a key={index} className={'dropdown-item'} href={i.path} onClick={i.handler}>{i.title}</a>
                 ))}
             </div>
         </li>
@@ -39,10 +35,11 @@ export const Dropdown = props => {
 
 Dropdown.propTypes = {
     title: PropTypes.string,
-    items: PropTypes.arrayOf(
+	items: PropTypes.arrayOf(
         PropTypes.shape(
             {
                 title: PropTypes.string,
+				path: PropTypes.string,
                 handler: PropTypes.func
             }
         )
