@@ -108,6 +108,23 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
     const fromRecord = state.currentPage === 1 ? 1 : ((state.currentPage - 1) * state.limit) + 1;
     const toRecord = Math.min(state.currentPage * state.limit, state.total);
     
+    const renderSortIcon = h => {
+		if (h.sortable === false) {
+			return;
+		}
+		return (
+			<div className={'sorts'}>
+				<div onClick={() => handleSort(h.key, 'asc')} className={'up' + isSortIconActive(h.key, 'asc')}>
+					<FontAwesomeIcon icon={'sort-up'}  />
+				</div>
+				<div onClick={() => handleSort(h.key, 'desc')}  className={'down' + isSortIconActive(h.key, 'desc')}>
+					<FontAwesomeIcon icon={'sort-down'} />
+				</div>
+			</div>
+		);
+		
+	};
+    
     return (
         <div className={'cdgd-pagination bootstrap-table'}>
             <PaginationPageSize onPageSizeChange={handlePageSizeChange}/>
@@ -118,14 +135,7 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                         {headers.map(h => (
                             <th key={h.key} className={h.size || ''}>
                                 {h.name}
-                                <div className={'sorts'}>
-                                    <div onClick={() => handleSort(h.key, 'asc')} className={'up' + isSortIconActive(h.key, 'asc')}>
-                                        <FontAwesomeIcon icon={'sort-up'}  />
-                                    </div>
-                                    <div onClick={() => handleSort(h.key, 'desc')}  className={'down' + isSortIconActive(h.key, 'desc')}>
-                                        <FontAwesomeIcon icon={'sort-down'} />
-                                    </div>
-                                </div>
+								{renderSortIcon(h)}
                             </th>
                         ))}
                     </tr>

@@ -7,11 +7,12 @@ import {userService} from '../../services';
 export const UserList = () => {
 
     const headers = [
-        {key: 'id', name: 'Id', 'size': 'narrow'},
+        {key: 'id', name: 'Id', size: 'narrow'},
         {key: 'username', name: 'Username'},
         {key: 'firstName', name: 'First Name'},
         {key: 'lastName', name: 'Last Name'},
-        {key: 'email', name: 'Email'}
+        {key: 'email', name: 'Email'},
+        {key: 'actions', name: 'Actions', sortable: false}
     ];
     
     const getUsers = (...args) => (
@@ -25,6 +26,11 @@ export const UserList = () => {
             <td>{firstName}</td>
             <td>{lastName}</td>
             <td>{email}</td>
+			<td>
+				<button className={'btn-link'}>
+					<i className={'nc-icon nc-simple-remove'}/>
+				</button>
+			</td>
         </tr>
     );
     

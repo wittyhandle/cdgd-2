@@ -31,8 +31,7 @@ export const PaginationControls = ({total, pageSize, currentPage, onPageChange, 
                         <li className={'page-item' + (currentPage === 1 ? ' text-muted disabled' : '')}>
                             <button
                                 className={'page-link btn-link' + (currentPage !== 1 ? ' text-info' : '')}
-                                onClick={handlePreviousClick}>Previous</button>
-                            
+                                onClick={handlePreviousClick}><i className={'nc-icon nc-minimal-left'}/></button>
                         </li>
                         
                         {[...Array(linkCount)].map((n, i) => (
@@ -46,7 +45,7 @@ export const PaginationControls = ({total, pageSize, currentPage, onPageChange, 
                         <li className={'page-item' + (currentPage === linkCount ? ' text-muted disabled' : '')}>
                             <button
                                 className={'page-link btn-link' + (currentPage !== linkCount ? ' text-info' : '')}
-                                onClick={handleNextClick}>Next</button>
+                                onClick={handleNextClick}><i className={'nc-icon nc-minimal-right'}/></button>
                         </li>
                     </ul>
                 </div>
