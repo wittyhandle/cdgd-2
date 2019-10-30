@@ -1,19 +1,17 @@
-import React, {useEffect, useReducer} from 'react';
+import React, {useReducer} from 'react';
 import PropTypes from 'prop-types';
 import {PaginationControls} from './index';
 import {PaginationPageSize} from './index';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-export const PaginatedList = ({getItems, headers, rowRenderer}) => {
+export const PaginatedList = ({itemsQueryer, total, headers, rowRenderer, items}) => {
     
     const initialState = {
-        items: [],
         isLoaded: false,
         success: false,
         limit: 10,
         startIndex: 0,
         currentPage: 1,
-        total: 0,
         fromRecord: 0,
         toRecord: 0,
         sortBy: 'id',
@@ -22,21 +20,12 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
     
     const reducer = (state, action) => {
     
-        switch(action.type) {
-            case 'get_users': {
+    	switch(action.type) {
+      
+    		case 'change_page': {
                 return {
                     ...state,
                     success: action.success,
-                    isLoaded: true,
-                    items: action.response.items,
-                    total: action.response.count
-                }
-            }
-            case 'change_page': {
-                return {
-                    ...state,
-                    success: action.success,
-                    items: action.response.items,
                     currentPage: action.selectedPage,
                     startIndex: action.startIndex,
                     fromRecord: action.fromRecord,
@@ -47,7 +36,6 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                 return {
                     ...state,
                     success: action.success,
-                    items: action.response.items,
                     currentPage: action.selectedPage,
                     startIndex: action.startIndex,
                     limit: action.limit,
@@ -56,11 +44,9 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                 }
             }
             case 'set_sort': {
-                console.log('set sort with action', action);
                 return {
                     ...state,
                     success: action.success,
-                    items: action.response.items,
                     sortBy: action.sortBy,
                     sortDirection: action.sortDirection
                 }
@@ -74,30 +60,23 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
     
     const [state, dispatch] = useReducer(reducer, initialState);
     
-    useEffect(() => {
-        getItems(initialState.limit, initialState.startIndex, initialState.sortBy, initialState.sortDirection).then(response => {
-            dispatch({type: 'get_users', response, success: true});
-        });
-    }, [getItems, initialState.limit, initialState.startIndex, initialState.sortBy, initialState.sortDirection]);
-    
     const handlePageChange = selectedPage => {
         const startIndex = (selectedPage - 1) * state.limit;
-        getItems(state.limit, startIndex, state.sortBy, state.sortDirection).then(response => {
-            dispatch({type: 'change_page', response, selectedPage, startIndex, success: true});
+		itemsQueryer(state.limit, startIndex, state.sortBy, state.sortDirection).then(() => {
+            dispatch({type: 'change_page', selectedPage, startIndex, success: true});
         });
     };
     
     const handlePageSizeChange = e => {
         const limit = Number(e.target.value);
-        getItems(limit, 0, state.sortBy, state.sortDirection).then(response => {
-            dispatch({type: 'change_page_size', response, selectedPage: 1, startIndex: 0, limit, success: true});
+		itemsQueryer(limit, 0, state.sortBy, state.sortDirection).then(() => {
+            dispatch({type: 'change_page_size', selectedPage: 1, startIndex: 0, limit, success: true});
         });
     };
     
     const handleSort = (column, direction) => {
-        
-        getItems(state.limit, state.startIndex, column, direction).then(response => {
-            dispatch({type: 'set_sort', response, sortBy: column, sortDirection: direction, success: true});
+		itemsQueryer(state.limit, state.startIndex, column, direction).then(() => {
+            dispatch({type: 'set_sort', sortBy: column, sortDirection: direction, success: true});
         });
     };
     
@@ -106,7 +85,7 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
     );
     
     const fromRecord = state.currentPage === 1 ? 1 : ((state.currentPage - 1) * state.limit) + 1;
-    const toRecord = Math.min(state.currentPage * state.limit, state.total);
+    const toRecord = Math.min(state.currentPage * state.limit, total);
     
     const renderSortIcon = h => {
 		if (h.sortable === false) {
@@ -122,7 +101,6 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
 				</div>
 			</div>
 		);
-		
 	};
     
     return (
@@ -133,7 +111,7 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                     <thead className={'text-info'}>
                     <tr>
                         {headers.map(h => (
-                            <th key={h.key} className={h.size || ''}>
+                            <th key={h.key} className={h.css || ''}>
                                 {h.name}
 								{renderSortIcon(h)}
                             </th>
@@ -141,14 +119,14 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {state.items.map((user) => (
-                        rowRenderer(user)
+                    {items.map((item) => (
+                        rowRenderer(item)
                     ))}
                     </tbody>
                 </table>
             </div>
             <PaginationControls
-                total={state.total}
+                total={total}
                 pageSize={state.limit}
                 currentPage={state.currentPage}
                 fromRecord={fromRecord}
@@ -161,7 +139,10 @@ export const PaginatedList = ({getItems, headers, rowRenderer}) => {
 };
 
 PaginatedList.propTypes = {
-    headers: PropTypes.arrayOf(PropTypes.shape({key: PropTypes.string, name: PropTypes.string, size: PropTypes.string})),
-    getItems: PropTypes.func,
-    rowRenderer: PropTypes.func
+	items: PropTypes.arrayOf(PropTypes.shape({})),
+	queryParams: PropTypes.shape({limit: PropTypes.string, startIndex: PropTypes.number, sortBy: PropTypes.string, sortDirection: PropTypes.string}),
+    headers: PropTypes.arrayOf(PropTypes.shape({key: PropTypes.string, name: PropTypes.string, css: PropTypes.string})),
+	itemsQueryer: PropTypes.func,
+    rowRenderer: PropTypes.func,
+	total: PropTypes.number
 };
