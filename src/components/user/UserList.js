@@ -14,13 +14,16 @@ export const UserList = ({users, total, queryUsers}) => {
         {key: 'actions', name: 'Actions', sortable: false, css: 'text-center'}
     ];
     
-    const rowRenderer = ({id, userName, firstName, lastName, email}) => (
-        <tr key={id}>
-            <td className={'text-center'}>{id}</td>
-            <td>{userName}</td>
-            <td>{firstName}</td>
-            <td>{lastName}</td>
-            <td>{email}</td>
+    const rowRenderer = ({id, userName, firstName, lastName, email, highlight}) => {
+		
+    	const klass = highlight ? 'table-success' : '';
+    	
+    	return (<tr key={id} className={klass}>
+			<td className={'text-center'}>{id}</td>
+			<td>{userName}</td>
+			<td>{firstName}</td>
+			<td>{lastName}</td>
+			<td>{email}</td>
 			<td>
 				<div className={'text-center'}>
 					<button className={'btn-link'}>
@@ -28,15 +31,15 @@ export const UserList = ({users, total, queryUsers}) => {
 					</button>
 				</div>
 			</td>
-        </tr>
-    );
+		</tr>)
+	};
     
     return (
         <PaginatedList
 			items={users}
 			total={total}
             headers={headers}
-            itemsQueryer={queryUsers}
+            getItemsHandler={queryUsers}
             rowRenderer={rowRenderer}/>
     )
 };

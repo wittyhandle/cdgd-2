@@ -4,7 +4,7 @@ import {PaginationControls} from './index';
 import {PaginationPageSize} from './index';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-export const PaginatedList = ({itemsQueryer, total, headers, rowRenderer, items}) => {
+export const PaginatedList = ({getItemsHandler, total, headers, rowRenderer, items}) => {
     
     const initialState = {
         isLoaded: false,
@@ -62,20 +62,20 @@ export const PaginatedList = ({itemsQueryer, total, headers, rowRenderer, items}
     
     const handlePageChange = selectedPage => {
         const startIndex = (selectedPage - 1) * state.limit;
-		itemsQueryer(state.limit, startIndex, state.sortBy, state.sortDirection).then(() => {
+		getItemsHandler(state.limit, startIndex, state.sortBy, state.sortDirection).then(() => {
             dispatch({type: 'change_page', selectedPage, startIndex, success: true});
         });
     };
     
     const handlePageSizeChange = e => {
         const limit = Number(e.target.value);
-		itemsQueryer(limit, 0, state.sortBy, state.sortDirection).then(() => {
+		getItemsHandler(limit, 0, state.sortBy, state.sortDirection).then(() => {
             dispatch({type: 'change_page_size', selectedPage: 1, startIndex: 0, limit, success: true});
         });
     };
     
     const handleSort = (column, direction) => {
-		itemsQueryer(state.limit, state.startIndex, column, direction).then(() => {
+		getItemsHandler(state.limit, state.startIndex, column, direction).then(() => {
             dispatch({type: 'set_sort', sortBy: column, sortDirection: direction, success: true});
         });
     };
@@ -107,7 +107,7 @@ export const PaginatedList = ({itemsQueryer, total, headers, rowRenderer, items}
         <div className={'cdgd-pagination bootstrap-table'}>
             <PaginationPageSize onPageSizeChange={handlePageSizeChange}/>
             <div className={'table-responsive fixed-table-container'}>
-                <table className={'table'}>
+                <table className={'table table-hover'}>
                     <thead className={'text-info'}>
                     <tr>
                         {headers.map(h => (
@@ -142,7 +142,7 @@ PaginatedList.propTypes = {
 	items: PropTypes.arrayOf(PropTypes.shape({})),
 	queryParams: PropTypes.shape({limit: PropTypes.string, startIndex: PropTypes.number, sortBy: PropTypes.string, sortDirection: PropTypes.string}),
     headers: PropTypes.arrayOf(PropTypes.shape({key: PropTypes.string, name: PropTypes.string, css: PropTypes.string})),
-	itemsQueryer: PropTypes.func,
+	getItemsHandler: PropTypes.func,
     rowRenderer: PropTypes.func,
 	total: PropTypes.number
 };

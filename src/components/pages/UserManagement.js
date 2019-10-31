@@ -15,7 +15,8 @@ export const UserManagement = () => {
 	
 		switch (action.type) {
 			
-			case 'load_users': {
+			case 'load_users':
+			case 'new_user': {
 				return {
 					...state,
 					users: action.users,
@@ -41,6 +42,11 @@ export const UserManagement = () => {
 		})
 	);
 	
+	const newUserHandler = user => {
+		user.highlight = true;
+		dispatch({type: 'new_user', users: [user, ...state.users], total: state.total + 1});
+	};
+	
     return (
 
         <div className={'row'}>
@@ -48,7 +54,7 @@ export const UserManagement = () => {
                 <Card title={'User Management'}>
                     {() => (
                         <>
-                            <NewUser/>
+                            <NewUser newUserHandler={newUserHandler}/>
 							<UserList users={state.users} total={state.total} queryUsers={queryUsers}/>
                         </>
                     )}
