@@ -7,11 +7,13 @@ import {userService} from '../../services';
 
 import {FeedbackPanel} from '../forms/FeedbackPanel';
 import {Field, Submit} from '..';
+import {Button} from 'react-bootstrap';
 
 export const NewUser = props => {
     
     const [isUserFormVisible, setUserFormVisible] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
+    const [newUserLabel, setNewUserLabel] = useState('New User');
 
     const specialCharacters = '!@#$%';
     const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
@@ -21,7 +23,9 @@ export const NewUser = props => {
     const handleNewUserClick = (e) => {
         e && e.preventDefault();
         const isVisible = isUserFormVisible === '' ? 'visible' : '';
+        const newUserLabel = isUserFormVisible === '' ? 'Cancel' : 'New User';
         setUserFormVisible(isVisible);
+        setNewUserLabel(newUserLabel);
     };
 
     const saveUser = (user, reset, setSubmitting, setFieldError) => {
@@ -47,10 +51,10 @@ export const NewUser = props => {
     return (
         <div className={'row'}>
             <div className={'col-lg-2'}>
-                <button className={'btn btn-info'} onClick={handleNewUserClick}>
-                    <i className={'nc-icon nc-simple-add'}/>
-                    New User
-                </button>
+                <Button className={'btn btn-info'} variant="primary" onClick={handleNewUserClick} block>
+					<i className={'nc-icon nc-simple-add'}/>
+					{newUserLabel}
+				</Button>
             </div>
 
             <Formik

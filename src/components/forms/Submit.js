@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Spinner} from './Spinner';
+import {Button} from 'react-bootstrap';
 
 export const Submit = props => {
 
     const spinner = props.isSubmitting ? <Spinner/> : '';
 
     return (
-        <button
-            type='submit'
-            className={'btn btn-primary'}
-            disabled={props.isSubmitting}
-        >
-            {props.title}
-            {spinner}
-        </button>
+		<Button
+			variant={'primary'}
+			type={'submit'}
+			className={'btn btn-info'}
+			disabled={props.isSubmitting}>
+			{props.title}
+			{spinner}
+		</Button>
     )
 };
 
