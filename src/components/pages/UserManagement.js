@@ -36,6 +36,7 @@ export const UserManagement = () => {
 				return {
 					...state,
 					users: action.users,
+					total: action.total,
 					toDelete: {}
 				}
 			}
@@ -70,16 +71,15 @@ export const UserManagement = () => {
 		dispatch({type: 'new_user', users: [user, ...state.users], total: state.total + 1});
 	};
 	
-	const deleteUserHandler = id => {
+	const promptDeleteHandler = id => {
 		const toDelete = state.users.find((u) => u.id === id);
 		dispatch({type: 'delete_prompt', toDelete});
 	};
 	
 	const doUserDelete = () => {
-		
 		userService.deleteUser(state.toDelete.id).then(() => {
 			const users = state.users.filter((u) => u.id !== state.toDelete.id);
-			dispatch({type: 'delete_user', users});
+			dispatch({type: 'delete_user', users, total: state.total - 1});
 		});
 	};
 	
@@ -95,7 +95,7 @@ export const UserManagement = () => {
                     {() => (
                         <>
                             <NewUser newUserHandler={newUserHandler}/>
-							<UserList users={state.users} total={state.total} queryUsers={queryUsers} deleteUserHandler={deleteUserHandler}/>
+							<UserList users={state.users} total={state.total} queryUsers={queryUsers} promptDeleteHandler={promptDeleteHandler}/>
                         </>
                     )}
                 </Card>

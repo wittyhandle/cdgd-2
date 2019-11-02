@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {PaginatedList} from '../PaginatedList';
 
 
-export const UserList = ({users, total, queryUsers, deleteUserHandler}) => {
+export const UserList = ({users, total, queryUsers, promptDeleteHandler}) => {
 
 	const headers = [
         {key: 'id', name: 'Id', css: 'narrow text-center'},
@@ -26,7 +26,7 @@ export const UserList = ({users, total, queryUsers, deleteUserHandler}) => {
 			<td>{email}</td>
 			<td>
 				<div className={'text-center'}>
-					<button className={'btn-link'} onClick={() => deleteUserHandler(id)}>
+					<button className={'btn-link'} onClick={() => promptDeleteHandler(id)}>
 						<i className={'nc-icon nc-simple-remove'}/>
 					</button>
 				</div>
@@ -57,6 +57,6 @@ UserList.propTypes = {
         )
     ),
 	queryUsers: PropTypes.func,
-	deleteUserHandler: PropTypes.func,
+	promptDeleteHandler: PropTypes.func,
 	total: PropTypes.number
 };
