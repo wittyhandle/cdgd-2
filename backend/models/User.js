@@ -39,3 +39,9 @@ exports.getUserByUsername = userName => (
         .where({userName})
         .select(...userFields)
 );
+
+exports.deleteUser = id => (
+	knex('users')
+		.where('id', id)
+		.del()
+);

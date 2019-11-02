@@ -76,8 +76,11 @@ export const UserManagement = () => {
 	};
 	
 	const doUserDelete = () => {
-		const users = state.users.filter((u) => u.id !== state.toDelete.id);
-		dispatch({type: 'delete_user', users});
+		
+		userService.deleteUser(state.toDelete.id).then(() => {
+			const users = state.users.filter((u) => u.id !== state.toDelete.id);
+			dispatch({type: 'delete_user', users});
+		});
 	};
 	
 	const cancelUserDelete = () => {

@@ -26,7 +26,13 @@ const createUser = user => {
         });
 };
 
+const deleteUser = id => {
+	return api.delete(`/api/v1/users/${id}`)
+		.then(() => true)
+		.catch(() => false);
+};
+
 
 export const userService = {
-    isUnique, createUser, getUsers
+    isUnique, createUser, getUsers, deleteUser
 };
