@@ -3,12 +3,14 @@ import {UserList} from '../user/UserList';
 import {Card} from '../index';
 import {NewUser} from '../user/NewUser';
 import {userService} from '../../services';
+import {Modal} from '../Modal';
 
 export const UserManagement = () => {
 	
 	const initialState = {
 		users: [],
-		total: 0
+		total: 0,
+		toDelete: {}
 	};
 	
 	const reducer = (state, action) => {
@@ -21,6 +23,27 @@ export const UserManagement = () => {
 					...state,
 					users: action.users,
 					total: action.total
+				}
+			}
+			case 'delete_prompt': {
+				return {
+					...state,
+					toDelete: action.toDelete
+				}
+			}
+			
+			case 'delete_user': {
+				return {
+					...state,
+					users: action.users,
+					toDelete: {}
+				}
+			}
+			
+			case 'cancel_delete_user': {
+				return {
+					...state,
+					toDelete: {}
 				}
 			}
 			
@@ -47,6 +70,20 @@ export const UserManagement = () => {
 		dispatch({type: 'new_user', users: [user, ...state.users], total: state.total + 1});
 	};
 	
+	const deleteUserHandler = id => {
+		const toDelete = state.users.find((u) => u.id === id);
+		dispatch({type: 'delete_prompt', toDelete});
+	};
+	
+	const doUserDelete = () => {
+		const users = state.users.filter((u) => u.id !== state.toDelete.id);
+		dispatch({type: 'delete_user', users});
+	};
+	
+	const cancelUserDelete = () => {
+		dispatch({type: 'cancel_delete_user'});
+	};
+	
     return (
 
         <div className={'row'}>
@@ -55,11 +92,17 @@ export const UserManagement = () => {
                     {() => (
                         <>
                             <NewUser newUserHandler={newUserHandler}/>
-							<UserList users={state.users} total={state.total} queryUsers={queryUsers}/>
+							<UserList users={state.users} total={state.total} queryUsers={queryUsers} deleteUserHandler={deleteUserHandler}/>
                         </>
                     )}
                 </Card>
             </div>
+			<Modal
+				show={!!state.toDelete.id}
+				title={'Delete User?'}
+				body={`Are you sure you want to delete <strong>${state.toDelete.firstName}</strong> with id <strong>${state.toDelete.id}</strong>?`}
+				handleAction={doUserDelete}
+				handleClose={cancelUserDelete}/>
         </div>
     )
 };
