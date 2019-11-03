@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {PaginatedList} from '../PaginatedList';
+import {Button} from 'react-bootstrap';
 
 
 export const UserList = ({users, total, queryUsers, promptDeleteHandler}) => {
@@ -26,9 +27,12 @@ export const UserList = ({users, total, queryUsers, promptDeleteHandler}) => {
 			<td>{email}</td>
 			<td>
 				<div className={'text-center'}>
-					<button className={'btn-link'} onClick={() => promptDeleteHandler(id)}>
+					<Button
+						className={'no-hover'}
+						variant={'link'}
+						onClick={() => promptDeleteHandler(id)}>
 						<i className={'nc-icon nc-simple-remove'}/>
-					</button>
+					</Button>
 				</div>
 			</td>
 		</tr>)
