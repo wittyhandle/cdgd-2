@@ -10,7 +10,13 @@ export const UserManagement = () => {
 	const initialState = {
 		users: [],
 		total: 0,
-		toDelete: {}
+		toDelete: {},
+		toEdit: {
+			userName: '',
+			firstName: '',
+			lastName: '',
+			email: ''
+		}
 	};
 	
 	const reducer = (state, action) => {
@@ -31,7 +37,6 @@ export const UserManagement = () => {
 					toDelete: action.toDelete
 				}
 			}
-			
 			case 'delete_user': {
 				return {
 					...state,
@@ -40,14 +45,18 @@ export const UserManagement = () => {
 					toDelete: {}
 				}
 			}
-			
 			case 'cancel_delete_user': {
 				return {
 					...state,
 					toDelete: {}
 				}
 			}
-			
+			case 'load_edit_user': {
+				return {
+					...state,
+					toEdit: action.toEdit
+				}
+			}
 			default: {
 				return state;
 			}
@@ -87,6 +96,11 @@ export const UserManagement = () => {
 		dispatch({type: 'cancel_delete_user'});
 	};
 	
+	const doUserEdit = id => {
+		const toEdit = state.users.find((u) => u.id === id);
+		dispatch({type: 'load_edit_user', toEdit});
+	};
+	
     return (
 
         <div className={'row'}>
@@ -94,8 +108,15 @@ export const UserManagement = () => {
                 <Card title={'User Management'}>
                     {() => (
                         <>
-                            <NewUser newUserHandler={newUserHandler}/>
-							<UserList users={state.users} total={state.total} queryUsers={queryUsers} promptDeleteHandler={promptDeleteHandler}/>
+                            <NewUser
+								newUserHandler={newUserHandler}
+								userToEdit={state.toEdit}/>
+							<UserList
+								users={state.users}
+								total={state.total}
+								queryUsers={queryUsers}
+								promptDeleteHandler={promptDeleteHandler}
+								editUserHandler={doUserEdit}/>
                         </>
                     )}
                 </Card>

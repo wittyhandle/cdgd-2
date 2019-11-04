@@ -179,6 +179,10 @@
 	font-weight: bold;
 }
 
-.no-hover.btn.btn-link:hover {
+.fa-pencil-alt {
+	color: $info-color;
+}
+
+.no-hover.btn.btn-link:hover, .no-hover.btn.btn-link:focus {
 	background-color: transparent !important;
 }

@@ -3,7 +3,8 @@ import {
     faSort,
     faSortDown,
     faSortUp,
-    faSpinner
+    faSpinner,
+	faPencilAlt
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -11,5 +12,6 @@ library.add(
     faSort,
     faSortUp,
     faSortDown,
-    faSort
+    faSort,
+	faPencilAlt
 );

@@ -7,7 +7,11 @@ export const Field = props => {
         <div className={props.colCss}>
             <div className={'form-group'}>
                 <label htmlFor={props.name}>{props.label}</label>
-                <FormikField type={props.type} name={props.name} className={'form-control'}/>
+                <FormikField
+					type={props.type}
+					name={props.name}
+					value={props.value}
+					className={'form-control'}/>
             </div>
         </div>
     )
@@ -17,6 +21,7 @@ Field.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     label: PropTypes.string,
+	value: PropTypes.string,
     colCss: PropTypes.string
 };
 

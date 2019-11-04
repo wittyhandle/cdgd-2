@@ -1,5 +1,5 @@
 /* eslint-disable no-template-curly-in-string */
-import React, {useState} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
@@ -9,36 +9,90 @@ import {FeedbackPanel} from '../forms/FeedbackPanel';
 import {Field, Submit} from '..';
 import {Button} from 'react-bootstrap';
 
-export const NewUser = props => {
+export const NewUser = ({newUserHandler, userToEdit}) => {
     
-    const [isUserFormVisible, setUserFormVisible] = useState('');
-    const [showSuccess, setShowSuccess] = useState(false);
-    const [newUserLabel, setNewUserLabel] = useState('New User');
+    const initialState = {
+    	isFormVisible: false,
+		showSuccess: false,
+		buttonLabel: 'New User',
+		isEditMode: false
+	};
+    
+    const reducer = (state, action) => {
+    
+    	switch (action.type) {
+		
+			case 'load_edit_form': {
+				return {
+					...state,
+					isFormVisible: true,
+					buttonLabel: 'Cancel',
+					isEditMode: true
+				}
+			}
+			case 'toggle_form': {
+				return {
+					...state,
+					isFormVisible: !state.isFormVisible,
+					buttonLabel: !state.isFormVisible ? 'Cancel' : 'New User',
+					isEditMode: state.isFormVisible && state.isEditMode
+				}
+			}
+			case 'user_saved': {
+				return {
+					...state,
+					showSuccess: true
+				}
+			}
+			case 'retract_form': {
+				return {
+					...state,
+					showSuccess: false,
+					isFormVisible: false
+				}
+			}
+			default: {
+				return state;
+			}
+		}
+	};
+	
+	const [state, dispatch] = useReducer(reducer, initialState);
+    
+    useEffect(() => {
+    	if (userToEdit.id && userToEdit.id !== '') {
+			dispatch({type: 'load_edit_form'});
+		}
+	}, [userToEdit]);
 
     const specialCharacters = '!@#$%';
     const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
     const numberRegex = /^.*[0-9]+.*$/;
     const capitalRegex = /^.*[A-Z]+.*$/;
 
-    const handleNewUserClick = (e) => {
-        e && e.preventDefault();
-        const isVisible = isUserFormVisible === '' ? 'visible' : '';
-        const newUserLabel = isUserFormVisible === '' ? 'Cancel' : 'New User';
-        setUserFormVisible(isVisible);
-        setNewUserLabel(newUserLabel);
+    const toggleNewUserForm = (reset) => {
+        reset();
+        dispatch({type: 'toggle_form'});
     };
+    
+    const renderPasswordFields = ({password, password2}) => {
+    	return !state.isEditMode ?
+			(<div className={'row'}>
+				<Field name={'password'} label={'Password'} value={password} type={'password'} colCss={'col-lg-6'}/>
+				<Field name={'password2'} label={'Confirm Password'} value={password2} type={'password'} colCss={'col-lg-6'}/>
+			</div>) : '';
+	};
 
     const saveUser = (user, reset, setSubmitting, setFieldError) => {
         userService.createUser(user).then(r => {
-            setShowSuccess(true);
-
+            dispatch({type: 'user_saved'});
+			
             user.id = r;
-            props.newUserHandler(user);
+            newUserHandler(user);
 
             setTimeout(() => {
                 reset();
-                setShowSuccess(false);
-                handleNewUserClick();
+                dispatch({type: 'retract_form'});
             }, 2000);
 
         }).catch(e => {
@@ -47,44 +101,56 @@ export const NewUser = props => {
             setSubmitting(false);
         });
     };
+    
+    const getInitialUser = () => {
+    	return state.isEditMode ?
+			userToEdit :
+			{userName: '', email: '', firstName: '', lastName: '', password: '', password2: ''};
+	};
+    
+    const getValidationRules = () => {
+    	
+    	const rules = {
+			email: Yup.string()
+				.required('Email is required')
+				.email('Email is invalid'),
+			firstName: Yup.string()
+				.required('First name is required'),
+			lastName: Yup.string()
+				.required('Last name is required')
+		};
+    	
+    	const passwordRules = {
+			password: Yup.string()
+				.required('Password is required')
+				.min(8, 'Password must be at least ${min} characters long')
+				.max(20, 'Password must be less than ${max} characters long')
+				.test('password-chars', `Password must have at least one of ${specialCharacters}`, function (value) {
+					return value && value.match(specialCharRegex);
+				})
+				.test( 'password-nums', 'Password must have at least one number', function (value) {
+					return value && value.match(numberRegex);
+				})
+				.test( 'password-uppercase', 'Password must have at least one uppercase letter', function (value) {
+					return value && value.match(capitalRegex);
+				}),
+			password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+		};
+    	
+    	return state.isEditMode ?
+			Yup.object().shape(rules) :
+			Yup.object().shape({...rules, ...passwordRules });
+	};
 
     return (
         <div className={'row'}>
-            <div className={'col-lg-2'}>
-                <Button className={'btn btn-info'} variant="primary" onClick={handleNewUserClick} block>
-					<i className={'nc-icon nc-simple-add'}/>
-					{newUserLabel}
-				</Button>
-            </div>
-
+			
             <Formik
+				enableReinitialize={true}
                 validateOnBlur={false}
                 validateOnChange={false}
-                initialValues={{userName: '', email: '', firstName: '', lastName: '', password: '', password2: ''}}
-                validationSchema={Yup.object().shape({
-                    email: Yup.string()
-                    .required('Email is required')
-                    .email('Email is invalid'),
-                    firstName: Yup.string()
-                    .required('First name is required'),
-                    lastName: Yup.string()
-                    .required('Last name is required'),
-                    password: Yup.string()
-                    .required('Password is required')
-                    .min(8, 'Password must be at least ${min} characters long')
-                    .max(20, 'Password must be less than ${max} characters long')
-                    .test('password-chars', 'Password must have at least one of ' + specialCharacters, function (value) {
-                        return value && value.match(specialCharRegex);
-                    })
-                    .test( 'password-nums', 'Password must have at least one number', function (value) {
-                        return value && value.match(numberRegex);
-                    })
-                    .test( 'password-uppercase', 'Password must have at least one uppercase letter', function (value) {
-                        return value && value.match(capitalRegex);
-                    }),
-                    password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
-                })}
-
+                initialValues={getInitialUser()}
+                validationSchema={getValidationRules()}
                 // Handle userName validation here for async
                 validate={values => {
 
@@ -112,49 +178,53 @@ export const NewUser = props => {
                     saveUser(user, resetForm, setSubmitting, setFieldError);
                 }}
             >
-                {({ isSubmitting, errors }) => (
-
-                    <div className={'col-lg-10 new-user ' + isUserFormVisible}>
-
-                        <div className={'row'}>
-                            <div className={'col-lg-6 form-container'}>
-                                <Form>
-                                    <div className={'row'}>
-                                        <Field name={'userName'} label={'Username'} type={'text'} colCss={'col-lg-6'}/>
-                                        <Field name={'email'} label={'Email'} type={'email'} colCss={'col-lg-6'}/>
-                                    </div>
-                                    <div className={'row'}>
-                                        <Field name={'firstName'} label={'First Name'} type={'text'} colCss={'col-lg-6'}/>
-                                        <Field name={'lastName'} label={'Last Name'} type={'text'} colCss={'col-lg-6'}/>
-                                    </div>
-
-                                    <div className={'row'}>
-                                        <Field name={'password'} label={'Password'} type={'password'} colCss={'col-lg-6'}/>
-                                        <Field name={'password2'} label={'Confirm Password'} type={'password'} colCss={'col-lg-6'}/>
-                                    </div>
-                                    <div className={'row'}>
-                                        <div className={'col-lg-3 ml-auto mr-auto'}>
-                                            <Submit isSubmitting={isSubmitting} title={'Submit'}/>
-                                        </div>
-                                    </div>
-                                </Form>
-                            </div>
-                            <div className={'col-lg-3'}>
-                                <FeedbackPanel
-                                    showSuccess={showSuccess}
-                                    successMessage={'Success - User created'}
-                                    errors={errors} />
-                            </div>
-                        </div>
-                    </div>
+                {({ isSubmitting, errors, values, resetForm }) => (
+                	<>
+						<div className={'col-lg-2'}>
+							<Button className={'btn btn-info'} variant="primary" onClick={() => toggleNewUserForm(resetForm)} block>
+								<i className={'nc-icon nc-simple-add'}/>
+								{state.buttonLabel}
+							</Button>
+						</div>
+						
+						<div className={'col-lg-10 new-user ' + (state.isFormVisible ? 'visible' : '')}>
+							<div className={'row'}>
+								<div className={'col-lg-6 form-container'}>
+									<Form>
+										<div className={'row'}>
+											<Field name={'userName'} label={'Username'} value={values.userName} type={'text'} colCss={'col-lg-6'}/>
+											<Field name={'email'} label={'Email'} type={'email'} value={values.email} colCss={'col-lg-6'}/>
+										</div>
+										<div className={'row'}>
+											<Field name={'firstName'} label={'First Name'} value={values.firstName} type={'text'} colCss={'col-lg-6'}/>
+											<Field name={'lastName'} label={'Last Name'} value={values.lastName} type={'text'}  colCss={'col-lg-6'}/>
+										</div>
+	
+										{renderPasswordFields(values)}
+										
+										<div className={'row'}>
+											<div className={'col-lg-3 ml-auto mr-auto'}>
+												<Submit isSubmitting={isSubmitting} title={'Submit'}/>
+											</div>
+										</div>
+									</Form>
+								</div>
+								<div className={'col-lg-3'}>
+									<FeedbackPanel
+										showSuccess={state.showSuccess}
+										successMessage={'Success - User created'}
+										errors={errors} />
+								</div>
+							</div>
+						</div>
+					</>
                 )}
-
             </Formik>
-
         </div>
     )
 };
 
 NewUser.propTypes = {
-    newUserHandler: PropTypes.func
+    newUserHandler: PropTypes.func,
+	userToEdit: PropTypes.shape({})
 };

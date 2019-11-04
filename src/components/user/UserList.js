@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {PaginatedList} from '../PaginatedList';
 import {Button} from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 
-export const UserList = ({users, total, queryUsers, promptDeleteHandler}) => {
+export const UserList = ({users, total, queryUsers, promptDeleteHandler, editUserHandler}) => {
 
 	const headers = [
         {key: 'id', name: 'Id', css: 'narrow text-center'},
@@ -32,6 +33,12 @@ export const UserList = ({users, total, queryUsers, promptDeleteHandler}) => {
 						variant={'link'}
 						onClick={() => promptDeleteHandler(id)}>
 						<i className={'nc-icon nc-simple-remove'}/>
+					</Button>
+					<Button
+						className={'no-hover'}
+						variant={'link'}
+						onClick={() => editUserHandler(id)}>
+						<FontAwesomeIcon icon={'pencil-alt'}/>
 					</Button>
 				</div>
 			</td>
@@ -62,5 +69,6 @@ UserList.propTypes = {
     ),
 	queryUsers: PropTypes.func,
 	promptDeleteHandler: PropTypes.func,
+	editUserHandler: PropTypes.func,
 	total: PropTypes.number
 };
