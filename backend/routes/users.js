@@ -5,7 +5,7 @@ const isAuthenticated = require('../middleware/auth');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
-const EXPIRATION = '30m';
+const EXPIRATION = '300m';
 const SECRET = 'secret';
 
 router.get('/:limit/:offset/:order/:direction', isAuthenticated,
