@@ -19,7 +19,8 @@ exports.getUsers = (limit, offset, order, direction) => (
 );
 
 exports.getUserCount = () => (
-    knex('users').count('userName', {as: 'u'})
+    knex('users')
+		.count('userName', {as: 'u'})
 );
 
 exports.getUserCountByUsername = username => (
@@ -44,4 +45,10 @@ exports.deleteUser = id => (
 	knex('users')
 		.where('id', id)
 		.del()
+);
+
+exports.updateUser = (userName, user) => (
+	knex('users')
+		.where('userName', userName)
+		.update(user)
 );

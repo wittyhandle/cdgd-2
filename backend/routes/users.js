@@ -90,4 +90,16 @@ router.delete('/:id', isAuthenticated, (req, res, next) => {
 	}).catch(next);
 });
 
+router.put('/:username', isAuthenticated, (req, res, next) => {
+	
+	const {user} = req.body;
+	User.updateUser(req.params.username, user).then(r => {
+		res.json({
+			success: true,
+			username: req.params.username
+		});
+	}).catch(next);
+
+});
+
 module.exports = router;

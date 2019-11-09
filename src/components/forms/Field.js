@@ -11,6 +11,7 @@ export const Field = props => {
 					type={props.type}
 					name={props.name}
 					value={props.value}
+					disabled={props.disabled}
 					className={'form-control'}/>
             </div>
         </div>
@@ -22,6 +23,7 @@ Field.propTypes = {
     type: PropTypes.string,
     label: PropTypes.string,
 	value: PropTypes.string,
-    colCss: PropTypes.string
+    colCss: PropTypes.string,
+    disabled: PropTypes.bool
 };
 

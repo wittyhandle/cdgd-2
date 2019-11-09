@@ -9,7 +9,7 @@ import {FeedbackPanel} from '../forms/FeedbackPanel';
 import {Field, Submit} from '..';
 import {Button} from 'react-bootstrap';
 
-export const NewUser = ({newUserHandler, userToEdit}) => {
+export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
     
     const initialState = {
     	isFormVisible: false,
@@ -48,7 +48,8 @@ export const NewUser = ({newUserHandler, userToEdit}) => {
 				return {
 					...state,
 					showSuccess: false,
-					isFormVisible: false
+					isFormVisible: false,
+					buttonLabel: 'New User'
 				}
 			}
 			default: {
@@ -84,22 +85,35 @@ export const NewUser = ({newUserHandler, userToEdit}) => {
 	};
 
     const saveUser = (user, reset, setSubmitting, setFieldError) => {
-        userService.createUser(user).then(r => {
-            dispatch({type: 'user_saved'});
+     
+    	if (state.isEditMode) {
+    		const {userName} = user;
+    		userService.updateUser(userName, user).then(r => {
+				dispatch({type: 'user_saved'});
+				updateUserHandler(user);
+				setTimeout(() => {
+					reset();
+					dispatch({type: 'retract_form'});
+				}, 2000);
+			});
+		} else {
+			userService.createUser(user).then(r => {
+				dispatch({type: 'user_saved'});
 			
-            user.id = r;
-            newUserHandler(user);
-
-            setTimeout(() => {
-                reset();
-                dispatch({type: 'retract_form'});
-            }, 2000);
-
-        }).catch(e => {
-            setFieldError('userName', e.message);
-        }).finally(() => {
-            setSubmitting(false);
-        });
+				user.id = r;
+				newUserHandler(user);
+			
+				setTimeout(() => {
+					reset();
+					dispatch({type: 'retract_form'});
+				}, 2000);
+			
+			}).catch(e => {
+				setFieldError('userName', e.message);
+			}).finally(() => {
+				setSubmitting(false);
+			});
+		}
     };
     
     const getInitialUser = () => {
@@ -154,25 +168,27 @@ export const NewUser = ({newUserHandler, userToEdit}) => {
                 // Handle userName validation here for async
                 validate={values => {
 
-                    let errors = {};
-
-                    if (!values.userName) {
-                        errors.userName = 'Username is required';
-                        return errors;
-                    }
-
-                    return userService.isUnique(values.userName).then(isUnique => {
-                        if (isUnique) {
-                            return true;
-                        }
-                        errors.userName = 'Username must be unique';
-                    }).catch(() => {
-                        errors.userName = 'Server error, cannot determine uniqueness';
-                    }).finally(() => {
-                        if (Object.keys(errors).length) {
-                            throw errors;
-                        }
-                    });
+                    if (!state.isEditMode) {
+						let errors = {};
+	
+						if (!values.userName) {
+							errors.userName = 'Username is required';
+							return errors;
+						}
+	
+						return userService.isUnique(values.userName).then(isUnique => {
+							if (isUnique) {
+								return true;
+							}
+							errors.userName = 'Username must be unique';
+						}).catch(() => {
+							errors.userName = 'Server error, cannot determine uniqueness';
+						}).finally(() => {
+							if (Object.keys(errors).length) {
+								throw errors;
+							}
+						});
+					}
                 }}
                 onSubmit={(user, { setSubmitting, resetForm, setFieldError }) => {
                     saveUser(user, resetForm, setSubmitting, setFieldError);
@@ -192,7 +208,7 @@ export const NewUser = ({newUserHandler, userToEdit}) => {
 								<div className={'col-lg-6 form-container'}>
 									<Form>
 										<div className={'row'}>
-											<Field name={'userName'} label={'Username'} value={values.userName} type={'text'} colCss={'col-lg-6'}/>
+											<Field name={'userName'} label={'Username'} value={values.userName} disabled={state.isEditMode} type={'text'} colCss={'col-lg-6'}/>
 											<Field name={'email'} label={'Email'} type={'email'} value={values.email} colCss={'col-lg-6'}/>
 										</div>
 										<div className={'row'}>
@@ -226,5 +242,6 @@ export const NewUser = ({newUserHandler, userToEdit}) => {
 
 NewUser.propTypes = {
     newUserHandler: PropTypes.func,
+	updateUserHandler: PropTypes.func,
 	userToEdit: PropTypes.shape({})
 };

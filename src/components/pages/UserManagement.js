@@ -31,6 +31,12 @@ export const UserManagement = () => {
 					total: action.total
 				}
 			}
+			case 'update_user': {
+				return {
+					...state,
+					users: action.users
+				}
+			}
 			case 'delete_prompt': {
 				return {
 					...state,
@@ -80,6 +86,21 @@ export const UserManagement = () => {
 		dispatch({type: 'new_user', users: [user, ...state.users], total: state.total + 1});
 	};
 	
+	const updateUserHandler = user => {
+		
+		const users = state.users.map((u) => {
+			if (u.userName !== user.userName) {
+				return u;
+			}
+			return {
+				...u,
+				...user
+			};
+		});
+		
+		dispatch({type: 'update_user', users});
+	};
+	
 	const promptDeleteHandler = id => {
 		const toDelete = state.users.find((u) => u.id === id);
 		dispatch({type: 'delete_prompt', toDelete});
@@ -110,6 +131,7 @@ export const UserManagement = () => {
                         <>
                             <NewUser
 								newUserHandler={newUserHandler}
+								updateUserHandler={updateUserHandler}
 								userToEdit={state.toEdit}/>
 							<UserList
 								users={state.users}

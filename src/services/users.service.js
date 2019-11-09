@@ -32,7 +32,15 @@ const deleteUser = id => {
 		.catch(() => false);
 };
 
+const updateUser = (username, user) => (
+	api.put(`/api/v1/users/${username}`, {user})
+		.then(res => {
+			return res.username;
+		}).catch(e => {
+			return Promise.reject(e);
+		})
+);
 
 export const userService = {
-    isUnique, createUser, getUsers, deleteUser
+    isUnique, createUser, getUsers, deleteUser, updateUser
 };
