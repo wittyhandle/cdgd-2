@@ -126,6 +126,19 @@
 		}
 	}
 
+	tr {
+
+		transition: background-color 150ms ease-out 75ms;
+
+		&.new {
+			background-color: $info-color;
+		}
+
+		&.edit {
+			background-color: $warning-color;
+		}
+	}
+
 }
 
 .page-size {

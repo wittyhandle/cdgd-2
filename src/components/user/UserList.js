@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {PaginatedList} from '../PaginatedList';
 import {Button} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-
+import {Tr} from '..';
 
 export const UserList = ({users, total, queryUsers, promptDeleteHandler, editUserHandler}) => {
 
@@ -16,11 +16,9 @@ export const UserList = ({users, total, queryUsers, promptDeleteHandler, editUse
         {key: 'actions', name: 'Actions', sortable: false, css: 'text-center'}
     ];
     
-    const rowRenderer = ({id, userName, firstName, lastName, email, highlight}) => {
+    const rowRenderer = ({id, userName, firstName, lastName, email, flair}) => {
 		
-    	const klass = highlight ? 'table-success' : '';
-    	
-    	return (<tr key={id} className={klass}>
+    	return (<Tr key={id} flairCss={flair}>
 			<td className={'text-center'}>{id}</td>
 			<td>{userName}</td>
 			<td>{firstName}</td>
@@ -42,7 +40,7 @@ export const UserList = ({users, total, queryUsers, promptDeleteHandler, editUse
 					</Button>
 				</div>
 			</td>
-		</tr>)
+		</Tr>)
 	};
     
     return (
@@ -63,7 +61,8 @@ UserList.propTypes = {
                 userName: PropTypes.string,
                 firstName: PropTypes.string,
                 lastName: PropTypes.string,
-                email: PropTypes.string
+                email: PropTypes.string,
+				flair: PropTypes.string
             }
         )
     ),

@@ -82,7 +82,7 @@ export const UserManagement = () => {
 	);
 	
 	const newUserHandler = user => {
-		user.highlight = true;
+		user.flair = 'new';
 		dispatch({type: 'new_user', users: [user, ...state.users], total: state.total + 1});
 	};
 	
@@ -94,6 +94,7 @@ export const UserManagement = () => {
 			}
 			return {
 				...u,
+				flair: 'edit',
 				...user
 			};
 		});

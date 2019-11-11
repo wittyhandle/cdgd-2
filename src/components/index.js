@@ -20,3 +20,5 @@ export * from './SidebarItem'
 
 export * from './forms/Field';
 export * from './forms/Submit';
+
+export * from './common/Tr';
