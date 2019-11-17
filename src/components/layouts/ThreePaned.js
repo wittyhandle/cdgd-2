@@ -1,8 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import {Footer, Dropdown, Sidebar, ErrorBoundary} from '../index';
 import { AuthenticationConsumer } from '../../context/authentication.context';
-import { authenticationService } from '../../services';
 import PropTypes from 'prop-types';
 
 export const ThreePaned = props => {
@@ -10,12 +8,12 @@ export const ThreePaned = props => {
     const items = [
         {
             title: 'Logout',
-			path: '/',
-            handler: () => {
-                authenticationService.logout();
-                return <Redirect to={{ pathname: '/login'}} />
-            }
-        }
+			path: '/logout'
+        },
+		{
+			title: 'Change Password',
+			path: '/change-password'
+		}
     ];
 
     return (

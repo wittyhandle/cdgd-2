@@ -7,12 +7,12 @@ export const Dropdown = props => {
         cssClass: '', isExpanded: false
     });
 
-    const onDropDownToggle = (e) => {
+    const onDropDownToggle = e => {
         e.preventDefault();
         const klass = dropdownState.cssClass === '' ? 'show' : '';
         setDropdownState({cssClass: klass, isExpanded: !dropdownState.isExpanded});
     };
-
+    
     return (
         <li className={'nav-item btn-rotate dropdown ' + dropdownState.cssClass }>
             <button
@@ -25,7 +25,7 @@ export const Dropdown = props => {
             </button>
             <div className={'dropdown-menu dropdown-menu-right ' + dropdownState.cssClass}>
                 {props.items.map((i, index) => (
-                    <a key={index} className={'dropdown-item'} href={i.path} onClick={i.handler}>{i.title}</a>
+                    <a key={index} className={'dropdown-item'} href={i.path}>{i.title}</a>
                 ))}
             </div>
         </li>
@@ -39,8 +39,7 @@ Dropdown.propTypes = {
         PropTypes.shape(
             {
                 title: PropTypes.string,
-				path: PropTypes.string,
-                handler: PropTypes.func
+				path: PropTypes.string
             }
         )
     )

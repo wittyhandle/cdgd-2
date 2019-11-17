@@ -2,6 +2,7 @@ export * from './pages/Dashboard';
 export * from './user/NewUser';
 export * from './user/UserList';
 export * from './pages/UserManagement';
+export * from './pages/ChangePassword';
 export {default as Login} from './pages/Login';
 export * from './Main';
 export * from './Dropdown';
