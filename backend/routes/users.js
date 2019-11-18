@@ -90,16 +90,40 @@ router.delete('/:id', isAuthenticated, (req, res, next) => {
 	}).catch(next);
 });
 
-router.put('/:username', isAuthenticated, (req, res, next) => {
+router.put('/update/:username', isAuthenticated, (req, res, next) => {
 	
 	const {user} = req.body;
-	User.updateUser(req.params.username, user).then(r => {
+	User.updateUser(req.params.username, user).then(() => {
 		res.json({
 			success: true,
 			username: req.params.username
 		});
 	}).catch(next);
+});
 
+router.put('/change-password', isAuthenticated, (req, res, next) => {
+	
+	const {username, oldPassword, newPassword} = req.body;
+	User.getPasswordByUsername(username).then(passwordHash => (
+		passwordHash[0] && bcrypt.compare(oldPassword, passwordHash[0].password)
+	)).then(m => {
+			if (m) {
+				bcrypt.hash(newPassword, 15).then(hash => {
+					User.updateUser(username, {password: hash}).then(() => {
+						res.json({
+							success: true,
+							message: 'Password changed'
+						});
+					}).catch(next);
+				});
+			} else {
+				res.json({
+					success: false,
+					message: 'Old password is incorrect'
+				});
+			}
+		})
+		.catch(next);
 });
 
 module.exports = router;

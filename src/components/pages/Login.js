@@ -36,10 +36,7 @@ class Login extends Component {
                                             this.doLogin(values, setStatus, setSubmitting, setCurrentUser);
                                         }}
                                     >
-                                        {({
-                                            status,
-                                            isSubmitting
-                                        }) => (
+                                        {({status, isSubmitting}) => (
                                             <Form>
                                                 {status && status.msg &&
                                                 <div className={'row'}>

@@ -8,19 +8,18 @@ export const FeedbackPanel = props => {
         <div className={'feedback'}>
 
             {Object.keys(props.errors).map((i, idx) => (
-                <ErrorMessage key={idx} name={i} component='div' className='alert alert-danger text-center fade show' />
+                <ErrorMessage key={idx} name={i} component='div' className='alert alert-danger text-center' />
             ))}
-
-            <div className={'alert alert-success text-center fade ' + (props.showSuccess ? 'show' : 'hide')}>
-                {props.successMessage}
-            </div>
+	
+			{props.successMessage && <div className={'alert alert-success text-center'}>
+                Success - {props.successMessage}
+            </div>}
         </div>
     );
 };
 
 FeedbackPanel.propTypes = {
     errors: PropTypes.shape({}),
-    showSuccess: PropTypes.bool,
     successMessage: PropTypes.string
 };
 

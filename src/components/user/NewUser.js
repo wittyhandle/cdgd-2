@@ -1,4 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
 import React, {useEffect, useReducer} from 'react';
 import {Form, Formik} from 'formik';
 import * as Yup from 'yup';
@@ -9,11 +8,13 @@ import {FeedbackPanel} from '../forms/FeedbackPanel';
 import {Field, Submit} from '..';
 import {Button} from 'react-bootstrap';
 
+import {passwordRules, newUserRules} from '../../utils/validations';
+
 export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
-    
-    const initialState = {
+ 
+	const initialState = {
     	isFormVisible: false,
-		showSuccess: false,
+		successMessage: '',
 		buttonLabel: 'New User',
 		isEditMode: false
 	};
@@ -41,13 +42,13 @@ export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
 			case 'user_saved': {
 				return {
 					...state,
-					showSuccess: true
+					successMessage: action.message
 				}
 			}
 			case 'retract_form': {
 				return {
 					...state,
-					showSuccess: false,
+					successMessage: '',
 					isFormVisible: false,
 					buttonLabel: 'New User'
 				}
@@ -65,12 +66,7 @@ export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
 			dispatch({type: 'load_edit_form'});
 		}
 	}, [userToEdit]);
-
-    const specialCharacters = '!@#$%';
-    const specialCharRegex = '^.*[' + specialCharacters + ']+.*$';
-    const numberRegex = /^.*[0-9]+.*$/;
-    const capitalRegex = /^.*[A-Z]+.*$/;
-
+    
     const toggleNewUserForm = (reset) => {
         reset();
         dispatch({type: 'toggle_form'});
@@ -81,7 +77,7 @@ export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
 			(<div className={'row'}>
 				<Field name={'password'} label={'Password'} value={password} type={'password'} colCss={'col-lg-6'}/>
 				<Field name={'password2'} label={'Confirm Password'} value={password2} type={'password'} colCss={'col-lg-6'}/>
-			</div>) : '';
+			</div>) : ''
 	};
 
     const saveUser = (user, reset, setSubmitting, setFieldError) => {
@@ -89,17 +85,16 @@ export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
     	if (state.isEditMode) {
     		const {userName} = user;
     		userService.updateUser(userName, user).then(r => {
-				dispatch({type: 'user_saved'});
+				dispatch({type: 'user_saved', message: 'User updated'});
 				updateUserHandler(user);
 				setTimeout(() => {
-					reset();
 					dispatch({type: 'retract_form'});
 				}, 2000);
 			});
 		} else {
 			userService.createUser(user).then(r => {
-				dispatch({type: 'user_saved'});
-			
+				
+				dispatch({type: 'user_saved', message: 'User created'});
 				user.id = r;
 				newUserHandler(user);
 			
@@ -117,44 +112,23 @@ export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
     };
     
     const getInitialUser = () => {
-    	return state.isEditMode ?
-			userToEdit :
-			{userName: '', email: '', firstName: '', lastName: '', password: '', password2: ''};
+		return state.isEditMode ?
+			{...userToEdit, password: '', password2: ''} :
+			{
+				userName: '',
+				email: '',
+				firstName: '',
+				lastName: '',
+				password: '',
+				password2: ''
+			};
 	};
     
-    const getValidationRules = () => {
-    	
-    	const rules = {
-			email: Yup.string()
-				.required('Email is required')
-				.email('Email is invalid'),
-			firstName: Yup.string()
-				.required('First name is required'),
-			lastName: Yup.string()
-				.required('Last name is required')
-		};
-    	
-    	const passwordRules = {
-			password: Yup.string()
-				.required('Password is required')
-				.min(8, 'Password must be at least ${min} characters long')
-				.max(20, 'Password must be less than ${max} characters long')
-				.test('password-chars', `Password must have at least one of ${specialCharacters}`, function (value) {
-					return value && value.match(specialCharRegex);
-				})
-				.test( 'password-nums', 'Password must have at least one number', function (value) {
-					return value && value.match(numberRegex);
-				})
-				.test( 'password-uppercase', 'Password must have at least one uppercase letter', function (value) {
-					return value && value.match(capitalRegex);
-				}),
-			password2: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
-		};
-    	
-    	return state.isEditMode ?
-			Yup.object().shape(rules) :
-			Yup.object().shape({...rules, ...passwordRules });
-	};
+    const getValidationRules = () => (
+		state.isEditMode ?
+			Yup.object().shape(newUserRules) :
+			Yup.object().shape({...newUserRules, ...passwordRules })
+	);
 
     return (
         <div className={'row'}>
@@ -168,14 +142,9 @@ export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
                 // Handle userName validation here for async
                 validate={values => {
 
-                    if (!state.isEditMode) {
+                    if (!state.isEditMode && values.userName) {
 						let errors = {};
-	
-						if (!values.userName) {
-							errors.userName = 'Username is required';
-							return errors;
-						}
-	
+
 						return userService.isUnique(values.userName).then(isUnique => {
 							if (isUnique) {
 								return true;
@@ -226,10 +195,7 @@ export const NewUser = ({newUserHandler, updateUserHandler, userToEdit}) => {
 									</Form>
 								</div>
 								<div className={'col-lg-3'}>
-									<FeedbackPanel
-										showSuccess={state.showSuccess}
-										successMessage={'Success - User created'}
-										errors={errors} />
+									<FeedbackPanel successMessage={state.successMessage} errors={errors} />
 								</div>
 							</div>
 						</div>
