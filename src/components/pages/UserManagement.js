@@ -3,7 +3,7 @@ import {UserList} from '../user/UserList';
 import {Card} from '../index';
 import {NewUser} from '../user/NewUser';
 import {userService} from '../../services';
-import {Modal} from '../Modal';
+import {Modal} from '../common/Modal';
 
 export const UserManagement = () => {
 	

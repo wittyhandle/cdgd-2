@@ -7,7 +7,7 @@ export {default as Login} from './pages/Login';
 export * from './Main';
 export * from './Dropdown';
 export * from './Footer';
-export * from './Modal';
+export * from './common/Modal';
 export * from './Sidebar';
 export * from './PaginatedList';
 export * from './PaginationControls';
