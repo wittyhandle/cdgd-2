@@ -7,8 +7,7 @@ export const Dropdown = props => {
         cssClass: '', isExpanded: false
     });
 
-    const onDropDownToggle = e => {
-        e.preventDefault();
+    const onDropDownToggle = () => {
         const klass = dropdownState.cssClass === '' ? 'show' : '';
         setDropdownState({cssClass: klass, isExpanded: !dropdownState.isExpanded});
     };
