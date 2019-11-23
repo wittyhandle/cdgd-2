@@ -1,10 +1,10 @@
 import React from 'react';
-import {Field as FormikField} from 'formik';
+import {ErrorMessage, Field as FormikField} from 'formik';
 import PropTypes from 'prop-types';
 
 export const Field = props => {
     return (
-        <div className={props.colCss}>
+        <div className={`cdgd-field ${props.colCss}`}>
             <div className={'form-group'}>
                 <label htmlFor={props.name}>{props.label}</label>
                 <FormikField
@@ -14,6 +14,7 @@ export const Field = props => {
 					disabled={props.disabled}
 					className={'form-control'}/>
             </div>
+			<ErrorMessage name={props.name} component='div' className='error' />
         </div>
     )
 };

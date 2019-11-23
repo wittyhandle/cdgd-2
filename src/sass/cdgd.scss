@@ -52,26 +52,22 @@
   }
 }
 
-.new-user {
-
-  form {
-    padding: 20px;
-  }
-}
-
-.new-user, .visible {
-  max-height: 0;
-  overflow-y: hidden;
-  transition: max-height 0.3s ease-in-out;
-}
-
-.new-user.visible {
-  max-height: 350px;
-}
-
 .alert {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.form-group {
+	margin-bottom: 0;
+}
+
+.cdgd-field {
+	margin-bottom: 30px;
+	height: 75px;
+}
+
+.error {
+	color: $danger-color;
 }
 
 .loader {

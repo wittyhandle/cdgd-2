@@ -3,7 +3,7 @@ import {UserList} from '../user/UserList';
 import {Card} from '../index';
 import {NewUser} from '../user/NewUser';
 import {userService} from '../../services';
-import {Modal} from '../common/Modal';
+import {Modal} from '../';
 
 export const UserManagement = () => {
 	
@@ -130,10 +130,7 @@ export const UserManagement = () => {
                 <Card title={'User Management'}>
                     {() => (
                         <>
-                            <NewUser
-								newUserHandler={newUserHandler}
-								updateUserHandler={updateUserHandler}
-								userToEdit={state.toEdit}/>
+                            <NewUser newUserHandler={newUserHandler} />
 							<UserList
 								users={state.users}
 								total={state.total}
@@ -147,9 +144,11 @@ export const UserManagement = () => {
 			<Modal
 				show={!!state.toDelete.id}
 				title={'Delete User?'}
-				body={`Are you sure you want to delete <strong>${state.toDelete.firstName}</strong> with id <strong>${state.toDelete.id}</strong>?`}
 				handleAction={doUserDelete}
-				handleClose={cancelUserDelete}/>
+				handleClose={cancelUserDelete}
+				submitLabel={'Delete'}>
+				<div>Are you sure you want to delete <strong>{state.toDelete.firstName}</strong> with id <strong>{state.toDelete.id}</strong>?</div>
+			</Modal>
         </div>
     )
 };
