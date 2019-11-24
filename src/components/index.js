@@ -1,5 +1,6 @@
 export * from './pages/Dashboard';
 export * from './user/NewUser';
+export * from './user/EditUser';
 export * from './user/UserList';
 export * from './pages/UserManagement';
 export * from './pages/ChangePassword';

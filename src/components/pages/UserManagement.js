@@ -1,22 +1,25 @@
 import React, {useEffect, useReducer} from 'react';
 import {UserList} from '../user/UserList';
-import {Card} from '../index';
+import {Card, EditUser} from '../index';
 import {NewUser} from '../user/NewUser';
 import {userService} from '../../services';
 import {Modal} from '../';
 
 export const UserManagement = () => {
 	
+	const EMPTY_EDIT_USER = {
+		id: 0,
+		userName: '',
+		firstName: '',
+		lastName: '',
+		email: ''
+	};
+	
 	const initialState = {
 		users: [],
 		total: 0,
 		toDelete: {},
-		toEdit: {
-			userName: '',
-			firstName: '',
-			lastName: '',
-			email: ''
-		}
+		toEdit: EMPTY_EDIT_USER
 	};
 	
 	const reducer = (state, action) => {
@@ -34,7 +37,8 @@ export const UserManagement = () => {
 			case 'update_user': {
 				return {
 					...state,
-					users: action.users
+					users: action.users,
+					toEdit: EMPTY_EDIT_USER
 				}
 			}
 			case 'delete_prompt': {
@@ -55,6 +59,12 @@ export const UserManagement = () => {
 				return {
 					...state,
 					toDelete: {}
+				}
+			}
+			case 'cancel_edit_user': {
+				return {
+					...state,
+					toEdit: EMPTY_EDIT_USER
 				}
 			}
 			case 'load_edit_user': {
@@ -114,10 +124,6 @@ export const UserManagement = () => {
 		});
 	};
 	
-	const cancelUserDelete = () => {
-		dispatch({type: 'cancel_delete_user'});
-	};
-	
 	const doUserEdit = id => {
 		const toEdit = state.users.find((u) => u.id === id);
 		dispatch({type: 'load_edit_user', toEdit});
@@ -145,10 +151,15 @@ export const UserManagement = () => {
 				show={!!state.toDelete.id}
 				title={'Delete User?'}
 				handleAction={doUserDelete}
-				handleClose={cancelUserDelete}
+				handleClose={() => { dispatch({type: 'cancel_delete_user'}) }}
 				submitLabel={'Delete'}>
 				<div>Are you sure you want to delete <strong>{state.toDelete.firstName}</strong> with id <strong>{state.toDelete.id}</strong>?</div>
 			</Modal>
+			
+			<EditUser
+				userToEdit={state.toEdit}
+				closeHandler={() => { dispatch({type: 'cancel_edit_user'}) }}
+				updateUserHandler={updateUserHandler}/>
         </div>
     )
 };
