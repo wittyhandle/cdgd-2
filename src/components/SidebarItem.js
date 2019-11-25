@@ -1,30 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import * as PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
-const SidebarItemWrapped = props => {
+const SidebarItemWrapped = ({ path, location, icon, name }) => {
+  const activeClass = () => {
+    const route = location.pathname;
+    return route.endsWith(path) ? "active" : "";
+  };
 
-    const activeClass = () => {
-        const path = props.path;
-        const route = props.location.pathname;
-        return route.endsWith(path) ? 'active' : '';
-    };
-
-    return (
-        <li className={activeClass()}>
-            <a href={'/' + props.path}>
-                <i className={'nc-icon ' + props.icon}/>
-                <p>{props.name}</p>
-            </a>
-        </li>
-    )
-
+  return (
+    <li className={activeClass()}>
+      <a href={`/${path}`}>
+        <i className={`nc-icon ${icon}`} />
+        <p>{name}</p>
+      </a>
+    </li>
+  );
 };
 
 SidebarItemWrapped.propTypes = {
-    path: PropTypes.string,
-    name: PropTypes.string,
-    icon: PropTypes.string
+  path: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+  location: PropTypes.shape({ pathname: PropTypes.string }).isRequired
 };
 
-export const SidebarItem = withRouter(SidebarItemWrapped);
+const SidebarItem = withRouter(SidebarItemWrapped);
+export default SidebarItem;

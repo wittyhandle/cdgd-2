@@ -1,26 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {ErrorMessage} from 'formik';
+import React from "react";
+import * as PropTypes from "prop-types";
+import { ErrorMessage } from "formik";
 
-export const FeedbackPanel = props => {
+const FeedbackPanel = ({ errors, successMessage }) => {
+  return (
+    <div className="feedback">
+      {Object.keys(errors).map(i => (
+        <ErrorMessage
+          key={i}
+          name={i}
+          component="div"
+          className="alert alert-danger text-center"
+        />
+      ))}
 
-    return (
-        <div className={'feedback'}>
-
-            {Object.keys(props.errors).map((i, idx) => (
-                <ErrorMessage key={idx} name={i} component='div' className='alert alert-danger text-center' />
-            ))}
-	
-			{props.successMessage && <div className={'alert alert-success text-center'}>
-                Success - {props.successMessage}
-            </div>}
+      {successMessage && (
+        <div className="alert alert-success text-center">
+          Success - {successMessage}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 FeedbackPanel.propTypes = {
-    errors: PropTypes.shape({}),
-    successMessage: PropTypes.string
+  errors: PropTypes.shape({}).isRequired,
+  successMessage: PropTypes.string.isRequired
 };
 
-
+export default FeedbackPanel;

@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {PaginatedList} from '../PaginatedList';
-import {Button} from 'react-bootstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Tr} from '..';
+import React from "react";
+import * as PropTypes from "prop-types";
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { PaginatedList } from "..";
+import { Tr } from "..";
 
 export const UserList = ({users, total, queryUsers, promptDeleteHandler, editUserHandler}) => {
 
@@ -54,20 +54,21 @@ export const UserList = ({users, total, queryUsers, promptDeleteHandler, editUse
 };
 
 UserList.propTypes = {
-    users: PropTypes.arrayOf(
-        PropTypes.shape(
-            {
-                id: PropTypes.number,
-                userName: PropTypes.string,
-                firstName: PropTypes.string,
-                lastName: PropTypes.string,
-                email: PropTypes.string,
-				flair: PropTypes.string
-            }
-        )
-    ),
-	queryUsers: PropTypes.func,
-	promptDeleteHandler: PropTypes.func,
-	editUserHandler: PropTypes.func,
-	total: PropTypes.number
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      userName: PropTypes.string,
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+      email: PropTypes.string,
+      flair: PropTypes.string
+    })
+  ),
+  queryUsers: PropTypes.func,
+  promptDeleteHandler: PropTypes.func,
+  editUserHandler: PropTypes.func,
+  total: PropTypes.number
 };
+
+export default UserList;
+

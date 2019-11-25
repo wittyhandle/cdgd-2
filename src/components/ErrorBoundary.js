@@ -1,29 +1,36 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import * as PropTypes from "prop-types";
 
-export default class ErrorBoundary extends Component{
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = { error: null, errorInfo: null };
+  // eslint-disable-next-line no-unused-vars
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      error
+    });
+  }
+
+  render() {
+    const { error } = this.state;
+    const { children } = this.props;
+    if (error) {
+      return (
+        <div>
+          <h2>{error && error.message}</h2>
+        </div>
+      );
     }
 
-    componentDidCatch(error, errorInfo) {
-        this.setState({
-            error: error,
-            errorInfo: errorInfo
-        })
-    }
-
-    render() {
-        if (this.state.error) {
-            return (
-                <div>
-                    <h2>{this.state.error && this.state.error.message}</h2>
-                </div>
-            );
-        }
-
-        return this.props.children;
-    }
-
+    return children;
+  }
 }
+
+ErrorBoundary.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
+export default ErrorBoundary;

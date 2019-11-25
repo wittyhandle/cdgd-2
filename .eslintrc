@@ -14,6 +14,11 @@
         "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
         "prettier/prettier": [
             2
+        ],
+        "react/jsx-props-no-spreading": [2,
+            {
+                "custom": "ignore"
+            }
         ]
     }
 }

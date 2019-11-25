@@ -1,5 +1,7 @@
-import React from 'react';
+import React from "react";
 
-export const Main = () => {
-    return <div className={'row w-100'}>Main</div>
+const Main = () => {
+  return <div className="row w-100">Main</div>;
 };
+
+export default Main;
