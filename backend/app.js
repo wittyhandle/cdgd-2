@@ -1,28 +1,26 @@
-let express = require('express');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
-let cors = require('cors');
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-let users = require('./routes/users');
-let admin = require('./routes/admin');
+const users = require("./routes/users");
 
-let app = express();
+const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api/v1/users', users);
-app.use('/api/v1/admin', admin);
+app.use("/api/v1/users", users);
 
 // our own error handler
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send({
-        success: false,
-        message: err.message
-    });
+  res.status(500).send({
+    success: false,
+    message: err.message
+  });
 });
 
 module.exports = app;

@@ -1,13 +1,12 @@
 // Update with your config settings.
 
 module.exports = {
-
   development: {
-    client: 'mysql',
+    client: "mysql",
     connection: {
-      user: 'cdgd',
-      password: 'password',
-      database: 'cdgd'
+      user: "cdgd",
+      password: "password",
+      database: "cdgd"
     }
   }
 };
