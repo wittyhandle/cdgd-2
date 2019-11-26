@@ -3,7 +3,8 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import { AuthenticationConsumer } from "../../context/authentication.context";
-import { Card, Field, Submit, FeedbackPanel } from "../index";
+import { Card } from "../index";
+import { Field, Submit, FeedbackPanel } from "../forms";
 import { passwordRules } from "../../utils/validations";
 import { userService } from "../../services";
 

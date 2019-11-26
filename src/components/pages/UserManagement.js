@@ -1,5 +1,7 @@
 import React, { useEffect, useReducer } from "react";
-import { Card, EditUser, Modal, UserList, NewUser } from "../index";
+import { Card } from "../index";
+import { EditUser, UserList, NewUser } from "../user";
+import { Modal } from "../common";
 import { userService } from "../../services";
 
 const UserManagement = () => {

@@ -4,7 +4,8 @@ import * as Yup from "yup";
 import * as PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { userService } from "../../services";
-import { Field, Submit, Modal } from "../index";
+import { Field, Submit } from "../forms";
+import { Modal } from "../common";
 import { passwordRules, newUserRules } from "../../utils/validations";
 
 const NewUser = ({ newUserHandler }) => {

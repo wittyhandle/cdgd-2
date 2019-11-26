@@ -1,5 +1,5 @@
 import React from "react";
-import { SidebarItem } from "./index";
+import SidebarItem from "./SidebarItem";
 
 const Sidebar = () => {
   return (

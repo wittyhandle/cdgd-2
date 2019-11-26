@@ -3,7 +3,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import * as PropTypes from "prop-types";
 import { userService } from "../../services";
-import { Field, Submit, Modal } from "../index";
+import { Field, Submit } from "../forms";
+import { Modal } from "../common";
 import { newUserRules } from "../../utils/validations";
 
 const EditUser = ({ updateUserHandler, userToEdit, closeHandler }) => {

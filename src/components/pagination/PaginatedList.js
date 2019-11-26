@@ -1,7 +1,8 @@
 import React, { useReducer } from "react";
 import * as PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { PaginationControls, PaginationPageSize } from "./index";
+import PaginationControls from "./PaginationControls";
+import PaginationPageSize from "./PaginationPageSize";
 
 const PaginatedList = ({
   getItemsHandler,
@@ -174,12 +175,6 @@ const PaginatedList = ({
 
 PaginatedList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  queryParams: PropTypes.shape({
-    limit: PropTypes.string,
-    startIndex: PropTypes.number,
-    sortBy: PropTypes.string,
-    sortDirection: PropTypes.string
-  }).isRequired,
   headers: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,

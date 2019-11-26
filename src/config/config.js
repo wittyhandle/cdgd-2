@@ -1,42 +1,55 @@
 import React, { Component } from "react";
+import * as PropTypes from "prop-types";
 
-export const Context = React.createContext({name: "test"});
+export const Context = React.createContext({ name: "test" });
 export class ConfigContext extends Component {
-
-    constructor() {
-
-        super();
-        this.state = {
-            name: "John",
-            isLoggedIn: false,
-            userInfo: {}
-        };
-    }
-
-    logIn = (data) => {
-        console.log(data);
-        this.setState({isLoggedIn: true, userInfo: data});
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "John",
+      isLoggedIn: false,
+      userInfo: {}
     };
+  }
 
-    logOut = () => {
-        this.setState({isLoggedIn: false});
-    };
+  logIn = data => {
+    this.setState({ isLoggedIn: true, userInfo: data });
+  };
 
-    delete = () => {
-        this.setState({isLoggedIn: false, userInfo: {}});
-    };
+  logOut = () => {
+    this.setState({ isLoggedIn: false });
+  };
 
-    changeName = () => {
-        this.setState({name: "Mike"});
-    };
+  delete = () => {
+    this.setState({ isLoggedIn: false, userInfo: {} });
+  };
 
-    render() {
-        const { isLoggedIn, userInfo, name } = this.state;
+  changeName = () => {
+    this.setState({ name: "Mike" });
+  };
 
-        return (
-            <Context.Provider value={{name, isLoggedIn, userInfo, changeName: this.changeName, logIn: this.logIn, logOut: this.logOut, delete: this.delete}}>
-                {this.props.children}
-            </Context.Provider>
-        );
-    }
+  render() {
+    const { isLoggedIn, userInfo, name } = this.state;
+    const { children } = this.props;
+
+    return (
+      <Context.Provider
+        value={{
+          name,
+          isLoggedIn,
+          userInfo,
+          changeName: this.changeName,
+          logIn: this.logIn,
+          logOut: this.logOut,
+          delete: this.delete
+        }}
+      >
+        {children}
+      </Context.Provider>
+    );
+  }
 }
+
+ConfigContext.propTypes = {
+  children: PropTypes.node.isRequired
+};

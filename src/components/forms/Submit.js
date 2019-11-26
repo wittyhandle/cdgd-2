@@ -1,7 +1,7 @@
 import React from "react";
 import * as PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
-import { Spinner } from "../index";
+import Spinner from "./Spinner";
 
 const Submit = ({ isSubmitting, title }) => {
   const spinner = isSubmitting ? <Spinner /> : "";

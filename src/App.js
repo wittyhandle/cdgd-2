@@ -5,18 +5,17 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+import { Main, PrivateRoute } from "./components/index";
 import {
   Dashboard,
   UserManagement,
-  Main,
   Login,
-  PrivateRoute,
-  ThreePaned,
   ChangePassword
-} from "./components/index";
+} from "./components/pages";
+import { ThreePaned } from "./components/layouts";
 import { AuthenticationProvider } from "./context/authentication.context";
 import { ConfigContext as Provider } from "./config/config";
-import { authenticationService } from "./services";
+import { authenticationService } from "./utils";
 import "./fontawesome";
 
 const App = () => {

@@ -1,31 +1,40 @@
-import React, { Component } from 'react';
-import { authenticationService } from '../services';
+import React, { Component } from "react";
+import * as PropTypes from "prop-types";
+import { authenticationService } from "../utils";
 
-const AuthenticationContext = React.createContext();
+const AuthenticationContext = React.createContext({});
 
 export class AuthenticationProvider extends Component {
-
-    state = {
-        currentUser: authenticationService.getUser()
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: authenticationService.getUser()
     };
+  }
 
-    setCurrentUser = (currentUser) => {
-        this.setState({currentUser});
-    };
+  setCurrentUser = currentUser => {
+    this.setState({ currentUser });
+  };
 
-    render() {
+  render() {
+    const { children } = this.props;
+    const { currentUser } = this.state;
 
-        return (
-            <AuthenticationContext.Provider
-                value={{
-                    currentUser: this.state.currentUser,
-                    setCurrentUser: this.setCurrentUser
-                }}
-            >
-                {this.props.children}
-            </AuthenticationContext.Provider>
-        );
-    }
+    return (
+      <AuthenticationContext.Provider
+        value={{
+          currentUser,
+          setCurrentUser: this.setCurrentUser
+        }}
+      >
+        {children}
+      </AuthenticationContext.Provider>
+    );
+  }
 }
+
+AuthenticationProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};
 
 export const AuthenticationConsumer = AuthenticationContext.Consumer;

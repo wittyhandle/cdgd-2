@@ -1,14 +1,16 @@
 import React from "react";
 import * as PropTypes from "prop-types";
 import { Formik, Form } from "formik";
-import { SinglePaned, Card, Field, Submit } from "../index";
-import { authenticationService } from "../../services";
+import { Card } from "../index";
+import { SinglePaned } from "../layouts";
+import { Field, Submit } from "../forms";
+import { userService } from "../../services";
 import { AuthenticationConsumer } from "../../context/authentication.context";
 
 const Login = ({ history }) => {
   const doLogin = (values, setStatus, setSubmitting, setCurrentUser) => {
     setStatus({});
-    authenticationService
+    userService
       .login(values.username, values.password)
       .then(user => {
         setCurrentUser(user);

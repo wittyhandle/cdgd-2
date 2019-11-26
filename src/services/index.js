@@ -1,3 +1,2 @@
-export * from './authentication.service';
-export * from './works.service';
-export * from './users.service';
+// eslint-disable-next-line import/prefer-default-export
+export { default as userService } from "./users.service";
