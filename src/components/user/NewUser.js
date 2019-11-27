@@ -72,7 +72,7 @@ const NewUser = ({ newUserHandler }) => {
                 }
               });
           }
-          return null;
+          return false;
         }}
         onSubmit={(user, { setSubmitting, resetForm, setFieldError }) => {
           saveUser(user, resetForm, setSubmitting, setFieldError);
