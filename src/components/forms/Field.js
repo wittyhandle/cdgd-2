@@ -24,6 +24,7 @@ Field.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/require-default-props
   value: PropTypes.string,
   colCss: PropTypes.string,
   disabled: PropTypes.bool
@@ -31,8 +32,7 @@ Field.propTypes = {
 
 Field.defaultProps = {
   colCss: "",
-  disabled: false,
-  value: ""
+  disabled: false
 };
 
 export default Field;

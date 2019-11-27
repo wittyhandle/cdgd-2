@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { withRouter } from "react-router-dom";
+import ReactRouterPropTypes from "react-router-prop-types";
 
 import { AuthenticationConsumer } from "../../context/authentication.context";
 import { Card } from "../index";
@@ -8,7 +10,7 @@ import { Field, Submit, FeedbackPanel } from "../forms";
 import { passwordRules } from "../../utils/validations";
 import { userService } from "../../services";
 
-const ChangePassword = () => {
+const ChangePasswordWrapped = ({ history }) => {
   const [success, setSuccess] = useState("");
 
   const getValidationRules = () =>
@@ -16,6 +18,10 @@ const ChangePassword = () => {
       oldPassword: Yup.string().required("Old password is required"),
       ...passwordRules
     });
+
+  const handleCancel = () => {
+    history.goBack();
+  };
 
   // noinspection RequiredAttributes
   return (
@@ -44,6 +50,9 @@ const ChangePassword = () => {
                       .then(res => {
                         if (res.success) {
                           setSuccess("Password updated");
+                          setTimeout(() => {
+                            history.goBack();
+                          }, 2000);
                         } else {
                           setFieldError("oldPassword", res.message);
                         }
@@ -84,8 +93,17 @@ const ChangePassword = () => {
                           colCss="col-lg-12 align-self-center"
                         />
                       </div>
-                      <div className="row">
-                        <div className="ml-auto mr-auto">
+                      <div className="row justify-content-md-center">
+                        <div className="col-lg-3">
+                          <button
+                            onClick={handleCancel}
+                            type="button"
+                            className="btn btn-default"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                        <div className="col-lg-3">
                           <Submit isSubmitting={isSubmitting} title="Submit" />
                         </div>
                       </div>
@@ -101,4 +119,9 @@ const ChangePassword = () => {
   );
 };
 
+ChangePasswordWrapped.propTypes = {
+  history: ReactRouterPropTypes.history.isRequired
+};
+
+const ChangePassword = withRouter(ChangePasswordWrapped);
 export default ChangePassword;
