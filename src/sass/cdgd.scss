@@ -128,6 +128,9 @@
 
 		&.new {
 			background-color: $info-color;
+      .fa-pencil-alt {
+        color: $white-bg;
+      }
 		}
 
 		&.edit {
