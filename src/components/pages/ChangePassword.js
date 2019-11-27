@@ -6,7 +6,7 @@ import ReactRouterPropTypes from "react-router-prop-types";
 
 import { AuthenticationConsumer } from "../../context/authentication.context";
 import { Card } from "../index";
-import { Field, Submit, FeedbackPanel } from "../forms";
+import { Field, Submit, SuccessPanel } from "../forms";
 import { passwordRules } from "../../utils/validations";
 import { userService } from "../../services";
 
@@ -59,14 +59,11 @@ const ChangePasswordWrapped = ({ history }) => {
                       });
                   }}
                 >
-                  {({ errors, isSubmitting }) => (
+                  {({ isSubmitting }) => (
                     <Form>
                       <div className="row">
                         <div className="col-lg-12">
-                          <FeedbackPanel
-                            successMessage={success}
-                            errors={errors}
-                          />
+                          <SuccessPanel successMessage={success} />
                         </div>
                       </div>
                       <div className="row">
