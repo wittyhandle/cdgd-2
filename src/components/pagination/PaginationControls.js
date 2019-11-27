@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from "react";
 import * as PropTypes from "prop-types";
 
@@ -53,7 +54,7 @@ const PaginationControls = ({
 
             {[...Array(linkCount)].map((n, i) => (
               <li
-                key={n}
+                key={i}
                 className={`page-item${i === currentPage - 1 ? " active" : ""}`}
               >
                 <button

@@ -24,14 +24,15 @@ Field.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   colCss: PropTypes.string,
   disabled: PropTypes.bool
 };
 
 Field.defaultProps = {
   colCss: "",
-  disabled: false
+  disabled: false,
+  value: ""
 };
 
 export default Field;
