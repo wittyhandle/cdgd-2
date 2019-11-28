@@ -23,7 +23,6 @@ const Login = ({ history }) => {
       });
   };
 
-  // noinspection RequiredAttributes
   return (
     <AuthenticationConsumer>
       {({ setCurrentUser }) => (

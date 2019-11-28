@@ -31,8 +31,6 @@ const NewUser = ({ newUserHandler }) => {
       });
   };
 
-  // eslint-disable-next-line consistent-return
-  // noinspection RequiredAttributes
   return (
     <div className="row">
       <Formik
