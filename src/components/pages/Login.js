@@ -1,5 +1,5 @@
 import React from "react";
-import * as PropTypes from "prop-types";
+import ReactRouterPropTypes from "react-router-prop-types";
 import { Formik, Form } from "formik";
 import { Card } from "../index";
 import { SinglePaned } from "../layouts";
@@ -8,8 +8,7 @@ import { userService } from "../../services";
 import { AuthenticationConsumer } from "../../context/authentication.context";
 
 const Login = ({ history }) => {
-  const doLogin = (values, setStatus, setSubmitting, setCurrentUser) => {
-    setStatus({});
+  const doLogin = (values, setSubmitting, setCurrentUser, setFieldError) => {
     userService
       .login(values.username, values.password)
       .then(user => {
@@ -17,7 +16,7 @@ const Login = ({ history }) => {
         history.push({ pathname: "/admin" });
       })
       .catch(e => {
-        setStatus({ msg: e.message });
+        setFieldError("username", e.message);
       })
       .finally(() => {
         setSubmitting(false);
@@ -34,21 +33,17 @@ const Login = ({ history }) => {
               {() => (
                 <Formik
                   initialValues={{ username: "", password: "" }}
-                  onSubmit={(values, { setSubmitting, setStatus }) => {
-                    doLogin(values, setStatus, setSubmitting, setCurrentUser);
+                  onSubmit={(values, { setSubmitting, setFieldError }) => {
+                    doLogin(
+                      values,
+                      setSubmitting,
+                      setCurrentUser,
+                      setFieldError
+                    );
                   }}
                 >
-                  {({ status, isSubmitting }) => (
+                  {({ isSubmitting }) => (
                     <Form>
-                      {status && status.msg && (
-                        <div className="row">
-                          <div className="col-lg-12">
-                            <div className="alert alert-danger fade show">
-                              {status.msg}
-                            </div>
-                          </div>
-                        </div>
-                      )}
                       <div className="row">
                         <Field
                           name="username"
@@ -83,7 +78,7 @@ const Login = ({ history }) => {
 };
 
 Login.propTypes = {
-  history: PropTypes.node.isRequired
+  history: ReactRouterPropTypes.history.isRequired
 };
 
 export default Login;

@@ -19,7 +19,7 @@ const SinglePaned = ({ children }) => {
 };
 
 SinglePaned.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.func.isRequired
 };
 
 export default SinglePaned;
