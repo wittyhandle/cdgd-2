@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import * as PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +12,34 @@ export const UserList = ({
   promptDeleteHandler,
   editUserHandler
 }) => {
+  const [toDelete, setToDelete] = useState([]);
+
+  const handleSelect = () => {
+    //
+  };
+
+  const handleDeleteSelect = (e, id) => {
+    if (e.target.checked) {
+      const newDeletes = [...toDelete];
+      newDeletes.push(id);
+      setToDelete(newDeletes);
+    } else {
+      const newDeletes = toDelete.filter(u => u !== id);
+      setToDelete(newDeletes);
+    }
+  };
+
   const headers = [
+    {
+      key: "delete",
+      markup: () => (
+        <Button className="no-hover" variant="link" onClick={handleSelect}>
+          <i className="nc-icon nc-simple-remove" />
+        </Button>
+      ),
+      sortable: false,
+      css: "narrow text-center"
+    },
     { key: "id", name: "Id", css: "narrow text-center" },
     { key: "username", name: "Username" },
     { key: "firstName", name: "First Name" },
@@ -25,6 +52,9 @@ export const UserList = ({
   const rowRenderer = ({ id, userName, firstName, lastName, email, flair }) => {
     return (
       <Tr key={id} flairCss={flair}>
+        <td className="text-center">
+          <input type="checkbox" onChange={e => handleDeleteSelect(e, id)} />
+        </td>
         <td className="text-center">{id}</td>
         <td>{userName}</td>
         <td>{firstName}</td>

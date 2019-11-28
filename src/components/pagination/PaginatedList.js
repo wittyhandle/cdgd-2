@@ -152,7 +152,7 @@ const PaginatedList = ({
             <tr>
               {headers.map(h => (
                 <th key={h.key} className={h.css || ""}>
-                  {h.name}
+                  {h.name || h.markup()}
                   {renderSortIcon(h)}
                 </th>
               ))}
