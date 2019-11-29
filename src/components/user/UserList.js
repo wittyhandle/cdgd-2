@@ -14,10 +14,6 @@ export const UserList = ({
 }) => {
   const [toDelete, setToDelete] = useState([]);
 
-  const handleSelect = () => {
-    //
-  };
-
   const handleDeleteSelect = (e, id) => {
     if (e.target.checked) {
       const newDeletes = [...toDelete];
@@ -33,7 +29,11 @@ export const UserList = ({
     {
       key: "delete",
       markup: () => (
-        <Button className="no-hover" variant="link" onClick={handleSelect}>
+        <Button
+          className="no-hover"
+          variant="link"
+          onClick={() => promptDeleteHandler(toDelete)}
+        >
           <i className="nc-icon nc-simple-remove" />
         </Button>
       ),
@@ -65,7 +65,7 @@ export const UserList = ({
             <Button
               className="no-hover"
               variant="link"
-              onClick={() => promptDeleteHandler(id)}
+              onClick={() => promptDeleteHandler([id])}
             >
               <i className="nc-icon nc-simple-remove" />
             </Button>

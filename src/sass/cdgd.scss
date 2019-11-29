@@ -192,3 +192,9 @@
 .no-hover.btn.btn-link:hover, .no-hover.btn.btn-link:focus {
 	background-color: transparent !important;
 }
+
+.delete-prompt {
+  ul {
+    margin-top: 10px;
+  }
+}

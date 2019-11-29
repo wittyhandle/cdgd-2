@@ -33,9 +33,9 @@ exports.getUserByUsername = userName =>
     .where({ userName })
     .select(...userFields);
 
-exports.deleteUser = id =>
+exports.deleteUsers = ids =>
   knex("users")
-    .where("id", id)
+    .whereIn("id", ids)
     .del();
 
 exports.updateUser = (userName, user) =>

@@ -15,11 +15,14 @@ const createUser = user =>
     .then(res => res.id)
     .catch(e => Promise.reject(e));
 
-const deleteUser = id =>
-  api
-    .delete(`/api/v1/users/${id}`)
+const deleteUsers = usersToDelete => {
+  // console.log('ll', usersToDelete);
+  const ids = usersToDelete.map(u => u.id);
+  return api
+    .delete("/api/v1/users/bulk", { data: { toDelete: ids } })
     .then(() => true)
     .catch(() => false);
+};
 
 const updateUser = (username, user) => {
   delete user.password;
@@ -52,7 +55,7 @@ const userService = {
   isUnique,
   createUser,
   getUsers,
-  deleteUser,
+  deleteUsers,
   updateUser,
   changePassword,
   login

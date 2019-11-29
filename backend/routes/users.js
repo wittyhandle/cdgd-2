@@ -91,8 +91,9 @@ router.post("/new", isAuthenticated, (req, res, next) => {
   });
 });
 
-router.delete("/:id", isAuthenticated, (req, res, next) => {
-  User.deleteUser(req.params.id)
+router.delete("/bulk", isAuthenticated, (req, res, next) => {
+  const { toDelete } = req.body;
+  User.deleteUsers(toDelete)
     .then(() => {
       res.json({
         success: true,

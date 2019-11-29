@@ -16,7 +16,7 @@ const UserManagement = () => {
   const initialState = {
     users: [],
     total: 0,
-    toDelete: {},
+    toDelete: [],
     toEdit: EMPTY_EDIT_USER
   };
 
@@ -48,13 +48,13 @@ const UserManagement = () => {
           ...state,
           users: action.users,
           total: action.total,
-          toDelete: {}
+          toDelete: []
         };
       }
       case "cancel_delete_user": {
         return {
           ...state,
-          toDelete: {}
+          toDelete: []
         };
       }
       case "cancel_edit_user": {
@@ -109,15 +109,19 @@ const UserManagement = () => {
     dispatch({ type: "update_user", users });
   };
 
-  const promptDeleteHandler = id => {
-    const toDelete = state.users.find(u => u.id === id);
+  const promptDeleteHandler = ids => {
+    const toDelete = state.users.filter(user => ids.includes(user.id));
     dispatch({ type: "delete_prompt", toDelete });
   };
 
   const doUserDelete = () => {
-    userService.deleteUser(state.toDelete.id).then(() => {
-      const users = state.users.filter(u => u.id !== state.toDelete.id);
-      dispatch({ type: "delete_user", users, total: state.total - 1 });
+    userService.deleteUsers(state.toDelete).then(() => {
+      const users = state.users.filter(u => !state.toDelete.includes(u));
+      dispatch({
+        type: "delete_user",
+        users,
+        total: state.total - state.toDelete.length
+      });
     });
   };
 
@@ -146,7 +150,7 @@ const UserManagement = () => {
       </div>
 
       <Modal
-        show={!!state.toDelete.id}
+        show={state.toDelete.length > 0}
         title="Delete User?"
         handleAction={doUserDelete}
         handleClose={() => {
@@ -154,10 +158,13 @@ const UserManagement = () => {
         }}
         submitLabel="Delete"
       >
-        <div>
-          Are you sure you want to delete{" "}
-          <strong>{state.toDelete.firstName}</strong> with id{" "}
-          <strong>{state.toDelete.id}</strong>?
+        <div className="delete-prompt">
+          Are you sure you want to delete the following users?
+          <ul>
+            {state.toDelete.map(u => (
+              <li key={u.id}>{u.userName}</li>
+            ))}
+          </ul>
         </div>
       </Modal>
 
