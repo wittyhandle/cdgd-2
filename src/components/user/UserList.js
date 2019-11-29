@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PaginatedList } from "../pagination";
 import { Tr } from "../common";
 
-export const UserList = ({
+const UserList = ({
   users,
   total,
   queryUsers,

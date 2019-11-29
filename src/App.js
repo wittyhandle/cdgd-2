@@ -10,7 +10,8 @@ import {
   Dashboard,
   UserManagement,
   Login,
-  ChangePassword
+  ChangePassword,
+  ClientManagement
 } from "./components/pages";
 import { ThreePaned } from "./components/layouts";
 import { AuthenticationProvider } from "./context/authentication.context";
@@ -51,6 +52,15 @@ const App = () => {
                 render={() => (
                   <ThreePaned>
                     <UserManagement />
+                  </ThreePaned>
+                )}
+              />
+              <PrivateRoute
+                exact
+                path="/client"
+                render={() => (
+                  <ThreePaned>
+                    <ClientManagement />
                   </ThreePaned>
                 )}
               />
