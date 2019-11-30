@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { api } from "../utils/index";
 
 const getUsers = (limit, offset, order, direction) =>
@@ -25,11 +24,14 @@ const deleteUsers = usersToDelete => {
 };
 
 const updateUser = (username, user) => {
-  delete user.password;
-  delete user.password2;
-  delete user.flair;
+  const toUpdate = { ...user };
+
+  delete toUpdate.password;
+  delete toUpdate.password2;
+  delete toUpdate.flair;
+
   return api
-    .put(`/api/v1/users/update/${username}`, { user })
+    .put(`/api/v1/users/update/${username}`, { toUpdate })
     .then(res => res.username)
     .catch(e => Promise.reject(e));
 };

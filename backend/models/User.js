@@ -2,8 +2,8 @@ const knex = require("knex")(require("../knexfile").development);
 
 const userFields = ["id", "userName", "email", "firstName", "lastName"];
 
-exports.create = user => {
-  // eslint-disable-next-line no-param-reassign
+exports.create = paramUser => {
+  const user = { ...paramUser };
   delete user.password2;
   return knex("users").insert(user);
 };

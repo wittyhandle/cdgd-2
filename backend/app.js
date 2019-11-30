@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const users = require("./routes/users");
+const clients = require("./routes/clients");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/api/v1/users", users);
+app.use("/api/v1/clients", clients);
 
 // our own error handler
 // eslint-disable-next-line no-unused-vars

@@ -6,6 +6,13 @@ const specialCharRegex = `^.*[${specialCharacters}]+.*$`;
 const numberRegex = /^.*[0-9]+.*$/;
 const capitalRegex = /^.*[A-Z]+.*$/;
 
+const userName = Yup.string().required("Username is required");
+const firstName = Yup.string().required("First name is required");
+const lastName = Yup.string().required("Last name is required");
+const email = Yup.string()
+  .required("Email is required")
+  .email("Email is invalid");
+
 export const passwordRules = {
   password: Yup.string()
     .required("Password is required")
@@ -32,10 +39,14 @@ export const passwordRules = {
 };
 
 export const newUserRules = {
-  userName: Yup.string().required("Username is required"),
-  email: Yup.string()
-    .required("Email is required")
-    .email("Email is invalid"),
-  firstName: Yup.string().required("First name is required"),
-  lastName: Yup.string().required("Last name is required")
+  userName,
+  email,
+  firstName,
+  lastName
+};
+
+export const newClientRules = {
+  email,
+  firstName,
+  lastName
 };
