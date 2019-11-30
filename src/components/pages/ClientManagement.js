@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { Card } from "../index";
-import {ClientList, NewClient} from "../client";
+import { ClientList, NewClient } from "../client";
+import { clientService } from "../../services";
 
 const ClientManagement = () => {
   const initialState = {
@@ -26,27 +27,14 @@ const ClientManagement = () => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // eslint-disable-next-line no-unused-vars
   const queryClients = (...args) => {
-    const clients = [
-      {
-        id: 1,
-        firstName: "Sally",
-        lastName: "Martin",
-        phone: "925-330-9002",
-        email: "sally@gmail.com",
-        addresses: [
-          {
-            street: "123 Main St",
-            city: "Lafayette",
-            state: "California",
-            zip: "94549"
-          }
-        ]
-      }
-    ];
-
-    dispatch({ type: "load_clients", clients, total: clients.length });
+    clientService.getClients(...args).then(r => {
+      dispatch({
+        type: "load_clients",
+        clients: r.items,
+        total: r.count
+      });
+    });
   };
 
   useEffect(() => {
