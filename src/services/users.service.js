@@ -31,7 +31,7 @@ const updateUser = (username, user) => {
   delete toUpdate.flair;
 
   return api
-    .put(`/api/v1/users/update/${username}`, { toUpdate })
+    .put(`/api/v1/users/update/${username}`, { user: toUpdate })
     .then(res => res.username)
     .catch(e => Promise.reject(e));
 };
