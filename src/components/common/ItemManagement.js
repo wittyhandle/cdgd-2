@@ -2,6 +2,7 @@ import React, { useEffect, useReducer, useCallback } from "react";
 import * as PropTypes from "prop-types";
 import { Card } from "../index";
 import itemReducer from "../reducers/itemReducer";
+import { ITEM_ACTIONS } from "../reducers";
 import { Modal } from "./index";
 
 const ItemManagement = ({
@@ -24,7 +25,11 @@ const ItemManagement = ({
   const queryItems = useCallback(
     (...args) =>
       getItemsFunc(...args).then(r => {
-        dispatch({ type: "load_items", items: r.items, total: r.count });
+        dispatch({
+          type: ITEM_ACTIONS.LOAD_ITEMS,
+          items: r.items,
+          total: r.count
+        });
       }),
     [getItemsFunc]
   );
@@ -33,7 +38,7 @@ const ItemManagement = ({
     deleteItemFunc(state.toDelete).then(() => {
       const items = state.items.filter(u => !state.toDelete.includes(u));
       dispatch({
-        type: "delete_item",
+        type: ITEM_ACTIONS.DELETE_ITEM,
         items,
         total: state.total - state.toDelete.length
       });
@@ -48,7 +53,7 @@ const ItemManagement = ({
 
   const createItemCallback = item => {
     dispatch({
-      type: "new_item",
+      type: ITEM_ACTIONS.NEW_ITEM,
       items: [{ ...item, flair: "new" }, ...state.items],
       total: state.total + 1
     });
@@ -66,21 +71,21 @@ const ItemManagement = ({
       };
     });
 
-    dispatch({ type: "update_item", items });
+    dispatch({ type: ITEM_ACTIONS.UPDATE_ITEM, items });
   };
 
   const loadItemForDelete = ids => {
     const toDelete = state.items.filter(item => ids.includes(item.id));
-    dispatch({ type: "delete_prompt", toDelete });
+    dispatch({ type: ITEM_ACTIONS.DELETE_PROMPT, toDelete });
   };
 
   const loadItemForEdit = id => {
     const toEdit = state.items.find(u => u.id === id);
-    dispatch({ type: "load_edit_item", toEdit });
+    dispatch({ type: ITEM_ACTIONS.LOAD_EDIT_ITEM, toEdit });
   };
 
   const cancelEdit = () => {
-    dispatch({ type: "cancel_edit_item" });
+    dispatch({ type: ITEM_ACTIONS.CANCEL_EDIT_ITEM });
   };
 
   return (
@@ -109,7 +114,7 @@ const ItemManagement = ({
         title={deleteTitle}
         handleAction={doItemDelete}
         handleClose={() => {
-          dispatch({ type: "cancel_delete_item" });
+          dispatch({ type: ITEM_ACTIONS.CANCEL_DELETE_ITEM });
         }}
         submitLabel="Delete"
       >

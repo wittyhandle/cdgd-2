@@ -1,28 +1,30 @@
+import { ITEM_ACTIONS } from "./actions";
+
 const itemReducer = () => {
   return (state, action) => {
     switch (action.type) {
-      case "load_items":
-      case "new_item": {
+      case ITEM_ACTIONS.LOAD_ITEMS:
+      case ITEM_ACTIONS.NEW_ITEM: {
         return {
           ...state,
           items: action.items,
           total: action.total
         };
       }
-      case "update_item": {
+      case ITEM_ACTIONS.UPDATE_ITEM: {
         return {
           ...state,
           items: action.items,
           toEdit: action.toEdit
         };
       }
-      case "delete_prompt": {
+      case ITEM_ACTIONS.DELETE_PROMPT: {
         return {
           ...state,
           toDelete: action.toDelete
         };
       }
-      case "delete_item": {
+      case ITEM_ACTIONS.DELETE_ITEM: {
         return {
           ...state,
           items: action.items,
@@ -30,19 +32,19 @@ const itemReducer = () => {
           toDelete: []
         };
       }
-      case "cancel_delete_item": {
+      case ITEM_ACTIONS.CANCEL_DELETE_ITEM: {
         return {
           ...state,
           toDelete: []
         };
       }
-      case "cancel_edit_item": {
+      case ITEM_ACTIONS.CANCEL_EDIT_ITEM: {
         return {
           ...state,
           toEdit: action.toEdit
         };
       }
-      case "load_edit_item": {
+      case ITEM_ACTIONS.LOAD_EDIT_ITEM: {
         return {
           ...state,
           toEdit: action.toEdit

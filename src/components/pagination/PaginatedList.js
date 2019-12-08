@@ -3,6 +3,7 @@ import * as PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PaginationControls from "./PaginationControls";
 import PaginationPageSize from "./PaginationPageSize";
+import { PAGINATION_ACTIONS } from "../reducers";
 
 const PaginatedList = ({
   getItemsHandler,
@@ -25,7 +26,7 @@ const PaginatedList = ({
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case "change_page": {
+      case PAGINATION_ACTIONS.CHANGE_PAGE: {
         return {
           ...state,
           success: action.success,
@@ -35,7 +36,7 @@ const PaginatedList = ({
           toRecord: action.toRecord
         };
       }
-      case "change_page_size": {
+      case PAGINATION_ACTIONS.SET_PAGE_SIZE: {
         return {
           ...state,
           success: action.success,
@@ -46,7 +47,7 @@ const PaginatedList = ({
           toRecord: action.toRecord
         };
       }
-      case "set_sort": {
+      case PAGINATION_ACTIONS.SET_SORT: {
         return {
           ...state,
           success: action.success,
@@ -72,7 +73,7 @@ const PaginatedList = ({
       state.sortDirection
     ).then(() => {
       dispatch({
-        type: "change_page",
+        type: PAGINATION_ACTIONS.CHANGE_PAGE,
         selectedPage,
         startIndex,
         success: true
@@ -84,7 +85,7 @@ const PaginatedList = ({
     const limit = Number(e.target.value);
     getItemsHandler(limit, 0, state.sortBy, state.sortDirection).then(() => {
       dispatch({
-        type: "change_page_size",
+        type: PAGINATION_ACTIONS.SET_PAGE_SIZE,
         selectedPage: 1,
         startIndex: 0,
         limit,
@@ -97,7 +98,7 @@ const PaginatedList = ({
     getItemsHandler(state.limit, state.startIndex, column, direction).then(
       () => {
         dispatch({
-          type: "set_sort",
+          type: PAGINATION_ACTIONS.SET_SORT,
           sortBy: column,
           sortDirection: direction,
           success: true
