@@ -6,9 +6,11 @@ const Tr = ({ flairCss, css, children }) => {
 
   useEffect(() => {
     setFlair(flairCss || "");
-    setTimeout(() => {
-      setFlair("");
-    }, 2000);
+    if (flairCss) {
+      setTimeout(() => {
+        setFlair("");
+      }, 2000);
+    }
   }, [flairCss]);
 
   return <tr className={`${css} ${flair}`}>{children}</tr>;
