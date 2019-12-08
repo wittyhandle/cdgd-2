@@ -8,7 +8,7 @@ import {
 import { Main, PrivateRoute } from "./components/index";
 import {
   Dashboard,
-  UserManagement,
+  UserDashboard,
   Login,
   ChangePassword,
   ClientManagement
@@ -49,7 +49,7 @@ const App = () => {
               path="/user"
               render={() => (
                 <ThreePaned>
-                  <UserManagement />
+                  <UserDashboard />
                 </ThreePaned>
               )}
             />

@@ -10,7 +10,7 @@ const UserList = ({
   total,
   queryUsers,
   promptDeleteHandler,
-  editUserHandler
+  loadItemForEdit
 }) => {
   const [toDelete, setToDelete] = useState([]);
 
@@ -72,7 +72,7 @@ const UserList = ({
             <Button
               className="no-hover"
               variant="link"
-              onClick={() => editUserHandler(id)}
+              onClick={() => loadItemForEdit(id)}
             >
               <FontAwesomeIcon icon="pencil-alt" />
             </Button>
@@ -93,6 +93,11 @@ const UserList = ({
   );
 };
 
+UserList.defaultProps = {
+  users: [],
+  total: 0
+};
+
 UserList.propTypes = {
   users: PropTypes.arrayOf(
     PropTypes.shape({
@@ -103,11 +108,11 @@ UserList.propTypes = {
       email: PropTypes.string,
       flair: PropTypes.string
     })
-  ).isRequired,
+  ),
   queryUsers: PropTypes.func.isRequired,
   promptDeleteHandler: PropTypes.func.isRequired,
-  editUserHandler: PropTypes.func.isRequired,
-  total: PropTypes.number.isRequired
+  loadItemForEdit: PropTypes.func.isRequired,
+  total: PropTypes.number
 };
 
 export default UserList;
