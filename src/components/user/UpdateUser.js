@@ -7,8 +7,8 @@ import { Field, Submit } from "../forms";
 import { Modal } from "../common";
 import { createUserRules } from "../../utils/validations";
 
-const EditUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
-  const editUser = (user, reset, setSubmitting) => {
+const UpdateUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
+  const updateUser = (user, reset, setSubmitting) => {
     const { userName } = user;
     userService
       .updateUser(userName, user)
@@ -30,7 +30,7 @@ const EditUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
         initialValues={{ ...userToEdit }}
         validationSchema={Yup.object().shape({ ...createUserRules })}
         onSubmit={(user, { setSubmitting, resetForm }) => {
-          editUser(user, resetForm, setSubmitting);
+          updateUser(user, resetForm, setSubmitting);
         }}
       >
         {({ isSubmitting, values }) => (
@@ -90,10 +90,10 @@ const EditUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
   );
 };
 
-EditUser.propTypes = {
+UpdateUser.propTypes = {
   updateUserHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
   userToEdit: PropTypes.shape({ id: PropTypes.number }).isRequired
 };
 
-export default EditUser;
+export default UpdateUser;
