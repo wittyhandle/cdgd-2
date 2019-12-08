@@ -36,7 +36,7 @@ const UpdateUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
         {({ isSubmitting, values }) => (
           <>
             <Modal
-              show={!!userToEdit.id}
+              show={!!userToEdit}
               title="Edit User"
               handleClose={() => closeHandler()}
               submitter={() => (
@@ -90,10 +90,14 @@ const UpdateUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
   );
 };
 
+UpdateUser.defaultProps = {
+  userToEdit: null
+};
+
 UpdateUser.propTypes = {
   updateUserHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
-  userToEdit: PropTypes.shape({ id: PropTypes.number }).isRequired
+  userToEdit: PropTypes.shape({ id: PropTypes.number })
 };
 
 export default UpdateUser;

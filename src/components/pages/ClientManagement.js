@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import { Card } from "../index";
-import { ListClient, CreateClient } from "../client";
+import { CreateClient, ListClient } from "../client";
 import { clientService } from "../../services";
 
 const ClientManagement = () => {

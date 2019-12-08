@@ -2,7 +2,6 @@ import React from "react";
 import ItemManagement from "../common/ItemManagement";
 import { CreateUser, UpdateUser, ListUser } from "../user";
 import { userService } from "../../services";
-import { EMPTY_EDIT_USER } from "../../utils/config";
 
 const UserDashboard = () => {
   const getUsers = (...args) => userService.getUsers(...args);
@@ -14,7 +13,6 @@ const UserDashboard = () => {
       deleteItemFunc={deleteUsers}
       title="Users"
       deleteTitle="Delete User?"
-      emptyItem={EMPTY_EDIT_USER}
       deletePane={toDelete => (
         <div>
           Are you sure you want to delete the following users?
@@ -39,11 +37,13 @@ const UserDashboard = () => {
       }) => (
         <>
           <CreateUser createUserCallback={createItemCallback} />
-          <UpdateUser
-            userToEdit={itemToEdit}
-            closeHandler={cancelEdit}
-            updateUserHandler={updateItem}
-          />
+          {itemToEdit && (
+            <UpdateUser
+              userToEdit={itemToEdit}
+              closeHandler={cancelEdit}
+              updateUserHandler={updateItem}
+            />
+          )}
           <ListUser
             users={items}
             total={total}

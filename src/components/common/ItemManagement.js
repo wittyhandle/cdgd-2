@@ -8,7 +8,6 @@ const ItemManagement = ({
   title,
   deleteTitle,
   children,
-  emptyItem,
   getItemsFunc,
   deleteItemFunc,
   deletePane
@@ -17,7 +16,7 @@ const ItemManagement = ({
     items: [],
     total: 0,
     toDelete: [],
-    toEdit: emptyItem
+    toEdit: null
   };
 
   const [state, dispatch] = useReducer(itemReducer(), initialState);
@@ -67,7 +66,7 @@ const ItemManagement = ({
       };
     });
 
-    dispatch({ type: "update_item", items, toEdit: emptyItem });
+    dispatch({ type: "update_item", items });
   };
 
   const loadItemForDelete = ids => {
@@ -81,7 +80,7 @@ const ItemManagement = ({
   };
 
   const cancelEdit = () => {
-    dispatch({ type: "cancel_edit_item", toEdit: emptyItem });
+    dispatch({ type: "cancel_edit_item" });
   };
 
   return (
@@ -123,7 +122,6 @@ const ItemManagement = ({
 ItemManagement.propTypes = {
   title: PropTypes.string.isRequired,
   deleteTitle: PropTypes.string.isRequired,
-  emptyItem: PropTypes.objectOf(PropTypes.any).isRequired,
   getItemsFunc: PropTypes.func.isRequired,
   deleteItemFunc: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
