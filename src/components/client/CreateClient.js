@@ -3,11 +3,11 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { Button } from "react-bootstrap";
 import { Modal, useModalToggle } from "../common";
-import { newClientRules } from "../../utils";
+import { createClientRules } from "../../utils";
 import { Field, Submit } from "../forms";
 import { clientService } from "../../services";
 
-const NewClient = () => {
+const CreateClient = () => {
   const [{ show }, toggleModal] = useModalToggle();
 
   const saveClient = (client, reset, setSubmitting, setFieldError) => {
@@ -36,7 +36,7 @@ const NewClient = () => {
           lastName: ""
         }}
         validationSchema={Yup.object().shape({
-          ...newClientRules
+          ...createClientRules
         })}
         onSubmit={(client, { setSubmitting, resetForm, setFieldError }) => {
           saveClient(client, resetForm, setSubmitting, setFieldError);
@@ -100,4 +100,4 @@ const NewClient = () => {
   );
 };
 
-export default NewClient;
+export default CreateClient;

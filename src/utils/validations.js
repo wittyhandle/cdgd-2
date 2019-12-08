@@ -45,7 +45,7 @@ export const createUserRules = {
   lastName
 };
 
-export const newClientRules = {
+export const createClientRules = {
   email,
   firstName,
   lastName
