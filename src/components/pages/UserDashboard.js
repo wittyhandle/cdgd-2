@@ -29,7 +29,7 @@ const UserDashboard = () => {
       {({
         createItemCallback,
         loadItemForEdit,
-        promptDeleteItemHandler,
+        loadItemForDelete,
         items,
         total,
         itemToEdit,
@@ -49,7 +49,7 @@ const UserDashboard = () => {
             total={total}
             loadItemForEdit={loadItemForEdit}
             queryUsers={queryItems}
-            promptDeleteHandler={promptDeleteItemHandler}
+            loadUserForDelete={loadItemForDelete}
           />
         </>
       )}

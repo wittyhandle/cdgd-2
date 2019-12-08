@@ -70,7 +70,7 @@ const ItemManagement = ({
     dispatch({ type: "update_item", items, toEdit: emptyItem });
   };
 
-  const promptDeleteItemHandler = ids => {
+  const loadItemForDelete = ids => {
     const toDelete = state.items.filter(item => ids.includes(item.id));
     dispatch({ type: "delete_prompt", toDelete });
   };
@@ -96,7 +96,7 @@ const ItemManagement = ({
                 total: state.total,
                 itemToEdit: state.toEdit,
                 queryItems,
-                promptDeleteItemHandler,
+                loadItemForDelete,
                 loadItemForEdit,
                 cancelEdit,
                 updateItem
