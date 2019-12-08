@@ -1,6 +1,6 @@
 import React from "react";
 import ItemManagement from "../common/ItemManagement";
-import { CreateUser, UpdateUser, UserList } from "../user";
+import { CreateUser, UpdateUser, ListUser } from "../user";
 import { userService } from "../../services";
 import { EMPTY_EDIT_USER } from "../../utils/config";
 
@@ -44,7 +44,7 @@ const UserDashboard = () => {
             closeHandler={cancelEdit}
             updateUserHandler={updateItem}
           />
-          <UserList
+          <ListUser
             users={items}
             total={total}
             loadItemForEdit={loadItemForEdit}

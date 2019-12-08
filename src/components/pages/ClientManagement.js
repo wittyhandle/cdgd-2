@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import { Card } from "../index";
-import { ClientList, CreateClient } from "../client";
+import { ListClient, CreateClient } from "../client";
 import { clientService } from "../../services";
 
 const ClientManagement = () => {
@@ -48,7 +48,7 @@ const ClientManagement = () => {
           {() => (
             <>
               <CreateClient />
-              <ClientList
+              <ListClient
                 clients={state.clients}
                 total={state.total}
                 queryClients={queryClients}

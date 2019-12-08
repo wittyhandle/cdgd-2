@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { PaginatedList } from "../pagination";
 import { Tr } from "../common";
 
-const ClientList = ({ clients, total, queryClients }) => {
+const ListClient = ({ clients, total, queryClients }) => {
   const headers = [
     { key: "id", name: "Id", css: "narrow text-center" },
     { key: "firstName", name: "First Name" },
@@ -47,7 +47,7 @@ const ClientList = ({ clients, total, queryClients }) => {
   );
 };
 
-ClientList.propTypes = {
+ListClient.propTypes = {
   clients: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -61,4 +61,4 @@ ClientList.propTypes = {
   queryClients: PropTypes.func.isRequired
 };
 
-export default ClientList;
+export default ListClient;

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PaginatedList } from "../pagination";
 import { Tr } from "../common";
 
-const UserList = ({
+const ListUser = ({
   users,
   total,
   queryUsers,
@@ -93,12 +93,12 @@ const UserList = ({
   );
 };
 
-UserList.defaultProps = {
+ListUser.defaultProps = {
   users: [],
   total: 0
 };
 
-UserList.propTypes = {
+ListUser.propTypes = {
   users: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -115,4 +115,4 @@ UserList.propTypes = {
   total: PropTypes.number
 };
 
-export default UserList;
+export default ListUser;
