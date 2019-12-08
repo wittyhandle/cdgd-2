@@ -5,7 +5,7 @@ import * as PropTypes from "prop-types";
 import { userService } from "../../services";
 import { Field, Submit } from "../forms";
 import { Modal } from "../common";
-import { newUserRules } from "../../utils/validations";
+import { createUserRules } from "../../utils/validations";
 
 const EditUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
   const editUser = (user, reset, setSubmitting) => {
@@ -28,7 +28,7 @@ const EditUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
         validateOnBlur={false}
         validateOnChange={false}
         initialValues={{ ...userToEdit }}
-        validationSchema={Yup.object().shape({ ...newUserRules })}
+        validationSchema={Yup.object().shape({ ...createUserRules })}
         onSubmit={(user, { setSubmitting, resetForm }) => {
           editUser(user, resetForm, setSubmitting);
         }}

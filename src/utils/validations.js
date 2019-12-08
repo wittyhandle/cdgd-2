@@ -38,7 +38,7 @@ export const passwordRules = {
     .oneOf([Yup.ref("password"), null], "Passwords must match")
 };
 
-export const newUserRules = {
+export const createUserRules = {
   userName,
   email,
   firstName,

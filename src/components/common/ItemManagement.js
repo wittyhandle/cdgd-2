@@ -47,7 +47,7 @@ const ItemManagement = ({
     });
   }, [queryItems]);
 
-  const newItemHandler = item => {
+  const createItemCallback = item => {
     dispatch({
       type: "new_item",
       items: [{ ...item, flair: "new" }, ...state.items],
@@ -91,7 +91,7 @@ const ItemManagement = ({
           {() => (
             <>
               {children({
-                newItemHandler,
+                createItemCallback,
                 items: state.items,
                 total: state.total,
                 itemToEdit: state.toEdit,

@@ -1,6 +1,6 @@
 import React from "react";
 import ItemManagement from "../common/ItemManagement";
-import { EditUser, NewUser, UserList } from "../user";
+import { EditUser, CreateUser, UserList } from "../user";
 import { userService } from "../../services";
 import { EMPTY_EDIT_USER } from "../../utils/config";
 
@@ -27,7 +27,7 @@ const UserDashboard = () => {
       )}
     >
       {({
-        newItemHandler,
+        createItemCallback,
         loadItemForEdit,
         promptDeleteItemHandler,
         items,
@@ -38,7 +38,7 @@ const UserDashboard = () => {
         updateItem
       }) => (
         <>
-          <NewUser newUserHandler={newItemHandler} />
+          <CreateUser createUserCallback={createItemCallback} />
           <EditUser
             userToEdit={itemToEdit}
             closeHandler={cancelEdit}

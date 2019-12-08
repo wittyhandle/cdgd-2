@@ -6,9 +6,9 @@ import { Button } from "react-bootstrap";
 import { userService } from "../../services";
 import { Field, Submit } from "../forms";
 import { Modal, useModalToggle } from "../common";
-import { passwordRules, newUserRules } from "../../utils/validations";
+import { passwordRules, createUserRules } from "../../utils/validations";
 
-const NewUser = ({ newUserHandler }) => {
+const CreateUser = ({ createUserCallback }) => {
   const [{ show }, toggleModal] = useModalToggle();
 
   const saveUser = (user, reset, setSubmitting, setFieldError) => {
@@ -16,7 +16,7 @@ const NewUser = ({ newUserHandler }) => {
       .createUser(user)
       .then(r => {
         toggleModal(reset);
-        newUserHandler({ ...user, id: r });
+        createUserCallback({ ...user, id: r });
       })
       .catch(e => {
         setFieldError("userName", e.message);
@@ -40,7 +40,7 @@ const NewUser = ({ newUserHandler }) => {
           password2: ""
         }}
         validationSchema={Yup.object().shape({
-          ...newUserRules,
+          ...createUserRules,
           ...passwordRules
         })}
         validate={values => {
@@ -150,8 +150,8 @@ const NewUser = ({ newUserHandler }) => {
   );
 };
 
-NewUser.propTypes = {
-  newUserHandler: PropTypes.func.isRequired
+CreateUser.propTypes = {
+  createUserCallback: PropTypes.func.isRequired
 };
 
-export default NewUser;
+export default CreateUser;
