@@ -15,7 +15,6 @@ const createUser = user =>
     .catch(e => Promise.reject(e));
 
 const deleteUsers = usersToDelete => {
-  // console.log('ll', usersToDelete);
   const ids = usersToDelete.map(u => u.id);
   return api
     .delete("/api/v1/users/bulk", { data: { toDelete: ids } })

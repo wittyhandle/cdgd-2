@@ -49,7 +49,7 @@ const UserDashboard = () => {
             total={total}
             loadItemForEdit={loadItemForEdit}
             queryUsers={queryItems}
-            loadUserForDelete={loadItemForDelete}
+            loadItemForDelete={loadItemForDelete}
           />
         </>
       )}

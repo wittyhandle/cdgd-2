@@ -9,7 +9,7 @@ const ListUser = ({
   users,
   total,
   queryUsers,
-  loadUserForDelete,
+  loadItemForDelete,
   loadItemForEdit
 }) => {
   const [toDelete, setToDelete] = useState([]);
@@ -32,7 +32,7 @@ const ListUser = ({
         <Button
           className="no-hover"
           variant="link"
-          onClick={() => loadUserForDelete(toDelete)}
+          onClick={() => loadItemForDelete(toDelete)}
         >
           <i className="nc-icon nc-simple-remove" />
         </Button>
@@ -65,7 +65,7 @@ const ListUser = ({
             <Button
               className="no-hover"
               variant="link"
-              onClick={() => loadUserForDelete([id])}
+              onClick={() => loadItemForDelete([id])}
             >
               <i className="nc-icon nc-simple-remove" />
             </Button>
@@ -110,7 +110,7 @@ ListUser.propTypes = {
     })
   ),
   queryUsers: PropTypes.func.isRequired,
-  loadUserForDelete: PropTypes.func.isRequired,
+  loadItemForDelete: PropTypes.func.isRequired,
   loadItemForEdit: PropTypes.func.isRequired,
   total: PropTypes.number
 };

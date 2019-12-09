@@ -12,4 +12,14 @@ exports.getClients = (limit, offset, order, direction) =>
     .limit(limit)
     .offset(offset);
 
+exports.deleteClients = ids =>
+  knex("clients")
+    .whereIn("id", ids)
+    .del();
+
+exports.updateClient = (id, client) =>
+  knex("clients")
+    .where("id", id)
+    .update(client);
+
 exports.getClientCount = () => knex("clients").count("id", { as: "i" });

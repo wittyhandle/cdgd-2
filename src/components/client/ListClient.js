@@ -1,12 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import * as PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 import { PaginatedList } from "../pagination";
 import { Tr } from "../common";
 
-const ListClient = ({ clients, total, queryClients }) => {
+const ListClient = ({
+  clients,
+  total,
+  queryClients,
+  loadItemForDelete,
+  loadItemForEdit
+}) => {
+  const [toDelete, setToDelete] = useState([]);
+
+  const handleDeleteSelect = (e, id) => {
+    if (e.target.checked) {
+      const newDeletes = [...toDelete];
+      newDeletes.push(id);
+      setToDelete(newDeletes);
+    } else {
+      const newDeletes = toDelete.filter(u => u !== id);
+      setToDelete(newDeletes);
+    }
+  };
+
   const headers = [
+    {
+      key: "delete",
+      markup: () => (
+        <Button
+          className="no-hover"
+          variant="link"
+          onClick={() => loadItemForDelete(toDelete)}
+        >
+          <i className="nc-icon nc-simple-remove" />
+        </Button>
+      ),
+      sortable: false,
+      css: "narrow text-center"
+    },
     { key: "id", name: "Id", css: "narrow text-center" },
     { key: "firstName", name: "First Name" },
     { key: "lastName", name: "Last Name" },
@@ -18,16 +51,27 @@ const ListClient = ({ clients, total, queryClients }) => {
   const rowRenderer = ({ id, firstName, lastName, email, flair }) => {
     return (
       <Tr key={id} flairCss={flair}>
+        <td className="text-center">
+          <input type="checkbox" onChange={e => handleDeleteSelect(e, id)} />
+        </td>
         <td className="text-center">{id}</td>
         <td>{firstName}</td>
         <td>{lastName}</td>
         <td>{email}</td>
         <td>
           <div className="text-center">
-            <Button className="no-hover" variant="link">
+            <Button
+              className="no-hover"
+              variant="link"
+              onClick={() => loadItemForDelete([id])}
+            >
               <i className="nc-icon nc-simple-remove" />
             </Button>
-            <Button className="no-hover" variant="link">
+            <Button
+              className="no-hover"
+              variant="link"
+              onClick={() => loadItemForEdit(id)}
+            >
               <FontAwesomeIcon icon="pencil-alt" />
             </Button>
           </div>
@@ -58,6 +102,8 @@ ListClient.propTypes = {
     })
   ).isRequired,
   total: PropTypes.number.isRequired,
+  loadItemForDelete: PropTypes.func.isRequired,
+  loadItemForEdit: PropTypes.func.isRequired,
   queryClients: PropTypes.func.isRequired
 };
 

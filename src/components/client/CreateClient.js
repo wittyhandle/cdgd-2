@@ -2,20 +2,21 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Button } from "react-bootstrap";
+import * as PropTypes from "prop-types";
 import { Modal, useModalToggle } from "../common";
 import { createClientRules } from "../../utils";
 import { Field, Submit } from "../forms";
 import { clientService } from "../../services";
 
-const CreateClient = () => {
+const CreateClient = ({ createClientCallback }) => {
   const [{ show }, toggleModal] = useModalToggle();
 
   const saveClient = (client, reset, setSubmitting, setFieldError) => {
     clientService
       .createClient(client)
-      // eslint-disable-next-line no-unused-vars
       .then(r => {
         toggleModal(reset);
+        createClientCallback({ ...client, id: r });
       })
       .catch(e => {
         setFieldError("firstName", e.message);
@@ -98,6 +99,10 @@ const CreateClient = () => {
       </Formik>
     </div>
   );
+};
+
+CreateClient.propTypes = {
+  createClientCallback: PropTypes.func.isRequired
 };
 
 export default CreateClient;

@@ -39,4 +39,28 @@ router.post("/new", isAuthenticated, (req, res, next) => {
     .catch(next);
 });
 
+router.delete("/bulk", isAuthenticated, (req, res, next) => {
+  const { toDelete } = req.body;
+  Client.deleteClients(toDelete)
+    .then(() => {
+      res.json({
+        success: true,
+        id: Number(req.params.id)
+      });
+    })
+    .catch(next);
+});
+
+router.put("/update/:id", isAuthenticated, (req, res, next) => {
+  const { client } = req.body;
+  Client.updateClient(req.params.id, client)
+    .then(() => {
+      res.json({
+        success: true,
+        id: req.params.id
+      });
+    })
+    .catch(next);
+});
+
 module.exports = router;

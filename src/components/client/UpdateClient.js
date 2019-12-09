@@ -2,19 +2,19 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import * as PropTypes from "prop-types";
-import { userService } from "../../services";
-import { Field, Submit } from "../forms";
+import { clientService } from "../../services";
 import { Modal } from "../common";
-import { createUserRules } from "../../utils/validations";
+import { createClientRules } from "../../utils";
+import {Field, Submit} from '../forms';
 
-const UpdateUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
-  const updateUser = (user, reset, setSubmitting) => {
-    const { userName } = user;
-    userService
-      .updateUser(userName, user)
+const UpdateClient = ({ updateClientHandler, clientToEdit, closeHandler }) => {
+  const updateClient = (client, reset, setSubmitting) => {
+    const { id } = client;
+    clientService
+      .updateClient(id, client)
       .then(() => {
         reset();
-        updateUserHandler(user);
+        updateClientHandler(client);
       })
       .finally(() => {
         setSubmitting(false);
@@ -27,16 +27,16 @@ const UpdateUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
         enableReinitialize
         validateOnBlur={false}
         validateOnChange={false}
-        initialValues={{ ...userToEdit }}
-        validationSchema={Yup.object().shape({ ...createUserRules })}
-        onSubmit={(user, { setSubmitting, resetForm }) => {
-          updateUser(user, resetForm, setSubmitting);
+        onSubmit={(client, { setSubmitting, resetForm }) => {
+          updateClient(client, resetForm, setSubmitting);
         }}
+        initialValues={{ ...clientToEdit }}
+        validationSchema={Yup.object().shape({ ...createClientRules })}
       >
         {({ isSubmitting, values }) => (
           <Modal
-            show={!!userToEdit}
-            title="Edit User"
+            show={!!clientToEdit}
+            title="Edit Client"
             handleClose={() => closeHandler()}
             submitter={() => (
               <Submit isSubmitting={isSubmitting} title="Update" />
@@ -47,18 +47,10 @@ const UpdateUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
                 <div className="col-lg-12 form-container">
                   <div className="row">
                     <Field
-                      name="userName"
-                      label="Username"
-                      value={values.userName}
-                      type="text"
-                      colCss="col-lg-6"
-                      disabled
-                    />
-                    <Field
                       name="email"
                       label="Email"
-                      type="email"
                       value={values.email}
+                      type="email"
                       colCss="col-lg-6"
                     />
                   </div>
@@ -88,14 +80,14 @@ const UpdateUser = ({ updateUserHandler, userToEdit, closeHandler }) => {
   );
 };
 
-UpdateUser.defaultProps = {
-  userToEdit: null
+UpdateClient.defaultProps = {
+  clientToEdit: null
 };
 
-UpdateUser.propTypes = {
-  updateUserHandler: PropTypes.func.isRequired,
+UpdateClient.propTypes = {
+  updateClientHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
-  userToEdit: PropTypes.shape({ id: PropTypes.number })
+  clientToEdit: PropTypes.shape({ id: PropTypes.number })
 };
 
-export default UpdateUser;
+export default UpdateClient;
