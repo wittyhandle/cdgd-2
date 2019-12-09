@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import * as PropTypes from "prop-types";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PaginatedList } from "../pagination";
-import { Tr } from "../common";
+import { Tr, useSelectionDelete } from "../common";
 
 const ListUser = ({
   users,
@@ -12,18 +12,7 @@ const ListUser = ({
   loadItemForDelete,
   loadItemForEdit
 }) => {
-  const [toDelete, setToDelete] = useState([]);
-
-  const handleDeleteSelect = (e, id) => {
-    if (e.target.checked) {
-      const newDeletes = [...toDelete];
-      newDeletes.push(id);
-      setToDelete(newDeletes);
-    } else {
-      const newDeletes = toDelete.filter(u => u !== id);
-      setToDelete(newDeletes);
-    }
-  };
+  const [toDelete, handleDeleteSelect] = useSelectionDelete();
 
   const headers = [
     {
