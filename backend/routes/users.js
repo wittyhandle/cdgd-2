@@ -122,8 +122,8 @@ router.put("/change-password", isAuthenticated, (req, res, next) => {
       passwordHash =>
         passwordHash[0] && bcrypt.compare(oldPassword, passwordHash[0].password)
     )
-    .then(m => {
-      if (m) {
+    .then(matched => {
+      if (matched) {
         bcrypt.hash(newPassword, 15).then(hash => {
           User.updateUser(username, { password: hash })
             .then(() => {
