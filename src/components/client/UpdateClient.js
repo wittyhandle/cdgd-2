@@ -5,7 +5,7 @@ import * as PropTypes from "prop-types";
 import { clientService } from "../../services";
 import { Modal } from "../common";
 import { createClientRules } from "../../utils";
-import {Field, Submit} from '../forms';
+import { Field, Submit } from "../forms";
 
 const UpdateClient = ({ updateClientHandler, clientToEdit, closeHandler }) => {
   const updateClient = (client, reset, setSubmitting) => {
