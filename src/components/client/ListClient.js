@@ -63,6 +63,13 @@ const ListClient = ({
             >
               <FontAwesomeIcon icon="pencil-alt" />
             </Button>
+            <Button
+              className="no-hover"
+              variant="link"
+              href="#"
+            >
+              <FontAwesomeIcon icon="eye" />
+            </Button>
           </div>
         </td>
       </Tr>

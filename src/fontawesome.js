@@ -4,7 +4,16 @@ import {
   faSortDown,
   faSortUp,
   faSpinner,
-  faPencilAlt
+  faPencilAlt,
+  faEye
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faSpinner, faSort, faSortUp, faSortDown, faSort, faPencilAlt);
+library.add(
+  faSpinner,
+  faSort,
+  faSortUp,
+  faSortDown,
+  faSort,
+  faPencilAlt,
+  faEye
+);
