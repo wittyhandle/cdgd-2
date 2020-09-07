@@ -90,6 +90,43 @@ const CreateClient = ({ createClientCallback }) => {
                         colCss="col-lg-6"
                       />
                     </div>
+                    <div className="row">
+                      <Field
+                        name="street1"
+                        label="Street Address 1"
+                        type="text"
+                        colCss="col-lg-12"
+                      />
+                    </div>
+                    <div className="row">
+                      <Field
+                        name="street2"
+                        label="Street Address 2"
+                        type="text"
+                        colCss="col-lg-12"
+                      />
+                    </div>
+                    <div className="row">
+                      <Field
+                        name="city"
+                        label="City"
+                        type="text"
+                        colCss="col-lg-6"
+                      />
+                      <Field
+                        name="state"
+                        label="State"
+                        type="text"
+                        colCss="col-lg-6"
+                        options={[{ key: "dd", label: "DD" }]}
+                      />
+                      <Field
+                        name="zip"
+                        label="Zip Code"
+                        type="text"
+                        colCss="col-lg-6"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

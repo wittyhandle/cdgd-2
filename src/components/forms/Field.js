@@ -2,7 +2,7 @@ import React from "react";
 import { ErrorMessage, Field as FormikField } from "formik";
 import * as PropTypes from "prop-types";
 
-const Field = ({ colCss, name, label, type, value, disabled }) => {
+const Field = ({ colCss, name, label, type, value, disabled, options }) => {
   return (
     <div className={`cdgd-field ${colCss}`}>
       <div className="form-group">
@@ -12,12 +12,20 @@ const Field = ({ colCss, name, label, type, value, disabled }) => {
           name={name}
           value={value}
           disabled={disabled}
+          component={options ? "select" : "input"}
           className="form-control"
-        />
+        >
+          {options &&
+            options.map(o => <option value={o.key}>{o.label}</option>)}
+        </FormikField>
       </div>
       <ErrorMessage name={name} component="div" className="error" />
     </div>
   );
+};
+
+Field.defaultProps = {
+  options: []
 };
 
 Field.propTypes = {
@@ -27,7 +35,13 @@ Field.propTypes = {
   // eslint-disable-next-line react/require-default-props
   value: PropTypes.string,
   colCss: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      label: PropTypes.string
+    })
+  )
 };
 
 Field.defaultProps = {

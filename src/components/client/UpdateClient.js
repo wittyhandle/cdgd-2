@@ -70,6 +70,24 @@ const UpdateClient = ({ updateClientHandler, clientToEdit, closeHandler }) => {
                       colCss="col-lg-6"
                     />
                   </div>
+                  <div className="row">
+                    <Field
+                      name="street1"
+                      label="Street Address 1"
+                      value={values.street1}
+                      type="text"
+                      colCss="col-lg-12"
+                    />
+                  </div>
+                  <div className="row">
+                    <Field
+                      name="street2"
+                      label="Street Address 2"
+                      value={values.street2}
+                      type="text"
+                      colCss="col-lg-12"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
