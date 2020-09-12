@@ -3,6 +3,12 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+const pino = require("pino");
+const expressPino = require("express-pino-logger");
+
+const logger = pino({ level: process.env.LOG_LEVEL || "info" });
+const expressLogger = expressPino({ logger });
+
 const users = require("./routes/users");
 const clients = require("./routes/clients");
 
@@ -12,6 +18,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(expressLogger);
 
 app.use("/api/v1/users", users);
 app.use("/api/v1/clients", clients);
