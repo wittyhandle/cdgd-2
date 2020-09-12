@@ -8,11 +8,11 @@ exports.up = knex =>
       .inTable("clients")
       .onDelete("CASCADE")
       .index();
-    t.string("street").notNullable();
-    t.string("street2").notNullable();
+    t.string("address").notNullable();
+    t.string("address2");
+    t.string("city").notNullable();
     t.string("state").notNullable();
     t.string("zip").notNullable();
-    t.string("zipExtension").notNullable();
     t.timestamps(false, true);
   });
 
