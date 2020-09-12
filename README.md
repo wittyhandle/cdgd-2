@@ -2,6 +2,10 @@
 
 #### To get the app running
 
+#### nvm
+
+Make sure to run `nvm use` from the root directory to set the correnct node version
+
 ##### Frontend
 `npm start`
 The entrypoint at this time is `http://localhost:3000/login`
