@@ -16,7 +16,11 @@ const Field = ({ colCss, name, label, type, value, disabled, options }) => {
           className="form-control"
         >
           {options &&
-            options.map(o => <option value={o.key}>{o.label}</option>)}
+            options.map(o => (
+              <option key={o.key} value={o.key}>
+                {o.label}
+              </option>
+            ))}
         </FormikField>
       </div>
       <ErrorMessage name={name} component="div" className="error" />

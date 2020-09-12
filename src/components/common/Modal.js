@@ -7,6 +7,7 @@ import { Form } from "formik";
 const Modal = ({
   title,
   show,
+  size,
   handleClose,
   handleAction,
   children,
@@ -25,6 +26,7 @@ const Modal = ({
   return (
     <ReactModal
       show={show}
+      size={size}
       onHide={handleClose}
       animation={false}
       backdrop="static"
@@ -48,6 +50,7 @@ const Modal = ({
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string.isRequired,
+  size: PropTypes.string,
   submitLabel: PropTypes.string,
   show: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
@@ -56,6 +59,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
+  size: "md",
   submitLabel: "Submit",
   handleAction: null,
   submitter: null

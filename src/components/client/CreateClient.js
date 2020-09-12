@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik } from "formik";
+import { Formik, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Button } from "react-bootstrap";
 import * as PropTypes from "prop-types";
@@ -7,6 +7,7 @@ import { Modal, useModalToggle } from "../common";
 import { createClientRules } from "../../utils";
 import { Field, Submit } from "../forms";
 import { clientService } from "../../services";
+import { US_STATES } from "../common/constants";
 
 const CreateClient = ({ createClientCallback }) => {
   const [{ show }, toggleModal] = useModalToggle();
@@ -34,7 +35,8 @@ const CreateClient = ({ createClientCallback }) => {
         initialValues={{
           email: "",
           firstName: "",
-          lastName: ""
+          lastName: "",
+          addresses: []
         }}
         validationSchema={Yup.object().shape({
           ...createClientRules
@@ -43,7 +45,7 @@ const CreateClient = ({ createClientCallback }) => {
           saveClient(client, resetForm, setSubmitting, setFieldError);
         }}
       >
-        {({ isSubmitting, resetForm }) => (
+        {({ isSubmitting, resetForm, values }) => (
           <>
             <div className="col-lg-2">
               <Button
@@ -59,7 +61,8 @@ const CreateClient = ({ createClientCallback }) => {
 
             <Modal
               show={show}
-              title="New User"
+              title="New Client"
+              size="lg"
               handleClose={() => toggleModal(resetForm)}
               submitter={() => (
                 <Submit isSubmitting={isSubmitting} title="Create" />
@@ -73,60 +76,88 @@ const CreateClient = ({ createClientCallback }) => {
                         name="email"
                         label="Email"
                         type="email"
-                        colCss="col-lg-6"
+                        colCss="col-lg-4"
                       />
-                    </div>
-                    <div className="row">
                       <Field
                         name="firstName"
                         label="First Name"
                         type="text"
-                        colCss="col-lg-6"
+                        colCss="col-lg-4"
                       />
                       <Field
                         name="lastName"
                         label="Last Name"
                         type="text"
-                        colCss="col-lg-6"
+                        colCss="col-lg-4"
                       />
                     </div>
-                    <div className="row">
-                      <Field
-                        name="street1"
-                        label="Street Address 1"
-                        type="text"
-                        colCss="col-lg-12"
+                    <fieldset className="form-group">
+                      <legend>Addresses</legend>
+                      <FieldArray
+                        name="addresses"
+                        render={arrayHelpers => (
+                          <div>
+                            <Button
+                              className="no-hover"
+                              variant="outline-info"
+                              size="sm"
+                              onClick={() => arrayHelpers.push({ id: -1 })}
+                            >
+                              <i className="nc-icon nc-simple-add" />
+                            </Button>
+                            <Button
+                              className="no-hover"
+                              variant="outline-info"
+                              size="sm"
+                              onClick={() => arrayHelpers.remove(0)}
+                            >
+                              <i className="nc-icon nc-simple-delete" />
+                            </Button>
+                            {values.addresses.map((address, index) => (
+                              <div key={address.id}>
+                                <div className="form-row">
+                                  <Field
+                                    name={`addresses[${index}].address`}
+                                    label="Address"
+                                    type="text"
+                                    colCss="col-lg-12"
+                                  />
+                                </div>
+                                <div className="form-row">
+                                  <Field
+                                    name={`addresses[${index}].address2`}
+                                    label="Address 2"
+                                    type="text"
+                                    colCss="col-lg-12"
+                                  />
+                                </div>
+                                <div className="form-row">
+                                  <Field
+                                    name={`addresses[${index}].city`}
+                                    label="City"
+                                    type="text"
+                                    colCss="col-lg-5"
+                                  />
+                                  <Field
+                                    name={`addresses[${index}].state`}
+                                    label="State"
+                                    type="text"
+                                    colCss="col-lg-5"
+                                    options={US_STATES}
+                                  />
+                                  <Field
+                                    name={`addresses[${index}].zip`}
+                                    label="Zip Code"
+                                    type="text"
+                                    colCss="col-lg-2"
+                                  />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       />
-                    </div>
-                    <div className="row">
-                      <Field
-                        name="street2"
-                        label="Street Address 2"
-                        type="text"
-                        colCss="col-lg-12"
-                      />
-                    </div>
-                    <div className="row">
-                      <Field
-                        name="city"
-                        label="City"
-                        type="text"
-                        colCss="col-lg-6"
-                      />
-                      <Field
-                        name="state"
-                        label="State"
-                        type="text"
-                        colCss="col-lg-6"
-                        options={[{ key: "dd", label: "DD" }]}
-                      />
-                      <Field
-                        name="zip"
-                        label="Zip Code"
-                        type="text"
-                        colCss="col-lg-6"
-                      />
-                    </div>
+                    </fieldset>
                   </div>
                 </div>
               </div>
