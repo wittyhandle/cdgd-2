@@ -10,8 +10,19 @@ const userName = Yup.string().required("Username is required");
 const firstName = Yup.string().required("First name is required");
 const lastName = Yup.string().required("Last name is required");
 const email = Yup.string()
-  .required("Email is required")
-  .email("Email is invalid");
+  .email("Email is invalid")
+  .required("Email is required");
+
+const addresses = Yup.array()
+  .of(
+    Yup.object().shape({
+      address: Yup.string().required("Address is required"),
+      city: Yup.string().required("City is required"),
+      state: Yup.string().required("State is required"),
+      zip: Yup.string().required("Zip code is required")
+    })
+  )
+  .required("At least one address is required");
 
 export const passwordRules = {
   password: Yup.string()
@@ -48,5 +59,6 @@ export const createUserRules = {
 export const createClientRules = {
   email,
   firstName,
-  lastName
+  lastName,
+  addresses
 };

@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import * as PropTypes from "prop-types";
 import { Modal, useModalToggle } from "../common";
 import { createClientRules } from "../../utils";
-import { Field, Submit } from "../forms";
+import { Field, Submit, ErrorMessage } from "../forms";
 import { clientService } from "../../services";
 import { US_STATES } from "../common/constants";
 
@@ -45,7 +45,7 @@ const CreateClient = ({ createClientCallback }) => {
           saveClient(client, resetForm, setSubmitting, setFieldError);
         }}
       >
-        {({ isSubmitting, resetForm, values }) => (
+        {({ isSubmitting, errors, resetForm, values }) => (
           <>
             <div className="col-lg-2">
               <Button
@@ -93,15 +93,17 @@ const CreateClient = ({ createClientCallback }) => {
                     </div>
                     <fieldset className="form-group">
                       <legend>Addresses</legend>
+                      <ErrorMessage name="addresses" />
                       <FieldArray
                         name="addresses"
+                        validateOnChange={false}
                         render={arrayHelpers => (
                           <div>
                             <Button
                               className="no-hover"
                               variant="outline-info"
                               size="sm"
-                              onClick={() => arrayHelpers.push({ id: -1 })}
+                              onClick={() => arrayHelpers.push({})}
                             >
                               <i className="nc-icon nc-simple-add" />
                             </Button>

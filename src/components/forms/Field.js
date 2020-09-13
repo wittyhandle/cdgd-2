@@ -1,6 +1,7 @@
 import React from "react";
-import { ErrorMessage, Field as FormikField } from "formik";
+import { Field as FormikField } from "formik";
 import * as PropTypes from "prop-types";
+import ErrorMessage from "./ErrorMessage";
 
 const Field = ({ colCss, name, label, type, value, disabled, options }) => {
   return (
@@ -23,7 +24,7 @@ const Field = ({ colCss, name, label, type, value, disabled, options }) => {
             ))}
         </FormikField>
       </div>
-      <ErrorMessage name={name} component="div" className="error" />
+      <ErrorMessage name={name} />
     </div>
   );
 };
